@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CROWNIE | Dashboard</title>
+    <style>
+        :root {
+            --background: #0a0a0a;
+            --foreground: #ededed;
+            --crown-purple: #a855f7;
+            --crown-gold: #FFD700;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: var(--background);
+            color: var(--foreground);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+        
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a0a2e, #2a1a4e);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(168, 85, 247, 0.3);
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: #fbbf24;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .discord-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+        
+        .discord-connected {
+            background: rgba(88, 101, 242, 0.2);
+            color: #5865F2;
+            border: 1px solid #5865F2;
+        }
+        
+        .discord-disconnected {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid #ef4444;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #f59e0b;
+        }
+        
+        .stat-card h3 {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--crown-gold);
+            margin: 10px 0;
+        }
+        
+        .stat-tier {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+        
+        .tier-novice { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+        .tier-active { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+        .tier-trusted { background: rgba(168, 85, 247, 0.2); color: #a855f7; }
+        .tier-elite { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        .tier-legend { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+        
+        .chat-sessions {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+        
+        .session-card {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid #f59e0b;
+        }
+        
+        .session-time {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        
+        .session-stats {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .session-stat {
+            text-align: center;
+        }
+        
+        .session-stat .label {
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+        
+        .session-stat .value {
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .points-earned {
+            color: #22c55e;
+            font-weight: bold;
+        }
+        
+        .no-sessions {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+        }
+        
+        .discord-connect-prompt {
+            background: rgba(88, 101, 242, 0.1);
+            border: 2px dashed #5865F2;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #f59e0b, #ea580c);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+        }
+        
+        .btn-discord {
+            background: linear-gradient(90deg, #5865F2, #7289DA);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #fbbf24;
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: 2px solid #f59e0b;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .login-message {
+            text-align: center;
+            padding: 60px 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .login-message h2 {
+            color: #fbbf24;
+            margin-bottom: 20px;
+        }
+        
+        .login-message p {
+            color: #94a3b8;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .realtime-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8rem;
+            color: #22c55e;
+            margin-left: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .live-stats {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .live-stat {
+            background: rgba(0,0,0,0.3);
+            padding: 10px 20px;
+            border-radius: 10px;
+            min-width: 150px;
+        }
+        
+        .live-stat .label {
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+        
+        .live-stat .value {
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        /* ===== REFERRAL SECTION ===== */
+        .referral-section {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .section-header h2 {
+            color: #8b5cf6;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .referral-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .referral-stat-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+        
+        .referral-stat-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .referral-stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fbbf24;
+            margin: 10px 0;
+        }
+        
+        .referral-stat-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        
+        .referral-link-container {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(124, 58, 237, 0.1));
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        
+        .referral-link-input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #475569;
+            border-radius: 8px;
+            color: white;
+            font-family: monospace;
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        
+        .referral-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .copy-btn {
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .share-btn {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .referrals-list {
+            margin-top: 25px;
+        }
+        
+        .referral-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid #8b5cf6;
+        }
+        
+        .referral-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .referral-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(90deg, #fbbf24, #ea580c);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .referral-info {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+        
+        .referral-date {
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+        
+        .referral-points {
+            color: #fbbf24;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .no-referrals {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+        }
+        
+        .no-referrals-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        
+        .how-to-earn {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            border-left: 4px solid #fbbf24;
+        }
+        
+        .how-to-earn h4 {
+            color: #fbbf24;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .how-to-earn ol {
+            margin-left: 20px;
+            color: #cbd5e1;
+        }
+        
+        .how-to-earn li {
+            margin-bottom: 8px;
+        }
+        
+        /* Quest section styles */
+        .dashboard-section {
+            margin-top: 30px;
+        }
+        
+        .quest-card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid;
+            margin-bottom: 15px;
+        }
+        
+        .quest-card.easy { border-left-color: #10b981; }
+        .quest-card.medium { border-left-color: #f59e0b; }
+        .quest-card.hard { border-left-color: #ef4444; }
+        
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            background: rgba(30, 41, 59, 0.3);
+            border-radius: 12px;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        {% if user.is_authenticated %}
+        <div class="header">
+            <h1>👑 Welcome, {{ user.username }}!</h1>
+            <p>Your journey to reclaim the crown continues...</p>
+            
+            {% if user.discord_connected %}
+            <div class="discord-status discord-connected">
+                <span>●</span> Discord Connected: {{ user.discord_username }}
+            </div>
+            {% else %}
+            <div class="discord-status discord-disconnected">
+                <span>●</span> Discord Not Connected
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Live Stats Update -->
+        <div class="live-stats" id="liveStats">
+            <div class="live-stat">
+                <div class="label">Today's Chat Points</div>
+                <div class="value" id="todayPoints">0.0</div>
+            </div>
+            <div class="live-stat">
+                <div class="label">Today's Sessions</div>
+                <div class="value" id="todaySessions">0</div>
+            </div>
+            <div class="live-stat">
+                <div class="label">Active Minutes</div>
+                <div class="value" id="activeMinutes">0</div>
+            </div>
+            <div class="live-stat">
+                <div class="label">Referrals</div>
+                <div class="value" id="referralCount">{{ user.referral_count }}</div>
+            </div>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Reputation Score</h3>
+                <div class="stat-value" id="reputationScore">{{ user.reputation_score|floatformat:1 }}</div>
+                <div class="stat-tier tier-{{ user.reputation_tier }}">
+                    {{ user.get_reputation_tier_display }}
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <h3>Chat Points Earned</h3>
+                <div class="stat-value" id="chatPoints">{{ user.discord_chat_points|floatformat:1 }}</div>
+                <div>From {{ user.chat_sessions_count }} sessions</div>
+            </div>
+            
+            <div class="stat-card">
+                <h3>Total Messages</h3>
+                <div class="stat-value" id="totalMessages">{{ user.discord_total_messages }}</div>
+                <div>{{ user.total_chat_minutes }} minutes chatting</div>
+            </div>
+            
+            <div class="stat-card">
+                <h3>Quests Completed</h3>
+                <div class="stat-value">{{ user.quests_completed }}</div>
+                <div>Continue your quests!</div>
+            </div>
+        </div>
+        
+        <!-- REFERRAL SECTION -->
+        <div class="referral-section">
+            <div class="section-header">
+                <h2>👥 Referral Program</h2>
+                <span style="color: #fbbf24; font-weight: bold; font-size: 1.2rem;">
+                    +{{ user.referral_points_earned }} Points Earned
+                </span>
+            </div>
+            
+            <div class="referral-stats">
+                <div class="referral-stat-card">
+                    <div class="referral-stat-icon">👥</div>
+                    <div class="referral-stat-value">{{ user.referral_count }}</div>
+                    <div class="referral-stat-label">Total Referrals</div>
+                </div>
+                
+                <div class="referral-stat-card">
+                    <div class="referral-stat-icon">💰</div>
+                    <div class="referral-stat-value">{{ user.referral_points_earned }}</div>
+                    <div class="referral-stat-label">Points Earned</div>
+                </div>
+                
+                <div class="referral-stat-card">
+                    <div class="referral-stat-icon">🎯</div>
+                    <div class="referral-stat-value">{{ referrals|length }}</div>
+                    <div class="referral-stat-label">Active Referrals</div>
+                </div>
+            </div>
+            
+            <div class="referral-link-container">
+                <h3 style="color: white; margin-bottom: 10px;">Your Referral Link</h3>
+                <p style="color: #cbd5e1; margin-bottom: 10px; font-size: 0.9rem;">
+                    Share this link with friends to earn 25 points per referral
+                </p>
+                
+                <input type="text" 
+                       value="{{ referral_url }}" 
+                       id="referral-link" 
+                       readonly 
+                       class="referral-link-input">
+                
+                <div class="referral-actions">
+                    <button onclick="copyReferralLink()" class="copy-btn">
+                        📋 Copy Link
+                    </button>
+                    <button onclick="copyReferralCode()" class="share-btn">
+                        🔢 Copy Code: <strong>{{ user.referral_code }}</strong>
+                    </button>
+                    <button onclick="shareOnTwitter()" class="share-btn">
+                        🐦 Share on Twitter
+                    </button>
+                </div>
+                
+                <p style="color: #94a3b8; font-size: 0.8rem; margin-top: 15px;">
+                    Your referral code: <strong style="color: #fbbf24;">{{ user.referral_code }}</strong>
+                </p>
+            </div>
+            
+            {% if referrals %}
+            <div class="referrals-list">
+                <h3 style="color: white; margin-bottom: 15px;">Your Referrals</h3>
+                {% for referral in referrals %}
+                <div class="referral-item">
+                    <div class="referral-user">
+                        <div class="referral-avatar">
+                            {{ referral.username|first|upper }}
+                        </div>
+                        <div>
+                            <div style="color: white; font-weight: 600;">{{ referral.username }}</div>
+                            <div class="referral-info">
+                                Joined {{ referral.date_joined|date:"M d, Y" }}
+                                {% if referral.discord_connected %}
+                                <span style="color: #10b981; margin-left: 10px;">● Discord Connected</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="referral-points">
+                        +25 points
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="no-referrals">
+                <div class="no-referrals-icon">👥</div>
+                <h4 style="color: #94a3b8; margin-bottom: 10px;">No referrals yet</h4>
+                <p style="color: #64748b; margin-bottom: 15px;">
+                    Share your referral link to start earning!
+                </p>
+            </div>
+            {% endif %}
+            
+            <div class="how-to-earn">
+                <h4>🎁 How to Earn with Referrals</h4>
+                <ol>
+                    <li>Share your referral link with friends</li>
+                    <li>They sign up using your link or code</li>
+                    <li>You get <strong>25 reputation points</strong> per referral</li>
+                    <li>They get <strong>10 bonus points</strong></li>
+                    <li>Complete referral quests for even more rewards!</li>
+                </ol>
+            </div>
+        </div>
+        
+        {% if not user.discord_connected %}
+        <div class="discord-connect-prompt">
+            <h2 style="color: #5865F2; margin-bottom: 15px;">🔗 Connect Discord Required</h2>
+            <p style="color: #94a3b8; margin-bottom: 20px;">
+                Connect your Discord account to start earning reputation points through chat-to-earn!
+                You'll receive +25 reputation points upon connection.
+            </p>
+            <a href="{% url 'discord_connect' %}" class="btn-primary btn-discord">
+                Connect Discord Account
+            </a>
+        </div>
+        {% endif %}
+        
+        <!-- Chat Sessions Section -->
+        <div class="chat-sessions">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="color: #fbbf24;">Recent Chat Sessions</h2>
+                <span class="realtime-indicator" id="realtimeIndicator">
+                    <span>●</span> Auto-updating
+                </span>
+            </div>
+            
+            <div id="sessionsContainer">
+                {% if recent_sessions %}
+                <div id="sessionsList">
+                    {% for session in recent_sessions %}
+                    <div class="session-card">
+                        <div>
+                            <div class="session-time">{{ session.start_time|date:"M d, H:i" }}</div>
+                            <div style="color: #94a3b8; font-size: 0.9rem; margin-top: 5px;">
+                                {{ session.channel_name }}
+                            </div>
+                        </div>
+                        <div class="session-stats">
+                            <div class="session-stat">
+                                <div class="label">Duration</div>
+                                <div class="value">{{ session.duration_minutes }} min</div>
+                            </div>
+                            <div class="session-stat">
+                                <div class="label">Messages</div>
+                                <div class="value">{{ session.message_count }}</div>
+                            </div>
+                            <div class="session-stat">
+                                <div class="label">Points</div>
+                                <div class="value points-earned">+{{ session.points_earned|floatformat:1 }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="no-sessions" id="noSessions">
+                    {% if user.discord_connected %}
+                    <p>No chat sessions yet. Start chatting in our Discord server to earn points!</p>
+                    <a href="https://discord.gg/kNyKUAw6" target="_blank" class="btn-primary btn-discord" style="margin-top: 15px;">
+                        Open Discord
+                    </a>
+                    {% else %}
+                    <p>Connect Discord to start tracking chat sessions!</p>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Quest section -->
+        <div class="dashboard-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="font-size: 1.5rem; font-weight: 700; color: white;">Active Quests</h3>
+                <a href="{% url 'quests' %}" style="color: #fbbf24; text-decoration: none; font-weight: 600;">
+                    View All →
+                </a>
+            </div>
+            
+            {% if active_quests %}
+            <div style="display: grid; gap: 15px;">
+                {% for quest_data in active_quests %}
+                <div class="quest-card {{ quest_data.quest.difficulty }}">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h4 style="font-size: 1.1rem; font-weight: 600; color: white;">{{ quest_data.quest.title }}</h4>
+                        <span style="font-size: 0.8rem; padding: 4px 10px; border-radius: 12px; background: 
+                            {% if quest_data.quest.difficulty == 'easy' %}rgba(16, 185, 129, 0.2)
+                            {% elif quest_data.quest.difficulty == 'medium' %}rgba(245, 158, 11, 0.2)
+                            {% elif quest_data.quest.difficulty == 'hard' %}rgba(239, 68, 68, 0.2)
+                            {% else %}rgba(139, 92, 246, 0.2)
+                            {% endif %}; color: 
+                            {% if quest_data.quest.difficulty == 'easy' %}#10b981
+                            {% elif quest_data.quest.difficulty == 'medium' %}#f59e0b
+                            {% elif quest_data.quest.difficulty == 'hard' %}#ef4444
+                            {% else %}#8b5cf6
+                            {% endif %};">
+                            {{ quest_data.quest.difficulty|title }}
+                        </span>
+                    </div>
+                    
+                    <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 15px;">
+                        {{ quest_data.quest.description|truncatechars:60 }}
+                    </p>
+                    
+                    <div style="margin-bottom: 10px;">
+                        <div style="height: 6px; background: rgba(255, 255, 255, 0.1); border-radius: 3px; overflow: hidden;">
+                            <div style="height: 100%; background: linear-gradient(90deg, #fbbf24, #ea580c); width: {{ quest_data.completion_percentage }}%; transition: width 0.3s;"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 5px;">
+                            <span style="color: #94a3b8;">Progress</span>
+                            <span style="color: #fbbf24; font-weight: 600;">{{ quest_data.completion_percentage }}%</span>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: #fbbf24; font-weight: 600;">
+                            +{{ quest_data.quest.reputation_reward }} Rep
+                        </span>
+                        
+                        {% if quest_data.progress.status == 'completed' %}
+                        <a href="{% url 'claim_quest_reward' quest_data.progress.id %}" 
+                           style="background: linear-gradient(90deg, #f59e0b, #ea580c); color: white; padding: 8px 16px; 
+                                  border-radius: 8px; text-decoration: none; font-size: 0.9rem; font-weight: 600;">
+                            Claim Reward
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <div style="font-size: 40px; margin-bottom: 10px; color: #64748b;">🏰</div>
+                <p style="color: #94a3b8; margin-bottom: 15px;">No active quests</p>
+                <a href="{% url 'quests' %}" style="color: #fbbf24; text-decoration: none; font-weight: 600;">
+                    Start your first quest →
+                </a>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="/" class="btn-primary">Back to Home</a>
+            {% if user.discord_connected %}
+            <a href="{% url 'discord_disconnect' %}" class="btn-secondary" style="margin-left: 10px;">Disconnect Discord</a>
+            {% endif %}
+            <a href="{% url 'logout' %}" class="btn-secondary" style="margin-left: 10px;">Logout</a>
+        </div>
+        
+        {% else %}
+        <div class="login-message">
+            <h2>🔒 Access Required</h2>
+            <p>Please log in to access your dashboard.</p>
+            <a href="{% url 'login' %}" class="btn-primary" style="margin-right: 10px;">Login</a>
+            <a href="{% url 'signup' %}" class="btn-secondary">Sign Up</a>
+        </div>
+        {% endif %}
+    </div>
+    
+    <script>
+        // Real-time chat stats update
+        async function updateChatStats() {
+            try {
+                const response = await fetch('/api/chat/stats/');
+                if (!response.ok) return;
+                
+                const data = await response.json();
+                
+                if (data.user) {
+                    // Update user stats
+                    document.getElementById('reputationScore').textContent = 
+                        data.user.reputation_score.toFixed(1);
+                    document.getElementById('chatPoints').textContent = 
+                        data.user.discord_chat_points.toFixed(1);
+                    document.getElementById('totalMessages').textContent = 
+                        data.user.discord_total_messages;
+                    document.getElementById('referralCount').textContent = 
+                        data.user.referral_count || 0;
+                    
+                    // Update live stats
+                    if (data.today) {
+                        document.getElementById('todayPoints').textContent = 
+                            data.today.points.toFixed(1);
+                        document.getElementById('todaySessions').textContent = 
+                            data.today.sessions;
+                        document.getElementById('activeMinutes').textContent = 
+                            data.today.duration;
+                    }
+                    
+                    // Update sessions list
+                    updateSessionsList(data.recent_sessions);
+                }
+            } catch (error) {
+                console.log('Error updating stats:', error);
+            }
+        }
+        
+        function updateSessionsList(sessions) {
+            const container = document.getElementById('sessionsContainer');
+            
+            if (!sessions || sessions.length === 0) {
+                const noSessions = document.getElementById('noSessions');
+                if (!noSessions) {
+                    container.innerHTML = `
+                        <div class="no-sessions" id="noSessions">
+                            <p>No chat sessions yet. Start chatting in our Discord server to earn points!</p>
+                            <a href="https://discord.gg/your-invite" target="_blank" class="btn-primary btn-discord" style="margin-top: 15px;">
+                                Open Discord
+                            </a>
+                        </div>
+                    `;
+                }
+                return;
+            }
+            
+            let sessionsHTML = '<div id="sessionsList">';
+            
+            sessions.forEach(session => {
+                const date = new Date(session.start_time);
+                const formattedDate = date.toLocaleDateString('en-US', { 
+                    month: 'short', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                sessionsHTML += `
+                    <div class="session-card">
+                        <div>
+                            <div class="session-time">${formattedDate}</div>
+                            <div style="color: #94a3b8; font-size: 0.9rem; margin-top: 5px;">
+                                ${session.channel_name || 'General Chat'}
+                            </div>
+                        </div>
+                        <div class="session-stats">
+                            <div class="session-stat">
+                                <div class="label">Duration</div>
+                                <div class="value">${session.duration_minutes} min</div>
+                            </div>
+                            <div class="session-stat">
+                                <div class="label">Messages</div>
+                                <div class="value">${session.message_count}</div>
+                            </div>
+                            <div class="session-stat">
+                                <div class="label">Points</div>
+                                <div class="value points-earned">+${session.points_earned.toFixed(1)}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            sessionsHTML += '</div>';
+            container.innerHTML = sessionsHTML;
+        }
+        
+        // Referral Functions
+        function copyReferralLink() {
+            const linkInput = document.getElementById('referral-link');
+            linkInput.select();
+            linkInput.setSelectionRange(0, 99999);
+            document.execCommand('copy');
+            
+            // Show success message
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✅ Copied!';
+            btn.style.background = 'linear-gradient(90deg, #10b981, #059669)';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = 'linear-gradient(90deg, #3b82f6, #1d4ed8)';
+            }, 2000);
+        }
+        
+        function copyReferralCode() {
+            const code = '{{ user.referral_code }}';
+            navigator.clipboard.writeText(code);
+            
+            // Show success message
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✅ Code Copied!';
+            btn.style.background = 'linear-gradient(90deg, #10b981, #059669)';
+            btn.style.color = 'white';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = 'rgba(251, 191, 36, 0.2)';
+                btn.style.color = '#fbbf24';
+            }, 2000);
+        }
+        
+        function shareOnTwitter() {
+            const text = `Join me in the CROWNIE kingdom! Earn reputation points, complete quests, and join an amazing community. Use my referral code: {{ user.referral_code }}`;
+            const url = '{{ referral_url }}';
+            const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+            window.open(twitterUrl, '_blank');
+        }
+        
+        // Initial update
+        updateChatStats();
+        
+        // Update every 30 seconds
+        setInterval(updateChatStats, 30000);
+        
+        // Animate realtime indicator
+        let indicatorPulse = true;
+        setInterval(() => {
+            const indicator = document.getElementById('realtimeIndicator');
+            if (indicator) {
+                indicator.style.opacity = indicatorPulse ? '0.5' : '1';
+                indicatorPulse = !indicatorPulse;
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

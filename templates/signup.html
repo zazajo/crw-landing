@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CROWNIE | Sign Up</title>
+    <style>
+        :root {
+            --background: #0a0a0a;
+            --foreground: #ededed;
+            --crown-purple: #a855f7;
+            --crown-gold: #FFD700;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: var(--background);
+            color: var(--foreground);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .auth-container {
+            background: linear-gradient(135deg, #1a0a2e, #2a1a4e);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            border: 2px solid rgba(168, 85, 247, 0.3);
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo h1 {
+            color: #fbbf24;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #f59e0b;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #f59e0b, #ea580c);
+            color: white;
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+        }
+        
+        .auth-footer a {
+            color: #fbbf24;
+            text-decoration: none;
+        }
+        
+        .error-message {
+            color: #ef4444;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .messages {
+            margin-bottom: 20px;
+        }
+        
+        .message {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .success {
+            background: #10b981;
+            color: white;
+        }
+        
+        .error {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .info {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        /* Referral Banner */
+        .referral-banner {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(124, 58, 237, 0.2));
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .referral-banner p {
+            margin: 0;
+            color: #8b5cf6;
+            font-weight: 600;
+        }
+        
+        .referral-banner .bonus {
+            color: #fbbf24;
+            font-size: 1.1rem;
+        }
+        
+        /* Referral How-to */
+        .referral-info {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            border-left: 4px solid #fbbf24;
+        }
+        
+        .referral-info h4 {
+            color: #fbbf24;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .referral-info ul {
+            margin-left: 20px;
+            color: #cbd5e1;
+        }
+        
+        .referral-info li {
+            margin-bottom: 5px;
+        }
+        
+        label {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+        
+        .help-text {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            margin-top: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="logo">
+            <h1><span>👑</span> CROWNIE</h1>
+            <p style="color: #94a3b8; margin-top: 5px;">Join the kingdom</p>
+        </div>
+        
+        <!-- Referral Banner if using referral link -->
+        {% if referral_code %}
+        <div class="referral-banner">
+            <p>🎁 You're using a referral link!</p>
+            <p class="bonus">Get +10 bonus points on signup</p>
+            {% if referrer %}
+            <p style="margin-top: 5px; color: #cbd5e1; font-size: 0.9rem;">
+                Referred by: <strong>{{ referrer.username }}</strong>
+            </p>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_username">Username</label>
+                <input type="text" name="username" id="id_username" class="form-control" placeholder="Choose a username" required>
+                {% if form.username.errors %}
+                <div class="error-message">{{ form.username.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="id_display_name">Display Name</label>
+                <input type="text" name="display_name" id="id_display_name" class="form-control" placeholder="How you'll be known in the kingdom" required>
+                {% if form.display_name.errors %}
+                <div class="error-message">{{ form.display_name.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="id_email">Email</label>
+                <input type="email" name="email" id="id_email" class="form-control" placeholder="Enter your email" required>
+                {% if form.email.errors %}
+                <div class="error-message">{{ form.email.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="id_password1">Password</label>
+                <input type="password" name="password1" id="id_password1" class="form-control" placeholder="Create a secure password" required>
+                {% if form.password1.errors %}
+                <div class="error-message">{{ form.password1.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="id_password2">Confirm Password</label>
+                <input type="password" name="password2" id="id_password2" class="form-control" placeholder="Confirm your password" required>
+                {% if form.password2.errors %}
+                <div class="error-message">{{ form.password2.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <!-- REFERRAL CODE FIELD -->
+            <div class="form-group">
+                <label for="id_referral_code_input">
+                    👥 Friend's Referral Code <span style="color: #94a3b8; font-weight: normal;">(Optional)</span>
+                </label>
+                <input type="text" 
+                       name="referral_code_input" 
+                       id="id_referral_code_input" 
+                       class="form-control" 
+                       placeholder="Enter referral code for +10 bonus points"
+                       value="{% if form.referral_code_input.value %}{{ form.referral_code_input.value }}{% elif referral_code %}{{ referral_code }}{% endif %}">
+                <div class="help-text">
+                    Don't have a code? That's okay! You'll get your own after signing up.
+                </div>
+                {% if form.referral_code_input.errors %}
+                <div class="error-message">{{ form.referral_code_input.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="btn-primary">🎉 Create Account</button>
+        </form>
+        
+        <!-- Referral Information -->
+        <div class="referral-info">
+            <h4>🎁 How Referrals Work</h4>
+            <ul>
+                <li><strong>For New Users:</strong> Get <span style="color: #fbbf24;">+10 bonus points</span> when using a referral code</li>
+                <li><strong>For Referrers:</strong> Earn <span style="color: #fbbf24;">+25 points</span> for each friend who signs up</li>
+                <li><strong>For Everyone:</strong> Complete referral quests for extra rewards!</li>
+            </ul>
+        </div>
+        
+        <div class="auth-footer">
+            <p>Already have an account? <a href="{% url 'login' %}">Sign In</a></p>
+            <p style="margin-top: 10px;"><a href="/">← Back to Home</a></p>
+        </div>
+    </div>
+</body>
+</html>

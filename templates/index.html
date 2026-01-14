@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CROWNIE | Own Meme Culture</title>
+    <meta name="description" content="CROWNIE is the Base meme economy that rewards creativity, culture, and engagement with on-chain value.">
+    <meta name="keywords" content="CROWNIE, meme economy, Base blockchain, cryptocurrency, NFT, DeFi, web3">
+    <meta name="author" content="CROWNIE Team">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="CROWNIE | Own Meme Culture">
+    <meta property="og:description" content="CROWNIE is the Base meme economy that rewards creativity, culture, and engagement with on-chain value.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://crownie.com">
+    <meta property="og:site_name" content="CROWNIE">
+    
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CROWNIE | Own Meme Culture">
+    <meta name="twitter:description" content="CROWNIE is the Base meme economy that rewards creativity, culture, and engagement with on-chain value.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Load static files -->
+    {% load static %}
+    
+    <style>
+        /* Enhanced CSS Variables for CROWNIE Premium Theme */
+        :root {
+            --background: #0a0a0a;
+            --foreground: #ededed;
+            --crown-purple: #a855f7;
+            --crown-purple-dark: #7c3aed;
+            --crown-purple-light: #c084fc;
+            --crown-gold: #FFD700;
+            --crown-gold-dark: #DAA520;
+            --crown-gold-light: #FFF8DC;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--foreground);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.3);
+            z-index: 1000;
+            padding: 15px 20px;
+            height: 70px; /* Fixed height for nav */
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+            z-index: 1001;
+        }
+
+        /* Desktop Navigation */
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            padding: 5px 0;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        /* Hamburger Menu for Mobile */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background: #fbbf24;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            align-items: center;
+            text-align: center;
+        }
+
+        .mobile-nav-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 600;
+            padding: 10px 0;
+            transition: color 0.3s;
+        }
+
+        .mobile-nav-link:hover {
+            color: #fbbf24;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, 
+                rgba(10, 1, 19, 0.95) 0%,
+                rgba(42, 10, 78, 0.85) 50%,
+                rgba(10, 1, 19, 0.95) 100%);
+            padding-top: 70px; /* Match nav height */
+        }
+
+        .hero-background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                rgba(10, 1, 19, 0.9) 0%,
+                rgba(42, 10, 78, 0.8) 50%,
+                rgba(10, 1, 19, 0.9) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            width: 100%;
+            padding: 20px 20px 60px 20px; /* Reduced top padding */
+            margin-top: 0; /* Ensure no extra margin */
+        }
+
+        /* Crown Badge */
+        .crown-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(90deg, rgba(251, 191, 36, 0.2), rgba(234, 88, 12, 0.2));
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            padding: 12px 24px;
+            border-radius: 50px;
+            margin-bottom: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fbbf24;
+            backdrop-filter: blur(10px);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #fbbf24, #ea580c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            text-shadow: 0 0 30px rgba(251, 191, 36, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #f59e0b, #ea580c);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.125rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 56px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+        }
+
+        /* ===== EARN BANNER SECTION ===== */
+        .earn-banner-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #1a0a2e 0%, #2a1a4e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .earn-banner-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 3px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .earn-banner-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .earn-banner-container:hover .earn-banner-image {
+            transform: scale(1.02);
+        }
+
+        /* ===== GAME TEASER SECTION ===== */
+        .game-teaser-section {
+            padding: 100px 0;
+            background: rgba(0, 0, 0, 0.9);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(90deg, #fbbf24, #ea580c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
+        }
+
+        .game-teaser-video-container {
+            position: relative;
+            max-width: 800px;
+            margin: 40px auto 60px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            border: 3px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .game-teaser-video {
+            width: 100%;
+            height: auto;
+            min-height: 450px;
+            display: block;
+            border-radius: 18px;
+            background: #000;
+        }
+
+        /* Improved Video Controls */
+        .video-controls-container {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 12px 20px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .video-controls-container:hover {
+            opacity: 1;
+        }
+
+        .video-control-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .video-control-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.1);
+        }
+
+        .video-control-btn.mute-btn {
+            margin-left: auto;
+        }
+
+        .video-progress {
+            flex: 1;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .video-progress-filled {
+            height: 100%;
+            background: linear-gradient(90deg, #f59e0b, #ea580c);
+            width: 0%;
+            transition: width 0.1s;
+        }
+
+        /* ===== KINGDOM OVERVIEW ===== */
+        .kingdom-overview {
+            padding: 100px 0;
+            background: linear-gradient(135deg, rgba(26, 10, 46, 0.8) 0%, rgba(42, 26, 78, 0.9) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kingdom-image-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto 60px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            border: 3px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .kingdom-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .kingdom-image-container:hover .kingdom-image {
+            transform: scale(1.03);
+        }
+
+        .kingdom-text {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        /* ===== JOURNEY SECTION ===== */
+        .journey-section {
+            padding: 100px 0;
+            background: rgba(0, 0, 0, 0.95);
+            position: relative;
+        }
+
+        .journey-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+
+        .journey-card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .journey-card:hover {
+            transform: translateY(-10px);
+            border-color: #f59e0b;
+            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.2);
+        }
+
+        .journey-image-container {
+            width: 100%;
+            overflow: hidden;
+            max-height: 300px;
+        }
+
+        .journey-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .journey-card:hover .journey-image {
+            transform: scale(1.05);
+        }
+
+        .journey-content {
+            padding: 30px;
+        }
+
+        .journey-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .journey-description {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        /* ===== CHARACTERS SECTION ===== */
+        .characters-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, rgba(42, 26, 78, 0.8) 0%, rgba(26, 10, 46, 0.9) 100%);
+        }
+
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .character-card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .character-card:hover {
+            transform: translateY(-5px);
+            border-color: #a855f7;
+            box-shadow: 0 15px 30px rgba(168, 85, 247, 0.3);
+        }
+
+        .character-image-container {
+            width: 100%;
+            overflow: hidden;
+            max-height: 350px;
+        }
+
+        .character-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .character-card:hover .character-image {
+            transform: scale(1.05);
+        }
+
+        .character-info {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .character-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .character-role {
+            color: #fbbf24;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        /* ===== CLAIM CROWN SECTION ===== */
+        .claim-crown-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, rgba(26, 10, 46, 0.9) 0%, rgba(42, 26, 78, 0.95) 100%);
+            text-align: center;
+        }
+
+        .claim-crown-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .claim-crown-image {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            margin-bottom: 40px;
+            border: 3px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .claim-cta {
+            font-size: 1.5rem;
+            color: #fbbf24;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        /* ===== SOCIAL SECTION ===== */
+        .social-section {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-radius: 24px;
+            padding: 80px 40px;
+            margin: 80px 0;
+            text-align: center;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .social-subtitle {
+            color: #cbd5e1;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            font-size: 1.125rem;
+            line-height: 1.6;
+        }
+
+        .social-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .social-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid #475569;
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: inherit;
+            backdrop-filter: blur(10px);
+        }
+
+        .social-card:hover {
+            border-color: currentColor;
+            transform: translateY(-5px);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            color: #64748b;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 80px;
+            position: relative;
+        }
+
+        .footer-copyright {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .footer-tagline {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            /* Mobile Navigation */
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            /* Hero Section - Mobile adjustments */
+            .hero-section {
+                padding-top: 70px; /* Match nav height */
+            }
+
+            .hero-content {
+                padding-top: 10px; /* Reduced padding on mobile */
+                padding-bottom: 40px;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+                margin-bottom: 15px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .social-title {
+                font-size: 2.5rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+                margin-bottom: 40px;
+            }
+            
+            .btn-primary {
+                width: 100%;
+                max-width: 300px;
+                padding: 14px 28px;
+                font-size: 1rem;
+            }
+            
+            /* Grid Layouts */
+            .journey-grid,
+            .characters-grid,
+            .social-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .social-section {
+                padding: 40px 20px;
+                margin: 40px 0;
+            }
+            
+            /* Video */
+            .game-teaser-video {
+                min-height: 300px;
+            }
+
+            .video-controls-container {
+                padding: 10px 15px;
+                border-radius: 40px;
+                bottom: 15px;
+                left: 15px;
+                right: 15px;
+            }
+
+            .video-control-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
+
+            /* Navigation Mobile */
+            .mobile-nav-link {
+                font-size: 1.25rem;
+            }
+
+            /* Adjust section paddings for mobile */
+            .earn-banner-section,
+            .game-teaser-section,
+            .kingdom-overview,
+            .journey-section,
+            .characters-section,
+            .claim-crown-section {
+                padding: 60px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* Navbar height adjustment for very small screens */
+            nav {
+                height: 60px;
+                padding: 10px 15px;
+            }
+
+            .hero-section {
+                padding-top: 60px; /* Match adjusted nav height */
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+                line-height: 1.1;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.125rem;
+                margin: 0 auto 30px;
+            }
+            
+            .social-section {
+                padding: 30px 20px;
+                margin: 30px 0;
+            }
+            
+            .game-teaser-video {
+                min-height: 250px;
+            }
+
+            .video-controls-container {
+                padding: 8px 12px;
+                border-radius: 30px;
+                bottom: 10px;
+                left: 10px;
+                right: 10px;
+            }
+
+            .video-control-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 16px;
+            }
+
+            .mobile-nav-link {
+                font-size: 1.1rem;
+            }
+
+            /* Crown badge adjustments */
+            .crown-badge {
+                font-size: 12px;
+                padding: 10px 20px;
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .crown-badge {
+                font-size: 11px;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <img src="{% static 'images/crownie_logo.png' %}" alt="Crownie Logo" style="height: 60px; width: auto; filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.5));">
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="{% url 'quests' %}" class="nav-link">Quests</a>
+                <a href="#game-teaser" class="nav-link">Roadmap</a>
+                <a href="#characters" class="nav-link">Whitepaper</a>
+                <a href="#social" class="nav-link">Community</a>
+                
+                {% if user.is_authenticated %}
+                    {% if user.discord_connected %}
+                    <a href="{% url 'dashboard' %}" class="nav-link" style="
+                        color: #fbbf24;
+                        font-weight: 600;
+                        padding: 8px 16px;
+                        border: 1px solid rgba(251, 191, 36, 0.3);
+                        border-radius: 8px;
+                    ">
+                        <span style="color: #00ff00; margin-right: 5px;">●</span> Dashboard
+                    </a>
+                    <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+                    {% else %}
+                    <a href="{% url 'discord_connect' %}" class="nav-link" style="color: #5865F2; font-weight: 600;">Connect Discord</a>
+                    <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+                    {% endif %}
+                {% else %}
+                <a href="{% url 'login' %}" class="nav-link">Sign In</a>
+                <a href="{% url 'signup' %}" class="nav-link" style="
+                    background: linear-gradient(90deg, #f59e0b, #ea580c);
+                    color: white;
+                    padding: 8px 16px;
+                    border-radius: 8px;
+                ">Sign Up</a>
+                {% endif %}
+            </div>
+
+            <!-- Hamburger Menu Button (Mobile) -->
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <div class="mobile-nav-links">
+            <a href="/" class="mobile-nav-link" onclick="closeMobileMenu()">Home</a>
+            <a href="{% url 'quests' %}" class="nav-link" onclick="closeMobileMenu()">Quests</a>
+            <a href="#game-teaser" class="mobile-nav-link" onclick="closeMobileMenu()">Roadmap</a>
+            <a href="#characters" class="mobile-nav-link" onclick="closeMobileMenu()">Whitepaper</a>
+            <a href="#social" class="mobile-nav-link" onclick="closeMobileMenu()">Community</a>
+            
+            {% if user.is_authenticated %}
+                {% if user.discord_connected %}
+                <a href="{% url 'dashboard' %}" class="mobile-nav-link" onclick="closeMobileMenu()" style="color: #fbbf24;">
+                    <span style="color: #00ff00; margin-right: 5px;">●</span> Dashboard
+                </a>
+                <a href="{% url 'logout' %}" class="mobile-nav-link" onclick="closeMobileMenu()">Logout</a>
+                {% else %}
+                <a href="{% url 'discord_connect' %}" class="mobile-nav-link" onclick="closeMobileMenu()" style="color: #5865F2;">Connect Discord</a>
+                <a href="{% url 'logout' %}" class="mobile-nav-link" onclick="closeMobileMenu()">Logout</a>
+                {% endif %}
+            {% else %}
+            <a href="{% url 'login' %}" class="mobile-nav-link" onclick="closeMobileMenu()">Sign In</a>
+            <a href="{% url 'signup' %}" class="mobile-nav-link" onclick="closeMobileMenu()" style="
+                background: linear-gradient(90deg, #f59e0b, #ea580c);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                margin-top: 10px;
+            ">Sign Up</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        {% if 'journey_begins.jpg' %}
+        <img src="{% static 'images/journey_begins.jpg' %}" alt="Crownie Journey Begins" class="hero-background-image">
+        {% endif %}
+        
+        <div class="hero-overlay"></div>
+        
+        <div class="container">
+            <div class="hero-content">
+                {% if 'logo.png' %}
+                <div style="margin-bottom: 20px;">
+                    <img src="{% static 'images/logo.png' %}" alt="Crownie Logo" style="height: 70px; width: auto; filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.5));">
+                </div>
+                {% endif %}
+                
+                <div class="crown-badge">CROWNIE VERSE</div>
+                <h1 class="hero-title">THE FALLEN KING AWAITS</h1>
+                
+                {% if user.is_authenticated %}
+                <p class="hero-subtitle">
+                    Welcome back, <span style="color: #fbbf24; font-weight: 600;">{{ user.username }}</span>! 
+                    Your reputation: <span style="color: #fbbf24; font-weight: 600;">{{ user.reputation_score|floatformat:1 }}</span>
+                    <br>Continue your quest to reclaim the crown!
+                </p>
+                {% else %}
+                <p class="hero-subtitle">
+                    Dethroned. Disgraced. Determined. <span style="color: #fbbf24; font-weight: 600;">Crownie</span> fights through endless challenges to reclaim the crown in a never-ending battle for royalty.
+                </p>
+                {% endif %}
+                
+                <div class="cta-buttons">
+                    <a href="#game-teaser" class="btn-primary">
+                        <span>⚔️</span> Begin Your Quest
+                    </a>
+                    
+                    {% if user.is_authenticated %}
+                        {% if user.discord_connected %}
+                        <a href="{% url 'dashboard' %}" class="btn-primary">
+                            <span>👑</span> Go to Dashboard
+                        </a>
+                        {% else %}
+                        <a href="{% url 'discord_connect' %}" class="btn-primary" style="background: linear-gradient(90deg, #5865F2, #7289DA);">
+                            <span>🔗</span> Connect Discord
+                        </a>
+                        {% endif %}
+                    {% else %}
+                    <a href="{% url 'signup' %}" class="btn-primary">
+                        <span>👑</span> Join the Kingdom
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Earn Banner Section -->
+    <section class="earn-banner-section fade-in">
+        <div class="container">
+            <h2 class="section-title">Earn Your Royalty</h2>
+            {% if 'earn_banner.jpg' %}
+            <div class="earn-banner-container">
+                <img src="{% static 'images/earn_banner.jpg' %}" alt="Chat to Earn, Engage to Earn, Play to Earn" class="earn-banner-image">
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Game Teaser Section -->
+    <section id="game-teaser" class="game-teaser-section fade-in">
+        <div class="container">
+            <h2 class="section-title">Witness the Battle</h2>
+            
+            <div class="game-teaser-video-container">
+                {% if 'videos/teaser.mp4' %}
+                <video class="game-teaser-video" 
+                       id="crownieVideo"
+                       poster="{% static 'images/video_poster.jpg' %}" 
+                       loop
+                       playsinline>
+                    <source src="{% static 'videos/teaser.mp4' %}" type="video/mp4">
+                    <source src="{% static 'videos/teaser.webm' %}" type="video/webm">
+                    Your browser does not support the video tag.
+                </video>
+                
+                <!-- Video Controls -->
+                <div class="video-controls-container">
+                    <button class="video-control-btn play-pause-btn" id="playPauseBtn">
+                        ▶
+                    </button>
+                    <div class="video-progress" id="videoProgress">
+                        <div class="video-progress-filled" id="videoProgressFilled"></div>
+                    </div>
+                    <button class="video-control-btn mute-btn" id="muteBtn">
+                        🔇
+                    </button>
+                    <button class="video-control-btn fullscreen-btn" id="fullscreenBtn">
+                        ⛶
+                    </button>
+                </div>
+                {% else %}
+                <div style="background: linear-gradient(135deg, #1a0a2e, #2a1a4e); min-height: 450px; border-radius: 18px; display: flex; align-items: center; justify-content: center;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 60px; margin-bottom: 20px;">🎮</div>
+                        <h3 style="color: white; margin-bottom: 10px;">Game Teaser Coming Soon</h3>
+                        <p style="color: #94a3b8;">Epic battles await in the Crownie kingdom</p>
+                        <!-- Add a static image fallback -->
+                        {% if 'video_placeholder.jpg' %}
+                        <img src="{% static 'images/video_placeholder.jpg' %}" alt="Game Teaser" style="width: 100%; max-width: 600px; border-radius: 10px; margin-top: 20px;">
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Kingdom Overview -->
+    <section class="kingdom-overview fade-in">
+        <div class="container">
+            <h2 class="section-title">Observe the Kingdom</h2>
+            {% if 'observing_kingdom.jpg' %}
+            <div class="kingdom-image-container">
+                <img src="{% static 'images/observing_kingdom.jpg' %}" alt="The King Observing His Kingdom" class="kingdom-image">
+            </div>
+            {% endif %}
+            <p class="kingdom-text">
+                From the highest peak, the fallen king surveys the vast kingdom he once ruled. 
+                Every mountain, every valley, every fortress holds memories of glory and betrayal. 
+                The path to reclaiming the crown begins with understanding the land and its people.
+            </p>
+        </div>
+    </section>
+
+    <!-- Journey Section -->
+    <section class="journey-section fade-in">
+        <div class="container">
+            <h2 class="section-title">The Journey of Royalty</h2>
+            <div class="journey-grid">
+                <div class="journey-card">
+                    <div class="journey-image-container">
+                        {% if 'journey_begins.jpg' %}
+                        <img src="{% static 'images/journey_begins.jpg' %}" alt="The Journey Begins" class="journey-image">
+                        {% endif %}
+                    </div>
+                    <div class="journey-content">
+                        <h3 class="journey-title">The Journey Begins</h3>
+                        <p class="journey-description">Every king starts as a warrior. Your path to royalty begins with courage and determination.</p>
+                    </div>
+                </div>
+                
+                <div class="journey-card">
+                    <div class="journey-image-container">
+                        {% if 'heir_rise.jpg' %}
+                        <img src="{% static 'images/heir_rise.jpg' %}" alt="Rise of the Heir" class="journey-image">
+                        {% endif %}
+                    </div>
+                    <div class="journey-content">
+                        <h3 class="journey-title">Rise of the Heir</h3>
+                        <p class="journey-description">Prove your worth, gain allies, and rise through the ranks to claim your birthright.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Characters Section -->
+    <section id="characters" class="characters-section fade-in">
+        <div class="container">
+            <h2 class="section-title">The Royal Kingdom</h2>
+            <div class="characters-grid">
+                <div class="character-card">
+                    <div class="character-image-container">
+                        {% if 'character1.jpg' %}
+                        <img src="{% static 'images/character1.jpg' %}" alt="The Fallen King" class="character-image">
+                        {% endif %}
+                    </div>
+                    <div class="character-info">
+                        <h3 class="character-name">Crownie the Fallen</h3>
+                        <div class="character-role">The Dethroned King</div>
+                        <p style="color: #94a3b8; font-size: 0.9rem;">Once ruler of all he surveyed, now fighting to reclaim his kingdom and honor.</p>
+                    </div>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-image-container">
+                        {% if 'character2.jpg' %}
+                        <img src="{% static 'images/character2.jpg' %}" alt="The Crown's Spirit" class="character-image">
+                        {% endif %}
+                    </div>
+                    <div class="character-info">
+                        <h3 class="character-name">The Crown's Spirit</h3>
+                        <div class="character-role">The Dethroned King</div>
+                        <p style="color: #94a3b8; font-size: 0.9rem;">The very essence of royalty, manifesting as Crownie in his quest for redemption.</p>
+                    </div>
+                </div>
+                
+                <div class="character-card">
+                    <div class="character-image-container">
+                        {% if 'character3.jpg' %}
+                        <img src="{% static 'images/character3.jpg' %}" alt="The Fallen Monarch" class="character-image">
+                        {% endif %}
+                    </div>
+                    <div class="character-info">
+                        <h3 class="character-name">The Fallen Monarch</h3>
+                        <div class="character-role">The Dethroned King</div>
+                        <p style="color: #94a3b8; font-size: 0.9rem;">A king without a throne, but with undying determination to reclaim what was lost.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Claim Crown Section -->
+    <section class="claim-crown-section fade-in">
+        <div class="container">
+            <h2 class="section-title">Claim Your Destiny</h2>
+            <div class="claim-crown-container">
+                {% if 'claim_crown.jpg' %}
+                <img src="{% static 'images/claim_crown.jpg' %}" alt="Claim the Crown" class="claim-crown-image">
+                {% endif %}
+                <div class="claim-cta">The Crown Awaits Its Rightful Heir</div>
+                <a href="{% url 'signup' %}" class="btn-primary" style="font-size: 1.25rem; padding: 18px 40px;">
+                    <span>👑</span> Begin Your Claim
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Section -->
+    <section id="social" class="social-section fade-in">
+        <div class="container">
+            <div class="social-content">
+                <h2 class="social-title">Join the Royal Community</h2>
+                <p class="social-subtitle">
+                    The Crownie kingdom thrives on community. Join Discord for chat-to-earn sessions, 
+                    follow our journey on X, and connect with fellow knights.
+                </p>
+                
+                <div class="social-cards">
+                    <a href="https://discord.gg/kNyKUAw6" target="_blank" class="social-card" style="border-color: #8b5cf6;">
+                        <div style="font-size: 40px; margin-bottom: 20px;">💬</div>
+                        <h3 style="color: white; margin-bottom: 15px; font-size: 1.5rem;">Discord</h3>
+                        <p style="color: #94a3b8; line-height: 1.6; margin-bottom: 20px;">
+                            Chat-to-Earn sessions, community events, and real-time updates with fellow knights.
+                        </p>
+                        <div style="color: #8b5cf6; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                            <span>Join Now</span>
+                            <span>→</span>
+                        </div>
+                    </a>
+                    
+                    <a href="https://x.com/crownie" target="_blank" class="social-card" style="border-color: #3b82f6;">
+                        <div style="font-size: 40px; margin-bottom: 20px;">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="#3b82f6">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </div>
+                        <h3 style="color: white; margin-bottom: 15px; font-size: 1.5rem;">X (Twitter)</h3>
+                        <p style="color: #94a3b8; line-height: 1.6; margin-bottom: 20px;">
+                            Follow for announcements, memes, kingdom updates, and exclusive content.
+                        </p>
+                        <div style="color: #3b82f6; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                            <span>Follow Us</span>
+                            <span>→</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p class="footer-copyright">© 2026 Crownie | Own Meme Culture. All rights reserved.</p>
+            <p class="footer-tagline">Built with Django | The fallen king shall rise again</p>
+            
+            {% if user.is_authenticated %}
+            <div style="margin-top: 20px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <a href="{% url 'dashboard' %}" style="color: #fbbf24; text-decoration: none;">Dashboard</a>
+                {% if user.discord_connected %}
+                <a href="{% url 'discord_disconnect' %}" style="color: #94a3b8; text-decoration: none;">Disconnect Discord</a>
+                {% else %}
+                <a href="{% url 'discord_connect' %}" style="color: #5865F2; text-decoration: none;">Connect Discord</a>
+                {% endif %}
+                <a href="{% url 'logout' %}" style="color: #ef4444; text-decoration: none;">Logout</a>
+            </div>
+            {% endif %}
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ===== MOBILE NAVIGATION =====
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            function toggleMobileMenu() {
+                hamburger.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+            }
+            
+            function closeMobileMenu() {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            
+            if (hamburger) {
+                hamburger.addEventListener('click', toggleMobileMenu);
+            }
+            
+            // Close menu when clicking outside
+            mobileMenu.addEventListener('click', function(e) {
+                if (e.target === mobileMenu) {
+                    closeMobileMenu();
+                }
+            });
+            
+            // ===== VIDEO CONTROLS =====
+            const video = document.getElementById('crownieVideo');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const muteBtn = document.getElementById('muteBtn');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            const videoProgress = document.getElementById('videoProgress');
+            const videoProgressFilled = document.getElementById('videoProgressFilled');
+            
+            if (video) {
+                // Autoplay video (muted for browser compliance)
+                video.muted = true;
+                video.play().then(() => {
+                    console.log('Video autoplay started');
+                    updatePlayPauseButton();
+                    updateMuteButton();
+                }).catch(error => {
+                    console.log('Autoplay prevented, waiting for user interaction:', error);
+                    // Show controls more prominently if autoplay fails
+                    playPauseBtn.style.opacity = '1';
+                });
+                
+                // Update play/pause button
+                function updatePlayPauseButton() {
+                    playPauseBtn.textContent = video.paused ? '▶' : '⏸';
+                }
+                
+                // Update mute button
+                function updateMuteButton() {
+                    muteBtn.textContent = video.muted ? '🔇' : '🔊';
+                }
+                
+                // Update progress bar
+                function updateProgressBar() {
+                    const percent = (video.currentTime / video.duration) * 100;
+                    videoProgressFilled.style.width = `${percent}%`;
+                }
+                
+                // Play/Pause toggle
+                playPauseBtn.addEventListener('click', () => {
+                    if (video.paused) {
+                        video.play();
+                    } else {
+                        video.pause();
+                    }
+                    updatePlayPauseButton();
+                });
+                
+                // Mute toggle
+                muteBtn.addEventListener('click', () => {
+                    video.muted = !video.muted;
+                    updateMuteButton();
+                });
+                
+                // Fullscreen toggle
+                fullscreenBtn.addEventListener('click', () => {
+                    if (!document.fullscreenElement) {
+                        video.parentElement.requestFullscreen().catch(err => {
+                            console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                        });
+                    } else {
+                        document.exitFullscreen();
+                    }
+                });
+                
+                // Progress bar click
+                videoProgress.addEventListener('click', (e) => {
+                    const rect = videoProgress.getBoundingClientRect();
+                    const pos = (e.clientX - rect.left) / rect.width;
+                    video.currentTime = pos * video.duration;
+                    updateProgressBar();
+                });
+                
+                // Video event listeners
+                video.addEventListener('play', updatePlayPauseButton);
+                video.addEventListener('pause', updatePlayPauseButton);
+                video.addEventListener('timeupdate', updateProgressBar);
+                video.addEventListener('volumechange', updateMuteButton);
+                video.addEventListener('loadedmetadata', updateProgressBar);
+                
+                // Loop video when it ends
+                video.addEventListener('ended', () => {
+                    video.currentTime = 0;
+                    video.play();
+                });
+                
+                // Initialize controls
+                updatePlayPauseButton();
+                updateMuteButton();
+                updateProgressBar();
+            }
+            
+            // ===== SMOOTH SCROLL =====
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    // Don't prevent default for mobile menu links
+                    if (this.classList.contains('mobile-nav-link')) {
+                        return;
+                    }
+                    
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const offset = 80;
+                        const targetPosition = targetElement.offsetTop - offset;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // ===== FADE-IN ANIMATION ON SCROLL =====
+            const observerOptions = {
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all sections
+            document.querySelectorAll('section').forEach(section => {
+                observer.observe(section);
+            });
+            
+            // ===== VIDEO AUTOPLAY ON USER INTERACTION =====
+            // Some browsers require user interaction to play video with sound
+            function enableVideoSound() {
+                if (video && video.muted) {
+                    video.muted = false;
+                    updateMuteButton();
+                    console.log('Video unmuted by user interaction');
+                }
+            }
+            
+            // Add event listeners for user interaction
+            document.addEventListener('click', enableVideoSound);
+            document.addEventListener('touchstart', enableVideoSound);
+            document.addEventListener('keydown', enableVideoSound);
+            
+            // ===== ADJUST SCROLL OFFSET FOR MOBILE =====
+            // Ensure smooth scroll accounts for mobile nav height
+            function updateScrollOffset() {
+                const navHeight = document.querySelector('nav').offsetHeight;
+                const style = document.createElement('style');
+                style.textContent = `
+                    html {
+                        scroll-padding-top: ${navHeight}px;
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            // Update on load and resize
+            updateScrollOffset();
+            window.addEventListener('resize', updateScrollOffset);
+        });
+    </script>
+</body>
+</html>

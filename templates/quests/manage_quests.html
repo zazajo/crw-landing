@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Quests - CROWNIE</title>
+    
+    <!-- Load static files -->
+    {% load static %}
+    
+    <style>
+        :root {
+            --background: #0a0a0a;
+            --foreground: #ededed;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--foreground);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Import Inter font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.3);
+            z-index: 1000;
+            padding: 15px 20px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            padding: 5px 0;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        /* Main content padding for fixed nav */
+        .main-content {
+            padding-top: 80px;
+            min-height: 100vh;
+            padding-bottom: 50px;
+        }
+
+        /* Manage Quests Styles */
+        .manage-quests-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #fbbf24, #ea580c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0;
+        }
+        
+        .quests-section {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+        
+        .section-title {
+            color: #fbbf24;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(251, 191, 36, 0.3);
+        }
+        
+        .quests-list {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .quest-item {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .quest-item:hover {
+            border-color: rgba(251, 191, 36, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .quest-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .quest-info h3 {
+            color: white;
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .quest-difficulty {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .difficulty-easy {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid #10b981;
+        }
+        
+        .difficulty-medium {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+            border: 1px solid #f59e0b;
+        }
+        
+        .difficulty-hard {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid #ef4444;
+        }
+        
+        .quest-description {
+            color: #94a3b8;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .quest-meta {
+            display: flex;
+            gap: 20px;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .quest-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .btn-edit {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+            border: 1px solid #3b82f6;
+        }
+        
+        .btn-delete {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid #ef4444;
+        }
+        
+        .btn-add {
+            background: linear-gradient(90deg, #10b981, #059669);
+            color: white;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border: none;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-edit:hover {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .btn-delete:hover {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .btn-add:hover {
+            background: linear-gradient(90deg, #059669, #047857);
+        }
+        
+        /* Form Styles */
+        .form-container {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+        
+        .form-title {
+            color: #fbbf24;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(251, 191, 36, 0.3);
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #cbd5e1;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #475569;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #fbbf24;
+            box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .select-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 20px;
+            padding-right: 40px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #fbbf24;
+        }
+        
+        .checkbox-group label {
+            margin: 0;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(90deg, #f59e0b, #ea580c);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .cancel-btn {
+            background: transparent;
+            color: #94a3b8;
+            padding: 15px 30px;
+            border: 1px solid #475569;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+        }
+        
+        .cancel-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: #94a3b8;
+            color: white;
+        }
+        
+        /* Messages */
+        .messages {
+            margin-bottom: 25px;
+        }
+        
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .alert::before {
+            font-size: 1.2rem;
+        }
+        
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid #10b981;
+            color: #10b981;
+        }
+        
+        .alert-success::before {
+            content: "✓";
+        }
+        
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            color: #ef4444;
+        }
+        
+        .alert-error::before {
+            content: "✗";
+        }
+        
+        .alert-info {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid #3b82f6;
+            color: #3b82f6;
+        }
+        
+        .alert-info::before {
+            content: "ℹ";
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #94a3b8;
+        }
+        
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
+        /* Loading State */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+            font-size: 1.2rem;
+            color: #94a3b8;
+        }
+        
+        .loading::after {
+            content: "";
+            width: 30px;
+            height: 30px;
+            margin-left: 15px;
+            border: 3px solid rgba(251, 191, 36, 0.2);
+            border-top-color: #fbbf24;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .main-content {
+                padding-top: 70px;
+            }
+            
+            .quest-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .quest-actions {
+                justify-content: flex-start;
+                margin-top: 15px;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+            
+            .btn-add {
+                align-self: flex-start;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .quest-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .submit-btn, .cancel-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                {% if 'images/crownie_logo.png' %}
+                <img src="{% static 'images/crownie_logo.png' %}" alt="Crownie Logo" style="height: 45px; width: auto; filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.5));">
+                {% else %}
+                <span style="color: #fbbf24;">👑</span>
+                <span>CROWNIE</span>
+                {% endif %}
+            </a>
+            
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="{% url 'quests' %}" class="nav-link">Quests</a>
+                <a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a>
+                <a href="{% url 'manage_quests' %}" class="nav-link" style="color: #fbbf24; font-weight: 600;">Manage Quests</a>
+                
+                {% if user.is_authenticated %}
+                    {% if user.is_staff %}
+                    <a href="/admin/" class="nav-link" style="color: #8b5cf6;">Admin</a>
+                    {% endif %}
+                    <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="nav-link">Sign In</a>
+                <a href="{% url 'signup' %}" class="nav-link" style="color: #f59e0b;">Sign Up</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="manage-quests-container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">Manage Quests</h1>
+                <a href="#create-quest" class="btn btn-add">
+                    <span>+</span> Create New Quest
+                </a>
+            </div>
+            
+            <!-- Messages -->
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <!-- Existing Quests Section -->
+            <div class="quests-section">
+                <h2 class="section-title">Existing Quests</h2>
+                
+                {% if quests %}
+                <div class="quests-list">
+                    {% for quest in quests %}
+                    <div class="quest-item">
+                        <div class="quest-content">
+                            <div class="quest-header">
+                                <div class="quest-info">
+                                    <h3>{{ quest.title }}</h3>
+                                    <span class="quest-difficulty difficulty-{{ quest.difficulty }}">
+                                        {{ quest.get_difficulty_display }}
+                                    </span>
+                                </div>
+                                <div class="quest-points" style="color: #fbbf24; font-weight: bold; font-size: 1.2rem;">
+                                    {{ quest.points }} pts
+                                </div>
+                            </div>
+                            
+                            <p class="quest-description">{{ quest.description|truncatechars:200 }}</p>
+                            
+                            <div class="quest-meta">
+                                <div class="meta-item">
+                                    <span>Created:</span>
+                                    <span>{{ quest.created_at|date:"M d, Y" }}</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>Completed by:</span>
+                                    <span>{{ quest.completed_by.count }} users</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>Created by:</span>
+                                    <span>{{ quest.created_by.username|default:"System" }}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="quest-actions">
+                                <a href="{% url 'edit_quest' quest.id %}" class="btn btn-edit">
+                                    <span>✏️</span> Edit
+                                </a>
+                                <form method="post" action="{% url 'delete_quest' quest.id %}" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this quest?');">
+                                        <span>🗑️</span> Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <div class="empty-state-icon">📜</div>
+                    <h3>No quests yet</h3>
+                    <p>Create your first quest to start engaging the community!</p>
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Create/Edit Quest Form -->
+            <div id="create-quest" class="form-container">
+                <h2 class="form-title">
+                    {% if editing %}
+                    Edit Quest
+                    {% else %}
+                    Create New Quest
+                    {% endif %}
+                </h2>
+                
+                <form method="post" action="{% if editing %}{% url 'edit_quest' quest_id %}{% else %}{% url 'create_quest' %}{% endif %}">
+                    {% csrf_token %}
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="title">Quest Title</label>
+                            <input type="text" id="title" name="title" class="form-control" 
+                                   value="{{ form.title.value|default:'' }}" 
+                                   placeholder="Enter quest title" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="difficulty">Difficulty</label>
+                            <select id="difficulty" name="difficulty" class="form-control select-control" required>
+                                <option value="">Select difficulty...</option>
+                                <option value="easy" {% if form.difficulty.value == 'easy' %}selected{% endif %}>Easy</option>
+                                <option value="medium" {% if form.difficulty.value == 'medium' %}selected{% endif %}>Medium</option>
+                                <option value="hard" {% if form.difficulty.value == 'hard' %}selected{% endif %}>Hard</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" class="form-control" 
+                                  rows="4" placeholder="Describe the quest..." required>{{ form.description.value|default:'' }}</textarea>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="points">Points Reward</label>
+                            <input type="number" id="points" name="points" class="form-control" 
+                                   value="{{ form.points.value|default:'10' }}" 
+                                   min="1" max="1000" step="0.1" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="requirements">Requirements (JSON)</label>
+                            <textarea id="requirements" name="requirements" class="form-control" 
+                                      rows="3" placeholder='{"min_level": 1, "required_items": []}'>{{ form.requirements.value|default:'{}' }}</textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="is_active" name="is_active" 
+                                   {% if form.is_active.value|default:True %}checked{% endif %}>
+                            <label for="is_active">Quest is active and visible to users</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="submit-btn">
+                            {% if editing %}
+                            Update Quest
+                            {% else %}
+                            Create Quest
+                            {% endif %}
+                        </button>
+                        <a href="{% url 'manage_quests' %}" class="cancel-btn">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#create-quest') {
+                        e.preventDefault();
+                        const target = document.querySelector(href);
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    }
+                });
+            });
+            
+            // Form validation
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    const title = form.querySelector('#title');
+                    const description = form.querySelector('#description');
+                    const points = form.querySelector('#points');
+                    
+                    let valid = true;
+                    
+                    if (title && !title.value.trim()) {
+                        alert('Please enter a quest title');
+                        title.focus();
+                        valid = false;
+                    }
+                    
+                    if (description && !description.value.trim()) {
+                        alert('Please enter a quest description');
+                        description.focus();
+                        valid = false;
+                    }
+                    
+                    if (points) {
+                        const pointsValue = parseFloat(points.value);
+                        if (pointsValue < 1 || pointsValue > 1000) {
+                            alert('Points must be between 1 and 1000');
+                            points.focus();
+                            valid = false;
+                        }
+                    }
+                    
+                    if (!valid) {
+                        e.preventDefault();
+                    }
+                });
+            });
+            
+            // Auto-resize textareas
+            const textareas = document.querySelectorAll('textarea');
+            textareas.forEach(textarea => {
+                textarea.addEventListener('input', function() {
+                    this.style.height = 'auto';
+                    this.style.height = (this.scrollHeight) + 'px';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CROWNIE | Connect Discord</title>
+    <style>
+        :root {
+            --background: #0a0a0a;
+            --foreground: #ededed;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: var(--background);
+            color: var(--foreground);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: linear-gradient(135deg, #1a0a2e, #2a1a4e);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            border: 2px solid rgba(168, 85, 247, 0.3);
+            text-align: center;
+        }
+        
+        .logo {
+            margin-bottom: 30px;
+        }
+        
+        .logo h1 {
+            color: #fbbf24;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .discord-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #5865F2;
+        }
+        
+        .title {
+            color: #fbbf24;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .description {
+            color: #94a3b8;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .benefits {
+            text-align: left;
+            background: rgba(88, 101, 242, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .benefits h3 {
+            color: #5865F2;
+            margin-bottom: 10px;
+        }
+        
+        .benefits ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .benefits li {
+            color: #cbd5e1;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .benefits li::before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        .connect-button {
+            background: linear-gradient(90deg, #5865F2, #7289DA);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .connect-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .skip-link {
+            color: #94a3b8;
+            text-decoration: none;
+            margin-top: 20px;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+        
+        .messages {
+            margin-bottom: 20px;
+        }
+        
+        .message {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .warning {
+            background: #f59e0b;
+            color: white;
+        }
+        
+        .error {
+            background: #ef4444;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1><span>👑</span> CROWNIE</h1>
+        </div>
+        
+        <div class="discord-icon">💬</div>
+        
+        <h2 class="title">Discord Connection Required</h2>
+        
+        <p class="description">
+            To participate in CROWNIE's chat-to-earn ecosystem and access all features, 
+            you need to connect your Discord account.
+        </p>
+        
+        <div class="benefits">
+            <h3>Why connect Discord?</h3>
+            <ul>
+                <li>Earn reputation points for chatting in our community</li>
+                <li>Track your Discord activity and earn rewards</li>
+                <li>Participate in exclusive chat-to-earn sessions</li>
+                <li>Join our community events and tournaments</li>
+                <li>Level up your reputation tier faster</li>
+            </ul>
+        </div>
+        
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <a href="{% url 'discord_connect' %}" class="connect-button">
+            <span>🔗</span> Connect Discord Account
+        </a>
+        
+        <div style="margin-top: 20px; font-size: 0.9rem; color: #94a3b8;">
+            <p>We'll ask for permission to:</p>
+            <ul style="list-style: none; padding: 0; margin: 5px 0;">
+                <li>• See your Discord username and ID</li>
+                <li>• Add you to our Discord server</li>
+                <li>• Verify your identity</li>
+            </ul>
+        </div>
+        
+        <a href="{% url 'logout' %}" class="skip-link">Not ready? Logout instead</a>
+    </div>
+</body>
+</html>
