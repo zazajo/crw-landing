@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CROWNIE | Development Roadmap</title>
+    <meta name="description" content="Crownie Development Roadmap - Track our progress through phases from concept to full game release in the Crownieverse.">
+    <meta name="keywords" content="Crownie, Roadmap, Development, Timeline, Phases, Game Launch">
+    <meta name="author" content="Crownie Team">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="CROWNIE | Development Roadmap">
+    <meta property="og:description" content="Crownie Development Roadmap - Track our progress through phases from concept to full game release in the Crownieverse.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.crownieverse.xyz/roadmap/">
+    <meta property="og:site_name" content="CROWNIE">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CROWNIE | Development Roadmap">
+    <meta name="twitter:description" content="Crownie Development Roadmap - Track our progress through phases from concept to full game release in the Crownieverse.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Load static files -->
+    {% load static %}
+
+    <style>
+        /* Crownie Premium Theme */
+        :root {
+            --background: #0a0a0a;
+            --foreground: #ededed;
+            --crown-purple: #a855f7;
+            --crown-purple-dark: #7c3aed;
+            --crown-purple-light: #c084fc;
+            --crown-gold: #FFD700;
+            --crown-gold-dark: #DAA520;
+            --crown-gold-light: #FFF8DC;
+            --crown-orange: #f59e0b;
+            --crown-orange-dark: #ea580c;
+            --section-bg: rgba(30, 41, 59, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--foreground);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.3);
+            z-index: 1000;
+            padding: 15px 20px;
+            height: 70px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        /* ===== ROADMAP HERO ===== */
+        .roadmap-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg,
+                rgba(10, 1, 19, 0.95) 0%,
+                rgba(42, 10, 78, 0.85) 50%,
+                rgba(10, 1, 19, 0.95) 100%);
+            padding-top: 100px;
+            padding-bottom: 60px;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            width: 100%;
+        }
+
+        .crown-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(90deg, rgba(251, 191, 36, 0.2), rgba(234, 88, 12, 0.2));
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            padding: 12px 24px;
+            border-radius: 50px;
+            margin-bottom: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fbbf24;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #fbbf24, #ea580c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: #94a3b8;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+
+        /* ===== ROADMAP TIMELINE ===== */
+        .roadmap-content {
+            padding: 80px 0;
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .timeline-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #f59e0b, #ea580c, #a855f7);
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .timeline-phase {
+            display: flex;
+            align-items: center;
+            margin-bottom: 100px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .timeline-phase:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-phase:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .phase-marker {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+            z-index: 3;
+            border: 4px solid #0a0a0a;
+        }
+
+        .phase-card {
+            background: var(--section-bg);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            width: calc(50% - 60px);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .phase-card:hover {
+            transform: translateY(-10px);
+            border-color: #f59e0b;
+            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.2);
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .phase-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(234, 88, 12, 0.2));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #fbbf24;
+        }
+
+        .phase-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            margin: 0;
+        }
+
+        .phase-status {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .status-current {
+            background: linear-gradient(90deg, rgba(251, 191, 36, 0.2), rgba(234, 88, 12, 0.2));
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .status-completed {
+            background: linear-gradient(90deg, rgba(34, 197, 94, 0.2), rgba(21, 128, 61, 0.2));
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .status-upcoming {
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.2), rgba(29, 78, 216, 0.2));
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .phase-timeline {
+            color: #fbbf24;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+
+        .phase-timeline::before {
+            content: "⏰";
+            font-size: 1rem;
+        }
+
+        .phase-focus {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .phase-features {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-item {
+            color: #94a3b8;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .feature-item::before {
+            content: "✓";
+            color: #f59e0b;
+            font-weight: bold;
+        }
+
+        /* ===== CURRENT PHASE HIGHLIGHT ===== */
+        .current-phase-highlight {
+            background: linear-gradient(135deg, rgba(26, 10, 46, 0.9) 0%, rgba(42, 26, 78, 0.95) 100%);
+            border-radius: 24px;
+            padding: 60px;
+            margin: 80px 0;
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(90deg, #f59e0b, #ea580c);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+        }
+
+        .highlight-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #fbbf24, #ea580c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .highlight-subtitle {
+            color: #cbd5e1;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-size: 1.125rem;
+            line-height: 1.6;
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(26, 10, 46, 0.9) 0%, rgba(42, 26, 78, 0.95) 100%);
+            border-radius: 24px;
+            margin: 80px 0;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #fbbf24, #ea580c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #f59e0b, #ea580c);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.125rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-height: 56px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #fbbf24;
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.125rem;
+            border: 2px solid #f59e0b;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-height: 56px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            color: #64748b;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 80px;
+        }
+
+        .footer-copyright {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .footer-tagline {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 992px) {
+            .timeline-line {
+                left: 40px;
+            }
+            
+            .timeline-phase {
+                flex-direction: row !important;
+                margin-left: 80px;
+            }
+            
+            .phase-marker {
+                left: 40px;
+                transform: translateX(-50%);
+            }
+            
+            .phase-card {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .phase-title {
+                font-size: 1.5rem;
+            }
+            
+            .phase-card {
+                padding: 30px;
+            }
+            
+            .current-phase-highlight {
+                padding: 40px 20px;
+            }
+            
+            .highlight-title {
+                font-size: 2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .nav-link {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .phase-card {
+                padding: 20px;
+            }
+            
+            .timeline-phase {
+                margin-left: 60px;
+            }
+            
+            .timeline-line {
+                left: 30px;
+            }
+            
+            .phase-marker {
+                left: 30px;
+                width: 30px;
+                height: 30px;
+                font-size: 1rem;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(245, 158, 11, 0.8);
+            }
+        }
+
+        .phase-marker.current {
+            animation: pulse 2s infinite;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #a855f7, #7c3aed);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <img src="{% static 'images/crownie_logo.PNG' %}" alt="Crownie Logo" style="height: 60px; width: auto; filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.5));">
+            </a>
+
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="{% url 'quests' %}" class="nav-link">Quests</a>
+                <a href="{% url 'roadmap' %}" class="nav-link" style="color: #fbbf24; font-weight: 600;">Roadmap</a>
+                <a href="{% url 'whitepaper' %}" class="nav-link">Whitepaper</a>
+                <a href="#social" class="nav-link">Community</a>
+
+                {% if user.is_authenticated %}
+                    {% if user.discord_connected %}
+                    <a href="{% url 'dashboard' %}" class="nav-link" style="
+                        color: #fbbf24;
+                        font-weight: 600;
+                        padding: 8px 16px;
+                        border: 1px solid rgba(251, 191, 36, 0.3);
+                        border-radius: 8px;
+                    ">
+                        <span style="color: #00ff00; margin-right: 5px;">●</span> Dashboard
+                    </a>
+                    <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+                    {% else %}
+                    <a href="{% url 'discord_connect' %}" class="nav-link" style="color: #5865F2; font-weight: 600;">Connect Discord</a>
+                    <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+                    {% endif %}
+                {% else %}
+                <a href="{% url 'login' %}" class="nav-link">Sign In</a>
+                <a href="{% url 'signup' %}" class="nav-link" style="
+                    background: linear-gradient(90deg, #f59e0b, #ea580c);
+                    color: white;
+                    padding: 8px 16px;
+                    border-radius: 8px;
+                ">Sign Up</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Roadmap Hero -->
+    <section class="roadmap-hero">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content fade-in">
+                <div class="crown-badge">DEVELOPMENT JOURNEY</div>
+                <h1 class="hero-title">CROWNIE ROADMAP</h1>
+                <p class="hero-subtitle">
+                    Follow our journey from concept to full game release. Each phase brings us closer to 
+                    building the ultimate Crownieverse experience.
+                </p>
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <a href="#current-phase" class="btn-primary">
+                        <span>🔥</span> Current Phase
+                    </a>
+                    <a href="#timeline" class="btn-secondary">
+                        <span>🗺️</span> View Timeline
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Current Phase Highlight -->
+    <section id="current-phase" class="current-phase-highlight fade-in">
+        <div class="highlight-badge">CURRENT PHASE</div>
+        <div class="container">
+            <h2 class="highlight-title">Phase 0: MVP / Concept</h2>
+            <p class="highlight-subtitle">
+                We're laying the foundation for the Crownieverse. This phase focuses on establishing 
+                the core concept, storyline, and character designs that will define the entire ecosystem.
+            </p>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 30px;">
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; color: #fbbf24; font-weight: 700;">100%</div>
+                    <div style="color: #94a3b8; font-size: 0.9rem;">Concept Finalized</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; color: #fbbf24; font-weight: 700;">85%</div>
+                    <div style="color: #94a3b8; font-size: 0.9rem;">Character Design</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; color: #fbbf24; font-weight: 700;">70%</div>
+                    <div style="color: #94a3b8; font-size: 0.9rem;">Story Development</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Timeline -->
+    <section id="timeline" class="roadmap-content">
+        <div class="container">
+            <div class="timeline-container">
+                <!-- Timeline Line -->
+                <div class="timeline-line"></div>
+
+                <!-- Phase 0: MVP / Concept -->
+                <div class="timeline-phase fade-in">
+                    <div class="phase-marker current">0</div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <div class="phase-icon">🎨</div>
+                            <h3 class="phase-title">Phase 0: MVP / Concept</h3>
+                        </div>
+                        <div class="phase-status status-current">Current Phase</div>
+                        <div class="phase-timeline">Ongoing</div>
+                        <p class="phase-focus">
+                            Establishing the foundation of the Crownieverse with core game concepts, 
+                            character designs, and storyline development.
+                        </p>
+                        <div class="phase-features">
+                            <ul class="feature-list">
+                                <li class="feature-item">Game concept and storyline development</li>
+                                <li class="feature-item">Character design and world-building</li>
+                                <li class="feature-item">Initial community building</li>
+                                <li class="feature-item">Basic website and social presence</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 1: Pre-Sale Launch -->
+                <div class="timeline-phase fade-in">
+                    <div class="phase-marker">1</div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <div class="phase-icon">💰</div>
+                            <h3 class="phase-title">Phase 1: Pre-Sale Launch</h3>
+                        </div>
+                        <div class="phase-status status-upcoming">Upcoming</div>
+                        <div class="phase-timeline">Q2 2024</div>
+                        <p class="phase-focus">
+                            Launching the pre-sale to fund development and build a strong community foundation.
+                        </p>
+                        <div class="phase-features">
+                            <ul class="feature-list">
+                                <li class="feature-item">Community building and engagement campaigns</li>
+                                <li class="feature-item">Teaser graphics and marketing materials</li>
+                                <li class="feature-item">Pre-sale launch on Seedify</li>
+                                <li class="feature-item">Enhanced Discord community features</li>
+                                <li class="feature-item">Early access program for supporters</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 2: Beta Gameplay -->
+                <div class="timeline-phase fade-in">
+                    <div class="phase-marker">2</div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <div class="phase-icon">🎮</div>
+                            <h3 class="phase-title">Phase 2: Beta Gameplay</h3>
+                        </div>
+                        <div class="phase-status status-upcoming">Upcoming</div>
+                        <div class="phase-timeline">Q3 2024</div>
+                        <p class="phase-focus">
+                            Introducing the first playable versions and testing core game mechanics with the community.
+                        </p>
+                        <div class="phase-features">
+                            <ul class="feature-list">
+                                <li class="feature-item">Player onboarding and testing programs</li>
+                                <li class="feature-item">P2E, C2E, E2E mechanics implementation</li>
+                                <li class="feature-item">Beta testing with community feedback</li>
+                                <li class="feature-item">Bug fixes and gameplay optimization</li>
+                                <li class="feature-item">Leaderboard and ranking system</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 3: NFT Implementation -->
+                <div class="timeline-phase fade-in">
+                    <div class="phase-marker">3</div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <div class="phase-icon">🖼️</div>
+                            <h3 class="phase-title">Phase 3: NFT Implementation</h3>
+                        </div>
+                        <div class="phase-status status-upcoming">Upcoming</div>
+                        <div class="phase-timeline">Q4 2024</div>
+                        <p class="phase-focus">
+                            Integrating NFTs into the gameplay ecosystem, making assets tradable and valuable.
+                        </p>
+                        <div class="phase-features">
+                            <ul class="feature-list">
+                                <li class="feature-item">Crowns, weapons, characters NFT integration</li>
+                                <li class="feature-item">Marketplace development</li>
+                                <li class="feature-item">Cross-game asset compatibility</li>
+                                <li class="feature-item">Rare item drops and special editions</li>
+                                <li class="feature-item">NFT staking mechanisms</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 4: Public Sale & Cross Chain -->
+                <div class="timeline-phase fade-in">
+                    <div class="phase-marker">4</div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <div class="phase-icon">🌐</div>
+                            <h3 class="phase-title">Phase 4: Public Sale & Cross Chain</h3>
+                        </div>
+                        <div class="phase-status status-upcoming">Upcoming</div>
+                        <div class="phase-timeline">Q1 2025</div>
+                        <p class="phase-focus">
+                            Expanding to multiple blockchains and launching the public token sale.
+                        </p>
+                        <div class="phase-features">
+                            <ul class="feature-list">
+                                <li class="feature-item">Ethereum, BNB, Monad chain integration</li>
+                                <li class="feature-item">Public token sale launch</li>
+                                <li class="feature-item">Yield farming rollout</li>
+                                <li class="feature-item">Enhanced cross-chain compatibility</li>
+                                <li class="feature-item">Partnership announcements</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 5: Full Game Release -->
+                <div class="timeline-phase fade-in">
+                    <div class="phase-marker">5</div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <div class="phase-icon">👑</div>
+                            <h3 class="phase-title">Phase 5: Full Game Release</h3>
+                        </div>
+                        <div class="phase-status status-upcoming">Upcoming</div>
+                        <div class="phase-timeline">Q2 2025</div>
+                        <p class="phase-focus">
+                            The complete Crownieverse experience with all features live and governance enabled.
+                        </p>
+                        <div class="phase-features">
+                            <ul class="feature-list">
+                                <li class="feature-item">Crownieverse persistent universe fully live</li>
+                                <li class="feature-item">Governance system enabled</li>
+                                <li class="feature-item">Complete P2E economy</li>
+                                <li class="feature-item">Tournament and event system</li>
+                                <li class="feature-item">Mobile app release</li>
+                                <li class="feature-item">Ongoing content updates and seasons</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section fade-in">
+        <div class="container">
+            <h2 class="cta-title">Join Our Journey</h2>
+            <p style="color: #cbd5e1; max-width: 600px; margin: 0 auto 30px; font-size: 1.125rem;">
+                Be part of the Crownieverse from the beginning. Follow our progress, participate in early access, 
+                and help shape the future of blockchain gaming.
+            </p>
+            <div class="cta-buttons">
+                <a href="{% url 'signup' %}" class="btn-primary">
+                    <span>👑</span> Join Early Access
+                </a>
+                <a href="https://discord.gg/kNyKUAw6" target="_blank" class="btn-secondary">
+                    <span>💬</span> Join Discord Community
+                </a>
+                <a href="{% url 'whitepaper' %}" class="btn-primary" style="background: linear-gradient(90deg, #8b5cf6, #7c3aed);">
+                    <span>📄</span> Read Whitepaper
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p class="footer-copyright">© 2024 Crownie | The Gameverse Reclaimed. All rights reserved.</p>
+            <p class="footer-tagline">Follow our roadmap to witness the rise of the Crownieverse</p>
+            
+            <div style="margin-top: 30px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <a href="/" style="color: #fbbf24; text-decoration: none;">Home</a>
+                <a href="{% url 'quests' %}" style="color: #94a3b8; text-decoration: none;">Quests</a>
+                <a href="{% url 'roadmap' %}" style="color: #fbbf24; text-decoration: none;">Roadmap</a>
+                <a href="{% url 'whitepaper' %}" style="color: #94a3b8; text-decoration: none;">Whitepaper</a>
+                <a href="#social" style="color: #94a3b8; text-decoration: none;">Community</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const offset = 80;
+                        const targetPosition = targetElement.offsetTop - offset;
+
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Fade-in animation on scroll
+            const observerOptions = {
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.timeline-phase, .current-phase-highlight, .cta-section').forEach(section => {
+                observer.observe(section);
+            });
+
+            // Update navigation active state
+            function updateNavActive() {
+                const currentPath = window.location.pathname;
+                const navLinks = document.querySelectorAll('.nav-link');
+                
+                navLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href === currentPath || (href === '/roadmap/' && currentPath.includes('roadmap'))) {
+                        link.style.color = '#fbbf24';
+                        link.style.fontWeight = '600';
+                    }
+                });
+            }
+
+            updateNavActive();
+
+            // Add scroll effect to navbar
+            let lastScrollTop = 0;
+            const nav = document.querySelector('nav');
+            
+            window.addEventListener('scroll', function() {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    nav.style.transform = 'translateY(-100%)';
+                    nav.style.transition = 'transform 0.3s ease';
+                } else {
+                    nav.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollTop = scrollTop;
+            });
+
+            // Highlight current phase marker
+            const currentMarker = document.querySelector('.phase-marker.current');
+            if (currentMarker) {
+                setInterval(() => {
+                    currentMarker.style.animation = 'pulse 2s infinite';
+                }, 100);
+            }
+
+            // Progress bar animation for current phase
+            const progressNumbers = document.querySelectorAll('.current-phase-highlight .phase-progress div:first-child');
+            progressNumbers.forEach(number => {
+                const target = parseInt(number.textContent);
+                let current = 0;
+                
+                const animateProgress = () => {
+                    if (current < target) {
+                        current++;
+                        number.textContent = current + '%';
+                        setTimeout(animateProgress, 20);
+                    }
+                };
+                
+                // Start animation after a delay
+                setTimeout(animateProgress, 500);
+            });
+        });
+    </script>
+</body>
+</html>

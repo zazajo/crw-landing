@@ -14,20 +14,20 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://crownie.com">
     <meta property="og:site_name" content="CROWNIE">
-    
+
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="CROWNIE | Own Meme Culture">
     <meta name="twitter:description" content="CROWNIE is the Base meme economy that rewards creativity, culture, and engagement with on-chain value.">
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
+
     <!-- Load static files -->
     {% load static %}
-    
+
     <style>
         /* Enhanced CSS Variables for CROWNIE Premium Theme */
         :root {
@@ -203,7 +203,7 @@
             align-items: center;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(135deg, 
+            background: linear-gradient(135deg,
                 rgba(10, 1, 19, 0.95) 0%,
                 rgba(42, 10, 78, 0.85) 50%,
                 rgba(10, 1, 19, 0.95) 100%);
@@ -227,7 +227,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, 
+            background: linear-gradient(to bottom,
                 rgba(10, 1, 19, 0.9) 0%,
                 rgba(42, 10, 78, 0.8) 50%,
                 rgba(10, 1, 19, 0.9) 100%);
@@ -759,41 +759,41 @@
                 font-size: 3rem;
                 margin-bottom: 15px;
             }
-            
+
             .section-title {
                 font-size: 2rem;
             }
-            
+
             .social-title {
                 font-size: 2.5rem;
             }
-            
+
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
                 gap: 15px;
                 margin-bottom: 40px;
             }
-            
+
             .btn-primary {
                 width: 100%;
                 max-width: 300px;
                 padding: 14px 28px;
                 font-size: 1rem;
             }
-            
+
             /* Grid Layouts */
             .journey-grid,
             .characters-grid,
             .social-cards {
                 grid-template-columns: 1fr;
             }
-            
+
             .social-section {
                 padding: 40px 20px;
                 margin: 40px 0;
             }
-            
+
             /* Video */
             .game-teaser-video {
                 min-height: 300px;
@@ -844,17 +844,17 @@
                 font-size: 2.5rem;
                 line-height: 1.1;
             }
-            
+
             .hero-subtitle {
                 font-size: 1.125rem;
                 margin: 0 auto 30px;
             }
-            
+
             .social-section {
                 padding: 30px 20px;
                 margin: 30px 0;
             }
-            
+
             .game-teaser-video {
                 min-height: 250px;
             }
@@ -889,11 +889,11 @@
             .hero-title {
                 font-size: 2rem;
             }
-            
+
             .hero-subtitle {
                 font-size: 1rem;
             }
-            
+
             .crown-badge {
                 font-size: 11px;
                 padding: 8px 16px;
@@ -906,17 +906,17 @@
     <nav>
         <div class="nav-container">
             <a href="/" class="nav-logo">
-                <img src="{% static 'images/crownie_logo.png' %}" alt="Crownie Logo" style="height: 60px; width: auto; filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.5));">
+                <img src="{% static 'images/crownie_logo.PNG' %}" alt="Crownie Logo" style="height: 60px; width: auto; filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.5));">
             </a>
-            
+
             <!-- Desktop Navigation -->
             <div class="nav-links">
                 <a href="/" class="nav-link">Home</a>
                 <a href="{% url 'quests' %}" class="nav-link">Quests</a>
                 <a href="#game-teaser" class="nav-link">Roadmap</a>
-                <a href="#characters" class="nav-link">Whitepaper</a>
+                <a href="{% url 'whitepaper' %}" class="nav-link">Whitepaper</a>
                 <a href="#social" class="nav-link">Community</a>
-                
+
                 {% if user.is_authenticated %}
                     {% if user.discord_connected %}
                     <a href="{% url 'dashboard' %}" class="nav-link" style="
@@ -959,9 +959,9 @@
             <a href="/" class="mobile-nav-link" onclick="closeMobileMenu()">Home</a>
             <a href="{% url 'quests' %}" class="nav-link" onclick="closeMobileMenu()">Quests</a>
             <a href="#game-teaser" class="mobile-nav-link" onclick="closeMobileMenu()">Roadmap</a>
-            <a href="#characters" class="mobile-nav-link" onclick="closeMobileMenu()">Whitepaper</a>
+            <a href="{% url 'whitepaper' %}" class="mobile-nav-link" onclick="closeMobileMenu()">Whitepaper</a>
             <a href="#social" class="mobile-nav-link" onclick="closeMobileMenu()">Community</a>
-            
+
             {% if user.is_authenticated %}
                 {% if user.discord_connected %}
                 <a href="{% url 'dashboard' %}" class="mobile-nav-link" onclick="closeMobileMenu()" style="color: #fbbf24;">
@@ -988,11 +988,11 @@
     <!-- Hero Section -->
     <section class="hero-section">
         {% if 'journey_begins.jpg' %}
-        <img src="{% static 'images/journey_begins.jpg' %}" alt="Crownie Journey Begins" class="hero-background-image">
+        <img src="{% static 'images/journey_begins.JPG' %}" alt="Crownie Journey Begins" class="hero-background-image">
         {% endif %}
-        
+
         <div class="hero-overlay"></div>
-        
+
         <div class="container">
             <div class="hero-content">
                 {% if 'logo.png' %}
@@ -1000,13 +1000,13 @@
                     <img src="{% static 'images/logo.png' %}" alt="Crownie Logo" style="height: 70px; width: auto; filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.5));">
                 </div>
                 {% endif %}
-                
+
                 <div class="crown-badge">CROWNIE VERSE</div>
                 <h1 class="hero-title">THE FALLEN KING AWAITS</h1>
-                
+
                 {% if user.is_authenticated %}
                 <p class="hero-subtitle">
-                    Welcome back, <span style="color: #fbbf24; font-weight: 600;">{{ user.username }}</span>! 
+                    Welcome back, <span style="color: #fbbf24; font-weight: 600;">{{ user.username }}</span>!
                     Your reputation: <span style="color: #fbbf24; font-weight: 600;">{{ user.reputation_score|floatformat:1 }}</span>
                     <br>Continue your quest to reclaim the crown!
                 </p>
@@ -1015,12 +1015,12 @@
                     Dethroned. Disgraced. Determined. <span style="color: #fbbf24; font-weight: 600;">Crownie</span> fights through endless challenges to reclaim the crown in a never-ending battle for royalty.
                 </p>
                 {% endif %}
-                
+
                 <div class="cta-buttons">
                     <a href="#game-teaser" class="btn-primary">
                         <span>⚔️</span> Begin Your Quest
                     </a>
-                    
+
                     {% if user.is_authenticated %}
                         {% if user.discord_connected %}
                         <a href="{% url 'dashboard' %}" class="btn-primary">
@@ -1045,75 +1045,79 @@
     <section class="earn-banner-section fade-in">
         <div class="container">
             <h2 class="section-title">Earn Your Royalty</h2>
-            {% if 'earn_banner.jpg' %}
+            {% if 'earn_banner.JPG' %}
             <div class="earn-banner-container">
-                <img src="{% static 'images/earn_banner.jpg' %}" alt="Chat to Earn, Engage to Earn, Play to Earn" class="earn-banner-image">
+                <img src="{% static 'images/earn_banner.JPG' %}" alt="Chat to Earn, Engage to Earn, Play to Earn" class="earn-banner-image">
             </div>
             {% endif %}
         </div>
     </section>
 
-    <!-- Game Teaser Section -->
-    <section id="game-teaser" class="game-teaser-section fade-in">
-        <div class="container">
-            <h2 class="section-title">Witness the Battle</h2>
-            
-            <div class="game-teaser-video-container">
-                {% if 'videos/teaser.mp4' %}
-                <video class="game-teaser-video" 
-                       id="crownieVideo"
-                       poster="{% static 'images/video_poster.jpg' %}" 
-                       loop
-                       playsinline>
-                    <source src="{% static 'videos/teaser.mp4' %}" type="video/mp4">
-                    <source src="{% static 'videos/teaser.webm' %}" type="video/webm">
-                    Your browser does not support the video tag.
-                </video>
-                
-                <!-- Video Controls -->
-                <div class="video-controls-container">
-                    <button class="video-control-btn play-pause-btn" id="playPauseBtn">
-                        ▶
-                    </button>
-                    <div class="video-progress" id="videoProgress">
-                        <div class="video-progress-filled" id="videoProgressFilled"></div>
-                    </div>
-                    <button class="video-control-btn mute-btn" id="muteBtn">
-                        🔇
-                    </button>
-                    <button class="video-control-btn fullscreen-btn" id="fullscreenBtn">
-                        ⛶
-                    </button>
+   <!-- Game Teaser Section -->
+<section id="game-teaser" class="game-teaser-section fade-in">
+    <div class="container">
+        <h2 class="section-title">Witness the Battle</h2>
+
+        <div class="game-teaser-video-container">
+            {% if 'videos/teaser.MP4' %}
+            <video class="game-teaser-video"
+                   id="crownieVideo"
+                   poster="{% static 'images/video-thumbnail.png' %}"
+                   loop
+                   playsinline
+                   preload="auto">
+                <source src="{% static 'videos/teaser.MP4' %}" type="video/mp4">
+                <source src="{% static 'videos/teaser.webm' %}" type="video/webm">
+                Your browser does not support the video tag.
+            </video>
+
+            <!-- Video Controls -->
+            <div class="video-controls-container" style="opacity: 0;">
+                <button class="video-control-btn play-pause-btn" id="playPauseBtn"
+                        title="Play/Pause (Space or K)" style="background: rgba(245, 158, 11, 0.9);">
+                    ▶
+                </button>
+                <div class="video-progress" id="videoProgress" title="Click to seek">
+                    <div class="video-progress-filled" id="videoProgressFilled"></div>
                 </div>
-                {% else %}
-                <div style="background: linear-gradient(135deg, #1a0a2e, #2a1a4e); min-height: 450px; border-radius: 18px; display: flex; align-items: center; justify-content: center;">
-                    <div style="text-align: center;">
-                        <div style="font-size: 60px; margin-bottom: 20px;">🎮</div>
-                        <h3 style="color: white; margin-bottom: 10px;">Game Teaser Coming Soon</h3>
-                        <p style="color: #94a3b8;">Epic battles await in the Crownie kingdom</p>
-                        <!-- Add a static image fallback -->
-                        {% if 'video_placeholder.jpg' %}
-                        <img src="{% static 'images/video_placeholder.jpg' %}" alt="Game Teaser" style="width: 100%; max-width: 600px; border-radius: 10px; margin-top: 20px;">
-                        {% endif %}
-                    </div>
-                </div>
-                {% endif %}
+                <button class="video-control-btn mute-btn" id="muteBtn"
+                        title="Mute/Unmute (M)" style="background: rgba(255, 255, 255, 0.2);">
+                    🔇
+                </button>
+                <button class="video-control-btn fullscreen-btn" id="fullscreenBtn"
+                        title="Fullscreen (F)" style="background: rgba(255, 255, 255, 0.2);">
+                    ⛶
+                </button>
             </div>
+            {% else %}
+            <div style="background: linear-gradient(135deg, #1a0a2e, #2a1a4e); min-height: 450px; border-radius: 18px; display: flex; align-items: center; justify-content: center;">
+                <div style="text-align: center;">
+                    <div style="font-size: 60px; margin-bottom: 20px;">🎮</div>
+                    <h3 style="color: white; margin-bottom: 10px;">Game Teaser Coming Soon</h3>
+                    <p style="color: #94a3b8;">Epic battles await in the Crownie kingdom</p>
+                    <!-- Add a static image fallback -->
+                    {% if 'video_placeholder.jpg' %}
+                    <img src="{% static 'images/video_placeholder.jpg' %}" alt="Game Teaser" style="width: 100%; max-width: 600px; border-radius: 10px; margin-top: 20px;">
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Kingdom Overview -->
     <section class="kingdom-overview fade-in">
         <div class="container">
             <h2 class="section-title">Observe the Kingdom</h2>
-            {% if 'observing_kingdom.jpg' %}
+            {% if 'Observing_kingdom.JPG' %}
             <div class="kingdom-image-container">
-                <img src="{% static 'images/observing_kingdom.jpg' %}" alt="The King Observing His Kingdom" class="kingdom-image">
+                <img src="{% static 'images/Observing_kingdom.JPG' %}" alt="The King Observing His Kingdom" class="kingdom-image">
             </div>
             {% endif %}
             <p class="kingdom-text">
-                From the highest peak, the fallen king surveys the vast kingdom he once ruled. 
-                Every mountain, every valley, every fortress holds memories of glory and betrayal. 
+                From the highest peak, the fallen king surveys the vast kingdom he once ruled.
+                Every mountain, every valley, every fortress holds memories of glory and betrayal.
                 The path to reclaiming the crown begins with understanding the land and its people.
             </p>
         </div>
@@ -1126,8 +1130,8 @@
             <div class="journey-grid">
                 <div class="journey-card">
                     <div class="journey-image-container">
-                        {% if 'journey_begins.jpg' %}
-                        <img src="{% static 'images/journey_begins.jpg' %}" alt="The Journey Begins" class="journey-image">
+                        {% if 'journey_begins.JPG' %}
+                        <img src="{% static 'images/journey_begins.JPG' %}" alt="The Journey Begins" class="journey-image">
                         {% endif %}
                     </div>
                     <div class="journey-content">
@@ -1135,11 +1139,11 @@
                         <p class="journey-description">Every king starts as a warrior. Your path to royalty begins with courage and determination.</p>
                     </div>
                 </div>
-                
+
                 <div class="journey-card">
                     <div class="journey-image-container">
-                        {% if 'heir_rise.jpg' %}
-                        <img src="{% static 'images/heir_rise.jpg' %}" alt="Rise of the Heir" class="journey-image">
+                        {% if 'heir_rise.JPG' %}
+                        <img src="{% static 'images/heir_rise.JPG' %}" alt="Rise of the Heir" class="journey-image">
                         {% endif %}
                     </div>
                     <div class="journey-content">
@@ -1158,8 +1162,8 @@
             <div class="characters-grid">
                 <div class="character-card">
                     <div class="character-image-container">
-                        {% if 'character1.jpg' %}
-                        <img src="{% static 'images/character1.jpg' %}" alt="The Fallen King" class="character-image">
+                        {% if 'character1.JPG' %}
+                        <img src="{% static 'images/character1.JPG' %}" alt="The Fallen King" class="character-image">
                         {% endif %}
                     </div>
                     <div class="character-info">
@@ -1168,11 +1172,11 @@
                         <p style="color: #94a3b8; font-size: 0.9rem;">Once ruler of all he surveyed, now fighting to reclaim his kingdom and honor.</p>
                     </div>
                 </div>
-                
+
                 <div class="character-card">
                     <div class="character-image-container">
-                        {% if 'character2.jpg' %}
-                        <img src="{% static 'images/character2.jpg' %}" alt="The Crown's Spirit" class="character-image">
+                        {% if 'character2.JPG' %}
+                        <img src="{% static 'images/character2.JPG' %}" alt="The Crown's Spirit" class="character-image">
                         {% endif %}
                     </div>
                     <div class="character-info">
@@ -1181,11 +1185,11 @@
                         <p style="color: #94a3b8; font-size: 0.9rem;">The very essence of royalty, manifesting as Crownie in his quest for redemption.</p>
                     </div>
                 </div>
-                
+
                 <div class="character-card">
                     <div class="character-image-container">
-                        {% if 'character3.jpg' %}
-                        <img src="{% static 'images/character3.jpg' %}" alt="The Fallen Monarch" class="character-image">
+                        {% if 'character3.JPG' %}
+                        <img src="{% static 'images/character3.JPG' %}" alt="The Fallen Monarch" class="character-image">
                         {% endif %}
                     </div>
                     <div class="character-info">
@@ -1203,8 +1207,8 @@
         <div class="container">
             <h2 class="section-title">Claim Your Destiny</h2>
             <div class="claim-crown-container">
-                {% if 'claim_crown.jpg' %}
-                <img src="{% static 'images/claim_crown.jpg' %}" alt="Claim the Crown" class="claim-crown-image">
+                {% if 'claim_crown.JPG' %}
+                <img src="{% static 'images/claim_crown.JPG' %}" alt="Claim the Crown" class="claim-crown-image">
                 {% endif %}
                 <div class="claim-cta">The Crown Awaits Its Rightful Heir</div>
                 <a href="{% url 'signup' %}" class="btn-primary" style="font-size: 1.25rem; padding: 18px 40px;">
@@ -1220,10 +1224,10 @@
             <div class="social-content">
                 <h2 class="social-title">Join the Royal Community</h2>
                 <p class="social-subtitle">
-                    The Crownie kingdom thrives on community. Join Discord for chat-to-earn sessions, 
+                    The Crownie kingdom thrives on community. Join Discord for chat-to-earn sessions,
                     follow our journey on X, and connect with fellow knights.
                 </p>
-                
+
                 <div class="social-cards">
                     <a href="https://discord.gg/kNyKUAw6" target="_blank" class="social-card" style="border-color: #8b5cf6;">
                         <div style="font-size: 40px; margin-bottom: 20px;">💬</div>
@@ -1236,7 +1240,7 @@
                             <span>→</span>
                         </div>
                     </a>
-                    
+
                     <a href="https://x.com/crownie" target="_blank" class="social-card" style="border-color: #3b82f6;">
                         <div style="font-size: 40px; margin-bottom: 20px;">
                             <svg width="32" height="32" viewBox="0 0 24 24" fill="#3b82f6">
@@ -1262,7 +1266,7 @@
         <div class="container">
             <p class="footer-copyright">© 2026 Crownie | Own Meme Culture. All rights reserved.</p>
             <p class="footer-tagline">Built with Django | The fallen king shall rise again</p>
-            
+
             {% if user.is_authenticated %}
             <div style="margin-top: 20px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
                 <a href="{% url 'dashboard' %}" style="color: #fbbf24; text-decoration: none;">Dashboard</a>
@@ -1278,200 +1282,598 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // ===== MOBILE NAVIGATION =====
-            const hamburger = document.getElementById('hamburger');
-            const mobileMenu = document.getElementById('mobileMenu');
-            
-            function toggleMobileMenu() {
-                hamburger.classList.toggle('active');
-                mobileMenu.classList.toggle('active');
-                document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    document.addEventListener('DOMContentLoaded', function() {
+        // ===== MOBILE NAVIGATION =====
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        function toggleMobileMenu() {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeMobileMenu() {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        if (hamburger) {
+            hamburger.addEventListener('click', toggleMobileMenu);
+        }
+
+        // Close menu when clicking outside
+        mobileMenu.addEventListener('click', function(e) {
+            if (e.target === mobileMenu) {
+                closeMobileMenu();
             }
-            
-            function closeMobileMenu() {
-                hamburger.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-            
-            if (hamburger) {
-                hamburger.addEventListener('click', toggleMobileMenu);
-            }
-            
-            // Close menu when clicking outside
-            mobileMenu.addEventListener('click', function(e) {
-                if (e.target === mobileMenu) {
-                    closeMobileMenu();
-                }
-            });
-            
-            // ===== VIDEO CONTROLS =====
-            const video = document.getElementById('crownieVideo');
-            const playPauseBtn = document.getElementById('playPauseBtn');
-            const muteBtn = document.getElementById('muteBtn');
-            const fullscreenBtn = document.getElementById('fullscreenBtn');
-            const videoProgress = document.getElementById('videoProgress');
-            const videoProgressFilled = document.getElementById('videoProgressFilled');
-            
-            if (video) {
-                // Autoplay video (muted for browser compliance)
+        });
+
+        // ===== VIDEO CONTROLS WITH SOUND FIX =====
+        const video = document.getElementById('crownieVideo');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const muteBtn = document.getElementById('muteBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const videoProgress = document.getElementById('videoProgress');
+        const videoProgressFilled = document.getElementById('videoProgressFilled');
+
+        // Track if user has interacted with page
+        let userInteracted = false;
+        let videoStarted = false;
+
+        if (video) {
+            // Different approach for PC vs Mobile
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+            if (isMobile) {
+                // Mobile: Use original approach (muted autoplay)
                 video.muted = true;
-                video.play().then(() => {
-                    console.log('Video autoplay started');
-                    updatePlayPauseButton();
-                    updateMuteButton();
-                }).catch(error => {
-                    console.log('Autoplay prevented, waiting for user interaction:', error);
-                    // Show controls more prominently if autoplay fails
+                video.volume = 0; // Start at 0 volume
+
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        console.log('Mobile: Video autoplay started (muted)');
+                        videoStarted = true;
+                        updatePlayPauseButton();
+                        updateMuteButton();
+                    }).catch(error => {
+                        console.log('Mobile autoplay prevented:', error);
+                    });
+                }
+            } else {
+                // PC: Don't autoplay, wait for user interaction
+                video.muted = false;
+                video.volume = 1.0; // Set to max volume
+                video.pause(); // Don't autoplay on PC
+
+                // Show play button more prominently
+                if (playPauseBtn) {
                     playPauseBtn.style.opacity = '1';
-                });
-                
-                // Update play/pause button
-                function updatePlayPauseButton() {
+                    playPauseBtn.style.background = 'rgba(245, 158, 11, 0.9)';
+                }
+
+                console.log('PC: Waiting for user interaction before playing');
+            }
+
+            // Update play/pause button
+            function updatePlayPauseButton() {
+                if (playPauseBtn) {
                     playPauseBtn.textContent = video.paused ? '▶' : '⏸';
+                    playPauseBtn.title = video.paused ? 'Play (Space)' : 'Pause (Space)';
                 }
-                
-                // Update mute button
-                function updateMuteButton() {
+            }
+
+            // Update mute button
+            function updateMuteButton() {
+                if (muteBtn) {
                     muteBtn.textContent = video.muted ? '🔇' : '🔊';
+                    muteBtn.title = video.muted ? 'Unmute (M)' : 'Mute (M)';
+
+                    // Highlight mute button if video is muted
+                    if (video.muted) {
+                        muteBtn.style.background = 'rgba(239, 68, 68, 0.8)';
+                        muteBtn.style.color = 'white';
+                    } else {
+                        muteBtn.style.background = 'rgba(255, 255, 255, 0.2)';
+                        muteBtn.style.color = 'white';
+                    }
                 }
-                
-                // Update progress bar
-                function updateProgressBar() {
+            }
+
+            // Update progress bar
+            function updateProgressBar() {
+                if (videoProgressFilled && video.duration && !isNaN(video.duration)) {
                     const percent = (video.currentTime / video.duration) * 100;
                     videoProgressFilled.style.width = `${percent}%`;
                 }
-                
-                // Play/Pause toggle
+            }
+
+            // Play/Pause toggle
+            if (playPauseBtn) {
                 playPauseBtn.addEventListener('click', () => {
+                    userInteracted = true;
+
+                    if (video.paused) {
+                        // First play on PC - ensure sound is enabled
+                        if (!videoStarted) {
+                            video.muted = false;
+                            video.volume = 1.0;
+                            videoStarted = true;
+                            console.log('PC: First play with sound enabled');
+                        }
+
+                        video.play().then(() => {
+                            console.log('Video playing with sound');
+                        }).catch(error => {
+                            console.log('Play failed:', error);
+                            // If play fails, try with muted
+                            video.muted = true;
+                            video.play();
+                        });
+                    } else {
+                        video.pause();
+                    }
+                    updatePlayPauseButton();
+                    updateMuteButton();
+                });
+            }
+
+            // Mute toggle
+            if (muteBtn) {
+                muteBtn.addEventListener('click', () => {
+                    userInteracted = true;
+                    video.muted = !video.muted;
+
+                    // If unmuting, set volume to max
+                    if (!video.muted) {
+                        video.volume = 1.0;
+                    }
+
+                    updateMuteButton();
+                    console.log('Mute toggled:', video.muted ? 'Muted' : 'Unmuted');
+                });
+            }
+
+            // Fullscreen toggle
+            if (fullscreenBtn) {
+                fullscreenBtn.addEventListener('click', () => {
+                    userInteracted = true;
+                    if (!document.fullscreenElement) {
+                        video.parentElement.requestFullscreen().catch(err => {
+                            console.log(`Fullscreen error: ${err.message}`);
+                        });
+                    } else {
+                        document.exitFullscreen();
+                    }
+                });
+            }
+
+            // Progress bar click
+            if (videoProgress) {
+                videoProgress.addEventListener('click', (e) => {
+                    userInteracted = true;
+                    const rect = videoProgress.getBoundingClientRect();
+                    const pos = (e.clientX - rect.left) / rect.width;
+                    video.currentTime = pos * video.duration;
+                    updateProgressBar();
+                });
+            }
+
+            // Video event listeners
+            video.addEventListener('play', updatePlayPauseButton);
+            video.addEventListener('pause', updatePlayPauseButton);
+            video.addEventListener('timeupdate', updateProgressBar);
+            video.addEventListener('volumechange', updateMuteButton);
+            video.addEventListener('loadedmetadata', updateProgressBar);
+
+            video.addEventListener('loadeddata', () => {
+                console.log('Video loaded, duration:', video.duration);
+                updateProgressBar();
+            });
+
+            video.addEventListener('error', (e) => {
+                console.error('Video error:', video.error);
+                showVideoError();
+            });
+
+            // Loop video when it ends
+            video.addEventListener('ended', () => {
+                video.currentTime = 0;
+                video.play();
+            });
+
+            // Initialize controls
+            updatePlayPauseButton();
+            updateMuteButton();
+        }
+
+        // ===== FORCE SOUND ON USER INTERACTION (PC FIX) =====
+        function enableVideoSound() {
+            if (video && !userInteracted) {
+                userInteracted = true;
+                console.log('User interacted with page');
+
+                // Try to play video with sound
+                if (video.paused) {
+                    video.muted = false;
+                    video.volume = 1.0;
+
+                    // Small delay to ensure interaction is registered
+                    setTimeout(() => {
+                        video.play().then(() => {
+                            console.log('Video started with sound after user interaction');
+                            videoStarted = true;
+                            updatePlayPauseButton();
+                            updateMuteButton();
+                        }).catch(error => {
+                            console.log('Play after interaction failed:', error);
+                        });
+                    }, 100);
+                }
+            }
+        }
+
+        // Multiple interaction listeners for PC
+        const interactionEvents = ['click', 'touchstart', 'keydown', 'scroll', 'mousemove'];
+        interactionEvents.forEach(eventType => {
+            document.addEventListener(eventType, enableVideoSound, { once: true });
+        });
+
+        // Also listen for specific play button interaction
+        if (playPauseBtn) {
+            playPauseBtn.addEventListener('click', enableVideoSound);
+        }
+
+        // ===== VIDEO ERROR HANDLING =====
+        function showVideoError() {
+            const videoContainer = document.querySelector('.game-teaser-video-container');
+            if (!videoContainer) return;
+
+            // Create or show error message
+            let errorDiv = document.getElementById('videoError');
+            if (!errorDiv) {
+                errorDiv = document.createElement('div');
+                errorDiv.id = 'videoError';
+                errorDiv.style.cssText = `
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.9);
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    text-align: center;
+                    padding: 20px;
+                    border-radius: 18px;
+                    z-index: 10;
+                `;
+
+                errorDiv.innerHTML = `
+                    <div style="font-size: 48px; margin-bottom: 20px;">🔇</div>
+                    <h3 style="color: #fbbf24; margin-bottom: 10px;">Audio Issue Detected</h3>
+                    <p style="color: #94a3b8; margin-bottom: 15px; max-width: 400px;">
+                        Some browsers restrict audio autoplay. Please:
+                    </p>
+                    <ol style="text-align: left; color: #cbd5e1; margin-bottom: 20px; max-width: 400px;">
+                        <li>Click the play button below</li>
+                        <li>Then click the 🔊 icon to unmute</li>
+                        <li>Or try clicking anywhere on the page first</li>
+                    </ol>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                        <button onclick="document.getElementById('playPauseBtn')?.click()" style="
+                            background: linear-gradient(90deg, #f59e0b, #ea580c);
+                            color: white;
+                            border: none;
+                            padding: 12px 24px;
+                            border-radius: 8px;
+                            cursor: pointer;
+                            font-weight: bold;
+                        ">
+                            ▶ Play Video
+                        </button>
+                        <button onclick="document.getElementById('muteBtn')?.click()" style="
+                            background: #3b82f6;
+                            color: white;
+                            border: none;
+                            padding: 12px 24px;
+                            border-radius: 8px;
+                            cursor: pointer;
+                            font-weight: bold;
+                        ">
+                            🔊 Toggle Mute
+                        </button>
+                    </div>
+                    <p style="color: #64748b; margin-top: 20px; font-size: 12px;">
+                        Still having issues? Try <a href="https://youtu.be/5OylbAODfFw" target="_blank" style="color: #fbbf24;">watching on YouTube</a>
+                    </p>
+                `;
+
+                videoContainer.appendChild(errorDiv);
+            }
+
+            errorDiv.style.display = 'flex';
+        }
+
+        // ===== SMOOTH SCROLL =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                // Don't prevent default for mobile menu links
+                if (this.classList.contains('mobile-nav-link')) {
+                    closeMobileMenu();
+                    return;
+                }
+
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const offset = 80;
+                    const targetPosition = targetElement.offsetTop - offset;
+
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // ===== FADE-IN ANIMATION ON SCROLL =====
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // ===== ADJUST SCROLL OFFSET FOR MOBILE =====
+        function updateScrollOffset() {
+            const navHeight = document.querySelector('nav').offsetHeight;
+            const style = document.createElement('style');
+            style.textContent = `
+                html {
+                    scroll-padding-top: ${navHeight}px;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        updateScrollOffset();
+        window.addEventListener('resize', updateScrollOffset);
+
+        // ===== FIXED NAVIGATION ON SCROLL =====
+        let lastScrollTop = 0;
+        const nav = document.querySelector('nav');
+
+        if (nav) {
+            window.addEventListener('scroll', function() {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    nav.style.transform = 'translateY(-100%)';
+                    nav.style.transition = 'transform 0.3s ease';
+                } else {
+                    nav.style.transform = 'translateY(0)';
+                }
+
+                lastScrollTop = scrollTop;
+            });
+        }
+
+        // ===== ENHANCED CTA BUTTON ANIMATIONS =====
+        const ctaButtons = document.querySelectorAll('.btn-primary');
+
+        ctaButtons.forEach(button => {
+            button.style.animation = 'float 3s ease-in-out infinite';
+
+            button.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 15px 35px rgba(245, 158, 11, 0.4)';
+            });
+
+            button.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '0 10px 25px rgba(245, 158, 11, 0.3)';
+            });
+
+            button.addEventListener('click', function(e) {
+                createRippleEffect(this, e);
+            });
+        });
+
+        // ===== RIPPLE EFFECT FUNCTION =====
+        function createRippleEffect(button, e) {
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+
+            ripple.style.cssText = `
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.7);
+                transform: scale(0);
+                animation: ripple 0.6s linear;
+                width: ${size}px;
+                height: ${size}px;
+                top: ${y}px;
+                left: ${x}px;
+                pointer-events: none;
+            `;
+
+            button.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        }
+
+        // Add CSS styles
+        const styles = document.createElement('style');
+        styles.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+
+            .btn-primary {
+                position: relative;
+                overflow: hidden;
+            }
+
+            .video-control-btn {
+                transition: all 0.2s ease;
+            }
+
+            .video-control-btn:hover {
+                transform: scale(1.1);
+                background: rgba(255, 255, 255, 0.3) !important;
+            }
+
+            #videoError {
+                animation: fadeIn 0.5s ease;
+            }
+
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+
+            /* Sound warning for PC users */
+            .sound-warning {
+                position: absolute;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(245, 158, 11, 0.9);
+                color: white;
+                padding: 8px 16px;
+                border-radius: 20px;
+                font-size: 12px;
+                font-weight: bold;
+                z-index: 5;
+                display: none;
+                animation: pulse 2s infinite;
+            }
+
+            @keyframes pulse {
+                0%, 100% { opacity: 0.8; }
+                50% { opacity: 1; }
+            }
+        `;
+        document.head.appendChild(styles);
+
+        // ===== ADD SOUND WARNING FOR PC USERS =====
+        if (!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            const videoContainer = document.querySelector('.game-teaser-video-container');
+            if (videoContainer) {
+                const warning = document.createElement('div');
+                warning.className = 'sound-warning';
+                warning.textContent = 'Click play, then unmute for sound 🔊';
+                warning.style.display = 'block';
+                videoContainer.appendChild(warning);
+
+                // Hide warning after 10 seconds or when video plays
+                setTimeout(() => {
+                    warning.style.display = 'none';
+                }, 10000);
+
+                if (video) {
+                    video.addEventListener('play', () => {
+                        warning.style.display = 'none';
+                    });
+                }
+            }
+        }
+
+        // ===== VIDEO CONTROLS VISIBILITY =====
+        const videoContainer = document.querySelector('.game-teaser-video-container');
+        if (videoContainer) {
+            let controlsTimeout;
+
+            videoContainer.addEventListener('mouseenter', function() {
+                const controls = this.querySelector('.video-controls-container');
+                if (controls) {
+                    controls.style.opacity = '1';
+                    clearTimeout(controlsTimeout);
+                }
+            });
+
+            videoContainer.addEventListener('mouseleave', function() {
+                const controls = this.querySelector('.video-controls-container');
+                if (controls && !video.paused) {
+                    controlsTimeout = setTimeout(() => {
+                        controls.style.opacity = '0.5';
+                    }, 2000);
+                }
+            });
+        }
+
+        // ===== CHECK FOR AUDIO ISSUES =====
+        setTimeout(() => {
+            if (video && videoStarted && video.muted) {
+                // Video is playing but muted - show help
+                console.log('Video is muted, showing help');
+                showVideoError();
+            }
+        }, 3000);
+
+        // ===== KEYBOARD SHORTCUTS =====
+        document.addEventListener('keydown', function(e) {
+            if (!video) return;
+
+            switch(e.key.toLowerCase()) {
+                case ' ':
+                case 'k':
+                    e.preventDefault();
                     if (video.paused) {
                         video.play();
                     } else {
                         video.pause();
                     }
                     updatePlayPauseButton();
-                });
-                
-                // Mute toggle
-                muteBtn.addEventListener('click', () => {
+                    break;
+
+                case 'm':
+                    e.preventDefault();
                     video.muted = !video.muted;
                     updateMuteButton();
-                });
-                
-                // Fullscreen toggle
-                fullscreenBtn.addEventListener('click', () => {
+                    break;
+
+                case 'f':
+                    e.preventDefault();
                     if (!document.fullscreenElement) {
-                        video.parentElement.requestFullscreen().catch(err => {
-                            console.log(`Error attempting to enable fullscreen: ${err.message}`);
-                        });
+                        video.parentElement.requestFullscreen();
                     } else {
                         document.exitFullscreen();
                     }
-                });
-                
-                // Progress bar click
-                videoProgress.addEventListener('click', (e) => {
-                    const rect = videoProgress.getBoundingClientRect();
-                    const pos = (e.clientX - rect.left) / rect.width;
-                    video.currentTime = pos * video.duration;
-                    updateProgressBar();
-                });
-                
-                // Video event listeners
-                video.addEventListener('play', updatePlayPauseButton);
-                video.addEventListener('pause', updatePlayPauseButton);
-                video.addEventListener('timeupdate', updateProgressBar);
-                video.addEventListener('volumechange', updateMuteButton);
-                video.addEventListener('loadedmetadata', updateProgressBar);
-                
-                // Loop video when it ends
-                video.addEventListener('ended', () => {
-                    video.currentTime = 0;
-                    video.play();
-                });
-                
-                // Initialize controls
-                updatePlayPauseButton();
-                updateMuteButton();
-                updateProgressBar();
+                    break;
             }
-            
-            // ===== SMOOTH SCROLL =====
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    // Don't prevent default for mobile menu links
-                    if (this.classList.contains('mobile-nav-link')) {
-                        return;
-                    }
-                    
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        const offset = 80;
-                        const targetPosition = targetElement.offsetTop - offset;
-                        
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-            
-            // ===== FADE-IN ANIMATION ON SCROLL =====
-            const observerOptions = {
-                threshold: 0.1
-            };
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('fade-in');
-                    }
-                });
-            }, observerOptions);
-            
-            // Observe all sections
-            document.querySelectorAll('section').forEach(section => {
-                observer.observe(section);
-            });
-            
-            // ===== VIDEO AUTOPLAY ON USER INTERACTION =====
-            // Some browsers require user interaction to play video with sound
-            function enableVideoSound() {
-                if (video && video.muted) {
-                    video.muted = false;
-                    updateMuteButton();
-                    console.log('Video unmuted by user interaction');
-                }
-            }
-            
-            // Add event listeners for user interaction
-            document.addEventListener('click', enableVideoSound);
-            document.addEventListener('touchstart', enableVideoSound);
-            document.addEventListener('keydown', enableVideoSound);
-            
-            // ===== ADJUST SCROLL OFFSET FOR MOBILE =====
-            // Ensure smooth scroll accounts for mobile nav height
-            function updateScrollOffset() {
-                const navHeight = document.querySelector('nav').offsetHeight;
-                const style = document.createElement('style');
-                style.textContent = `
-                    html {
-                        scroll-padding-top: ${navHeight}px;
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-            
-            // Update on load and resize
-            updateScrollOffset();
-            window.addEventListener('resize', updateScrollOffset);
         });
-    </script>
+
+        // ===== LOG VIDEO STATE FOR DEBUGGING =====
+        console.log('Video initialized - Platform:', navigator.userAgent);
+        console.log('Video element:', video);
+    });
+</script>
 </body>
 </html>

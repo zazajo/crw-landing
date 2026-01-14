@@ -215,7 +215,7 @@ def dashboard_view(request):
     referrals = User.objects.filter(referred_by=user)
     
     # Get referral URL
-    referral_url = f"http://localhost:8000/signup/?ref={user.referral_code}"
+    referral_url = f"https://www.crownieverse.xyz/signup/?ref={user.referral_code}"
     
     context = {
         'user': user,
@@ -231,12 +231,18 @@ def home_view(request):
     """Homepage view"""
     return render(request, 'index.html')
 
+def whitepaper_view(request):
+    return render(request, 'whitepaper.html')
+
+def roadmap_view(request):
+    return render(request, 'roadmap.html')
+
 @login_required
 def discord_connect(request):
     """Start Discord OAuth2 flow"""
     # Discord OAuth2 URL
     client_id = os.getenv('DISCORD_CLIENT_ID')
-    redirect_uri = os.getenv('DISCORD_REDIRECT_URI', 'http://localhost:8000/discord/callback/')
+    redirect_uri = os.getenv('DISCORD_REDIRECT_URI', 'https://www.crownieverse.xyz/discord/callback/')
     
     # Scopes needed: identify + guilds.join (to add to server)
     scopes = ['identify', 'guilds.join']

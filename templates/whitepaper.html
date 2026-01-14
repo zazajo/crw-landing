@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CROWNIE | Official Whitepaper</title>
+    <meta name="description" content="Crownie Whitepaper - The Gameverse Reclaimed. A blockchain-powered gaming ecosystem merging play-to-earn, NFT ownership, and persistent gameplay.">
+    <meta name="keywords" content="Crownie, Whitepaper, GameFi, Play-to-Earn, NFT, Blockchain Gaming, Crownieverse">
+    <meta name="author" content="Crownie Team">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="CROWNIE | Official Whitepaper">
+    <meta property="og:description" content="Crownie Whitepaper - The Gameverse Reclaimed. A blockchain-powered gaming ecosystem merging play-to-earn, NFT ownership, and persistent gameplay.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.crownieverse.xyz/whitepaper/">
+    <meta property="og:site_name" content="CROWNIE">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CROWNIE | Official Whitepaper">
+    <meta name="twitter:description" content="Crownie Whitepaper - The Gameverse Reclaimed. A blockchain-powered gaming ecosystem merging play-to-earn, NFT ownership, and persistent gameplay.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Load static files -->
+    {% load static %}
+
+    <style>
+        /* Crownie Premium Theme */
+        :root {
+            --background: #0a0a0a;
+            --foreground: #ededed;
+            --crown-purple: #a855f7;
+            --crown-purple-dark: #7c3aed;
+            --crown-purple-light: #c084fc;
+            --crown-gold: #FFD700;
+            --crown-gold-dark: #DAA520;
+            --crown-gold-light: #FFF8DC;
+            --crown-orange: #f59e0b;
+            --crown-orange-dark: #ea580c;
+            --section-bg: rgba(30, 41, 59, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--foreground);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.3);
+            z-index: 1000;
+            padding: 15px 20px;
+            height: 70px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        /* ===== WHITEPAPER HERO ===== */
+        .whitepaper-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg,
+                rgba(10, 1, 19, 0.95) 0%,
+                rgba(42, 10, 78, 0.85) 50%,
+                rgba(10, 1, 19, 0.95) 100%);
+            padding-top: 100px;
+            padding-bottom: 60px;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            width: 100%;
+        }
+
+        .crown-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(90deg, rgba(251, 191, 36, 0.2), rgba(234, 88, 12, 0.2));
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            padding: 12px 24px;
+            border-radius: 50px;
+            margin-bottom: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fbbf24;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #fbbf24, #ea580c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: #94a3b8;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+
+        /* ===== WHITEPAPER CONTENT ===== */
+        .whitepaper-content {
+            padding: 80px 0;
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .whitepaper-section {
+            background: var(--section-bg);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            border-radius: 20px;
+            padding: 50px;
+            margin-bottom: 60px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+        }
+
+        .whitepaper-section:hover {
+            transform: translateY(-5px);
+            border-color: #f59e0b;
+            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .section-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(234, 88, 12, 0.2));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #fbbf24;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            margin: 0;
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: #cbd5e1;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* ===== CONTENT STYLING ===== */
+        .content-block {
+            margin-bottom: 40px;
+        }
+
+        .content-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-title::before {
+            content: "▸";
+            color: #f59e0b;
+        }
+
+        .content-text {
+            color: #cbd5e1;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .highlight-text {
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: #fbbf24;
+        }
+
+        /* ===== TABLES ===== */
+        .feature-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .feature-table th {
+            background: linear-gradient(90deg, #f59e0b, #ea580c);
+            color: white;
+            padding: 20px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .feature-table td {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+        }
+
+        .feature-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .feature-table tr:hover td {
+            background: rgba(251, 191, 36, 0.05);
+        }
+
+        .feature-table .feature-name {
+            color: #fbbf24;
+            font-weight: 600;
+            width: 25%;
+        }
+
+        /* ===== TOKENOMICS ===== */
+        .tokenomics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .token-card {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .token-card:hover {
+            border-color: #a855f7;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(168, 85, 247, 0.2);
+        }
+
+        .token-percentage {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #f59e0b, #ea580c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .token-label {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .token-desc {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(26, 10, 46, 0.9) 0%, rgba(42, 26, 78, 0.95) 100%);
+            border-radius: 24px;
+            margin: 80px 0;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #fbbf24, #ea580c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #f59e0b, #ea580c);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.125rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-height: 56px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #fbbf24;
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.125rem;
+            border: 2px solid #f59e0b;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-height: 56px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            color: #64748b;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 80px;
+        }
+
+        .footer-copyright {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .footer-tagline {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.75rem;
+            }
+            
+            .whitepaper-section {
+                padding: 30px;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .feature-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .tokenomics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .whitepaper-section {
+                padding: 20px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .nav-link {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #a855f7, #7c3aed);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <img src="{% static 'images/crownie_logo.PNG' %}" alt="Crownie Logo" style="height: 60px; width: auto; filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.5));">
+            </a>
+
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="{% url 'quests' %}" class="nav-link">Quests</a>
+                <a href="{% url 'roadmap' %}" class="nav-link">Roadmap</a>
+                <a href="{% url 'whitepaper' %}" class="nav-link" style="color: #fbbf24; font-weight: 600;">Whitepaper</a>
+                <a href="#social" class="nav-link">Community</a>
+
+                {% if user.is_authenticated %}
+                    {% if user.discord_connected %}
+                    <a href="{% url 'dashboard' %}" class="nav-link" style="
+                        color: #fbbf24;
+                        font-weight: 600;
+                        padding: 8px 16px;
+                        border: 1px solid rgba(251, 191, 36, 0.3);
+                        border-radius: 8px;
+                    ">
+                        <span style="color: #00ff00; margin-right: 5px;">●</span> Dashboard
+                    </a>
+                    <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+                    {% else %}
+                    <a href="{% url 'discord_connect' %}" class="nav-link" style="color: #5865F2; font-weight: 600;">Connect Discord</a>
+                    <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+                    {% endif %}
+                {% else %}
+                <a href="{% url 'login' %}" class="nav-link">Sign In</a>
+                <a href="{% url 'signup' %}" class="nav-link" style="
+                    background: linear-gradient(90deg, #f59e0b, #ea580c);
+                    color: white;
+                    padding: 8px 16px;
+                    border-radius: 8px;
+                ">Sign Up</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Whitepaper Hero -->
+    <section class="whitepaper-hero">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content fade-in">
+                <div class="crown-badge">OFFICIAL DOCUMENT</div>
+                <h1 class="hero-title">CROWNIE WHITEPAPER</h1>
+                <p class="hero-subtitle">
+                    The Gameverse Reclaimed. A blockchain-powered gaming ecosystem merging play-to-earn, 
+                    NFT ownership, and persistent gameplay in the Crownieverse.
+                </p>
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <a href="#download" class="btn-primary">
+                        <span>📄</span> Download PDF
+                    </a>
+                    <a href="#tokenomics" class="btn-secondary">
+                        <span>💰</span> View Tokenomics
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Whitepaper Content -->
+    <section class="whitepaper-content">
+        <div class="container">
+            <!-- Overview Section -->
+            <div class="whitepaper-section fade-in">
+                <div class="section-header">
+                    <div class="section-icon">📜</div>
+                    <h2 class="section-title">1. Overview</h2>
+                </div>
+                <div class="content-block">
+                    <p class="content-text">
+                        Crownie is a blockchain powered gaming ecosystem that merges play to earn mechanics, 
+                        NFT ownership, and a persistent game universe, known as the Crownieverse. Unlike typical 
+                        crypto projects, Crownie is first and foremost a game, with a metaverse like structure 
+                        but deeply focused on gameplay, story, and player progression.
+                    </p>
+                    <p class="content-text">
+                        Players take on the role of Crownie, the rightful heir whose birthright was usurped by a 
+                        treacherous uncle, struggling to reclaim his throne across multiple realms, stages, and 
+                        challenges. Every action, achievement, and in game decision is integrated into the 
+                        Crownieverse economy, allowing players to earn rewards, influence governance, and progress 
+                        their characters and assets.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Mission Section -->
+            <div class="whitepaper-section fade-in">
+                <div class="section-header">
+                    <div class="section-icon">🎯</div>
+                    <h2 class="section-title">2. Mission</h2>
+                </div>
+                <div class="content-block">
+                    <p class="content-text">
+                        Crownie aims to deliver a new class of blockchain games where storyline, strategy, 
+                        and utility intersect. It solves common issues in both gaming and crypto ecosystems:
+                    </p>
+                    <div style="margin: 25px 0;">
+                        <div style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 15px;">
+                            <span style="color: #f59e0b; font-size: 1.2rem;">•</span>
+                            <span style="color: #cbd5e1;">Lack of meaningful player driven progression in blockchain games.</span>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 15px;">
+                            <span style="color: #f59e0b; font-size: 1.2rem;">•</span>
+                            <span style="color: #cbd5e1;">Confusing or exploitative NFT and token mechanics.</span>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 15px;">
+                            <span style="color: #f59e0b; font-size: 1.2rem;">•</span>
+                            <span style="color: #cbd5e1;">Communities that are detached from actual gameplay and rewards.</span>
+                        </div>
+                    </div>
+                    <p class="content-text">
+                        By combining Play to Earn (P2E), Chat to Earn (C2E), Engage to Earn (E2E), NFTs, 
+                        and yield farming, Crownie provides tangible utility for both players and investors 
+                        while preserving the integrity of the game experience.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Game Storyline -->
+            <div class="whitepaper-section fade-in">
+                <div class="section-header">
+                    <div class="section-icon">🎮</div>
+                    <h2 class="section-title">3. Game Storyline</h2>
+                </div>
+                <div class="content-block">
+                    <div class="highlight-text">
+                        "In a world once ruled by a single crown... power is no longer inherited. 
+                        It is earned. Crownie awakens to reclaim what is rightfully his."
+                    </div>
+                    <div style="display: grid; gap: 20px; margin-top: 30px;">
+                        <div>
+                            <h3 class="content-title">Premise</h3>
+                            <p class="content-text">
+                                Crownie, the young prince of Aldoris, had his birthright stolen by his treacherous uncle.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="content-title">Objective</h3>
+                            <p class="content-text">
+                                Navigate the social hierarchy, battle enemies, complete quests, and reclaim the crown.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="content-title">Core Gameplay</h3>
+                            <p class="content-text">
+                                Players conquer realms, master abilities, and unlock special items representing both 
+                                in-game utility and tokenized assets.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="content-title">Progression</h3>
+                            <p class="content-text">
+                                Levels, stages, and quests integrate player rewards, increasing engagement and 
+                                economic participation.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Crownieverse Features -->
+            <div class="whitepaper-section fade-in">
+                <div class="section-header">
+                    <div class="section-icon">✨</div>
+                    <h2 class="section-title">4. Crownieverse Features</h2>
+                </div>
+                <div class="content-block">
+                    <table class="feature-table">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Description</th>
+                                <th>Use Case</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="feature-name">Play to Earn (P2E)</td>
+                                <td>Players earn tokens through battles and quests</td>
+                                <td>Unlock characters, skills, and crowns</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Chat to Earn (C2E)</td>
+                                <td>In game chat & strategy participation</td>
+                                <td>Rewards active community engagement</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Engage to Earn (E2E)</td>
+                                <td>Completing social or strategic challenges</td>
+                                <td>Boosts leaderboard standing and unlocks special events</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">NFT Assets</td>
+                                <td>Crowns, weapons, skins, and characters</td>
+                                <td>Tradable, usable across game modes, non buyable in pre sale</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Yield Farming</td>
+                                <td>Stake tokens for passive growth</td>
+                                <td>Encourages holding and long term ecosystem engagement</td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Governance</td>
+                                <td>Token holders influence updates and seasons</td>
+                                <td>Shared decision making over economy and gameplay balance</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tokenomics -->
+            <div class="whitepaper-section fade-in" id="tokenomics">
+                <div class="section-header">
+                    <div class="section-icon">💰</div>
+                    <h2 class="section-title">5. Tokenomics</h2>
+                </div>
+                <div class="content-block">
+                    <div style="text-align: center; margin-bottom: 40px;">
+                        <div style="font-size: 2rem; font-weight: 800; color: #fbbf24; margin-bottom: 10px;">
+                            Token Name: CROWNIE
+                        </div>
+                        <div style="color: #cbd5e1; font-size: 1.1rem;">
+                            Type: Utility + Governance + Game Asset Token
+                        </div>
+                    </div>
+
+                    <div class="tokenomics-grid">
+                        <div class="token-card">
+                            <div class="token-percentage">50%</div>
+                            <div class="token-label">Game Development</div>
+                            <div class="token-desc">Developing game mechanics, P2E implementation, NFT integration</div>
+                        </div>
+                        <div class="token-card">
+                            <div class="token-percentage">25%</div>
+                            <div class="token-label">Pre-Sale</div>
+                            <div class="token-desc">Seed funding for game launch & marketing campaigns</div>
+                        </div>
+                        <div class="token-card">
+                            <div class="token-percentage">10%</div>
+                            <div class="token-label">Liquidity Provision</div>
+                            <div class="token-desc">Ensuring smooth trading and token stability</div>
+                        </div>
+                        <div class="token-card">
+                            <div class="token-percentage">5%</div>
+                            <div class="token-label">Marketing & Community</div>
+                            <div class="token-desc">Promotions, influencer engagement, community building</div>
+                        </div>
+                        <div class="token-card">
+                            <div class="token-percentage">10%</div>
+                            <div class="token-label">Reserve / Treasury</div>
+                            <div class="token-desc">Future development, chain expansion, partnerships</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 40px; padding: 25px; background: rgba(0, 0, 0, 0.3); border-radius: 12px;">
+                        <h3 class="content-title">Important Notes</h3>
+                        <div style="color: #cbd5e1; line-height: 1.8;">
+                            <p style="margin-bottom: 10px;">• Pre-sale funds go directly into game development and marketing, not treasury.</p>
+                            <p style="margin-bottom: 10px;">• No direct buyable NFTs; all are earned in game.</p>
+                            <p>• Yield farming and staking allow token utility beyond gameplay.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Community Integration -->
+            <div class="whitepaper-section fade-in">
+                <div class="section-header">
+                    <div class="section-icon">👥</div>
+                    <h2 class="section-title">7. Community Integration</h2>
+                </div>
+                <div class="content-block">
+                    <p class="content-text">
+                        Crownie is designed to foster active player and investor communities across multiple platforms:
+                    </p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 30px;">
+                        <div style="background: rgba(0, 0, 0, 0.3); padding: 25px; border-radius: 12px; border: 1px solid rgba(88, 101, 242, 0.3);">
+                            <div style="font-size: 1.5rem; color: #5865F2; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                                <span>💬</span> Discord
+                            </div>
+                            <div style="color: #cbd5e1; line-height: 1.6;">
+                                Main hub for gameplay discussion, event coordination, and support. Join our active community of knights.
+                            </div>
+                            <a href="https://discord.gg/kNyKUAw6" target="_blank" style="
+                                display: inline-block;
+                                margin-top: 15px;
+                                color: #5865F2;
+                                text-decoration: none;
+                                font-weight: 600;
+                                display: flex;
+                                align-items: center;
+                                gap: 5px;
+                            ">
+                                Join Now →
+                            </a>
+                        </div>
+
+                        <div style="background: rgba(0, 0, 0, 0.3); padding: 25px; border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.3);">
+                            <div style="font-size: 1.5rem; color: #3b82f6; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                                <span>🐦</span> X (Twitter)
+                            </div>
+                            <div style="color: #cbd5e1; line-height: 1.6;">
+                                Stay updated with announcements, memes, and kingdom updates. Follow for exclusive content.
+                            </div>
+                            <a href="https://x.com/CrownieVerse" target="_blank" style="
+                                display: inline-block;
+                                margin-top: 15px;
+                                color: #3b82f6;
+                                text-decoration: none;
+                                font-weight: 600;
+                                display: flex;
+                                align-items: center;
+                                gap: 5px;
+                            ">
+                                Follow Us →
+                            </a>
+                        </div>
+
+                        <div style="background: rgba(0, 0, 0, 0.3); padding: 25px; border-radius: 12px; border: 1px solid rgba(6, 182, 212, 0.3);">
+                            <div style="font-size: 1.5rem; color: #06b6d4; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                                <span>📢</span> Announcements
+                            </div>
+                            <div style="color: #cbd5e1; line-height: 1.6;">
+                                Dedicated channels for updates, events, and pre-sale/public sale news. Never miss important announcements.
+                            </div>
+                            <a href="https://t.me/crownie_ann" target="_blank" style="
+                                display: inline-block;
+                                margin-top: 15px;
+                                color: #06b6d4;
+                                text-decoration: none;
+                                font-weight: 600;
+                                display: flex;
+                                align-items: center;
+                                gap: 5px;
+                            ">
+                                Join Channel →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conclusion -->
+            <div class="whitepaper-section fade-in">
+                <div class="section-header">
+                    <div class="section-icon">👑</div>
+                    <h2 class="section-title">8. Conclusion</h2>
+                </div>
+                <div class="content-block">
+                    <p class="content-text" style="font-size: 1.1rem; line-height: 1.8;">
+                        Crownie is more than a token or a meme project. It is a game first, community driven, 
+                        utility rich ecosystem with layered tokenomics, NFTs, and yield farming. Players are 
+                        immersed in a persistent universe where they can earn, influence, and reclaim their 
+                        crowns literally and metaphorically.
+                    </p>
+                    <div class="highlight-text" style="margin-top: 30px;">
+                        The fallen king rises. The crown awaits its rightful heir. Join the Crownieverse today.
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="cta-section fade-in" id="download">
+                <h2 class="cta-title">Ready to Join the Crownieverse?</h2>
+                <p style="color: #cbd5e1; max-width: 600px; margin: 0 auto 30px; font-size: 1.125rem;">
+                    Download the full whitepaper, join our community, and start your journey to reclaim the crown.
+                </p>
+                <div class="cta-buttons">
+                    <a href="{% url 'signup' %}" class="btn-primary">
+                        <span>👑</span> Join the Kingdom
+                    </a>
+                    <a href="https://discord.gg/kNyKUAw6" target="_blank" class="btn-secondary">
+                        <span>💬</span> Join Discord
+                    </a>
+                    <button onclick="downloadWhitepaper()" class="btn-primary" style="background: linear-gradient(90deg, #8b5cf6, #7c3aed);">
+                        <span>📄</span> Download Whitepaper (PDF)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p class="footer-copyright">© 2024 Crownie | The Gameverse Reclaimed. All rights reserved.</p>
+            <p class="footer-tagline">Built with Django | The fallen king shall rise again</p>
+            
+            <div style="margin-top: 30px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <a href="/" style="color: #fbbf24; text-decoration: none;">Home</a>
+                <a href="{% url 'quests' %}" style="color: #94a3b8; text-decoration: none;">Quests</a>
+                <a href="{% url 'roadmap' %}" style="color: #94a3b8; text-decoration: none;">Roadmap</a>
+                <a href="{% url 'whitepaper' %}" style="color: #fbbf24; text-decoration: none;">Whitepaper</a>
+                <a href="#social" style="color: #94a3b8; text-decoration: none;">Community</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const offset = 80;
+                        const targetPosition = targetElement.offsetTop - offset;
+
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Fade-in animation on scroll
+            const observerOptions = {
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.whitepaper-section, .cta-section').forEach(section => {
+                observer.observe(section);
+            });
+
+            // Download whitepaper function
+            window.downloadWhitepaper = function() {
+                // Create a simple PDF download (you can replace with actual PDF)
+                const text = document.querySelector('body').innerText;
+                const blob = new Blob([text], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'Crownie_Whitepaper.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                // Show success message
+                alert('Whitepaper download started! For the full formatted version, please visit our website.');
+            };
+
+            // Update navigation active state
+            function updateNavActive() {
+                const currentPath = window.location.pathname;
+                const navLinks = document.querySelectorAll('.nav-link');
+                
+                navLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href === currentPath || (href === '/whitepaper/' && currentPath.includes('whitepaper'))) {
+                        link.style.color = '#fbbf24';
+                        link.style.fontWeight = '600';
+                    }
+                });
+            }
+
+            updateNavActive();
+
+            // Add scroll effect to navbar
+            let lastScrollTop = 0;
+            const nav = document.querySelector('nav');
+            
+            window.addEventListener('scroll', function() {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    nav.style.transform = 'translateY(-100%)';
+                    nav.style.transition = 'transform 0.3s ease';
+                } else {
+                    nav.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollTop = scrollTop;
+            });
+        });
+    </script>
+</body>
+</html>

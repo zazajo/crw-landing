@@ -5,7 +5,7 @@ from .views import (
     discord_connect, discord_callback, discord_disconnect, 
     discord_activity_webhook, get_user_chat_stats,
     quests_view, start_quest, claim_quest_reward, daily_login_reward,
-    manage_quests, create_quest, edit_quest, delete_quest
+    manage_quests, create_quest, edit_quest, delete_quest, whitepaper_view, roadmap_view
 )
 
 urlpatterns = [
@@ -14,6 +14,10 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
     path('dashboard/', dashboard_view, name='dashboard'),
+    path('whitepaper/', whitepaper_view, name='whitepaper'),
+    path('roadmap/', roadmap_view, name='roadmap'),
+
+
     
     # Discord OAuth
     path('discord/connect/', discord_connect, name='discord_connect'),

@@ -96,11 +96,11 @@ class User(AbstractUser):
     
     def get_referral_url(self):
         """Get full referral URL"""
-        return f"http://localhost:8000/signup/?ref={self.referral_code}"
+        return f"https://www.crownieverse.xyz/signup/?ref={self.referral_code}"
     
     def get_short_referral_link(self):
         """Get short referral link for display"""
-        return f"crownie.com/ref/{self.referral_code}"
+        return f"crownie.xyz/ref/{self.referral_code}"
     
     def update_login_streak(self):
         """Update login streak when user logs in"""
