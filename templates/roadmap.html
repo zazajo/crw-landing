@@ -101,8 +101,10 @@
             color: white;
             font-weight: 700;
             font-size: 1.2rem;
+            z-index: 1001;
         }
 
+        /* Desktop Navigation */
         .nav-links {
             display: flex;
             gap: 25px;
@@ -114,10 +116,88 @@
             text-decoration: none;
             font-size: 0.9rem;
             transition: color 0.3s;
+            padding: 5px 0;
         }
 
         .nav-link:hover {
             color: white;
+        }
+
+        /* Hamburger Menu for Mobile */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background: #fbbf24;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            align-items: center;
+            text-align: center;
+        }
+
+        .mobile-nav-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 600;
+            padding: 10px 0;
+            transition: color 0.3s;
+        }
+
+        .mobile-nav-link:hover {
+            color: #fbbf24;
         }
 
         /* ===== ROADMAP HERO ===== */
@@ -498,84 +578,118 @@
             .timeline-line {
                 left: 40px;
             }
-            
+
             .timeline-phase {
                 flex-direction: row !important;
                 margin-left: 80px;
             }
-            
+
             .phase-marker {
                 left: 40px;
                 transform: translateX(-50%);
             }
-            
+
             .phase-card {
                 width: 100%;
             }
         }
 
         @media (max-width: 768px) {
+            /* Mobile Navigation */
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            /* Hero Section */
             .hero-title {
                 font-size: 2.5rem;
             }
-            
+
             .phase-title {
                 font-size: 1.5rem;
             }
-            
+
             .phase-card {
                 padding: 30px;
             }
-            
+
             .current-phase-highlight {
                 padding: 40px 20px;
             }
-            
+
             .highlight-title {
                 font-size: 2rem;
             }
-            
+
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .btn-primary,
             .btn-secondary {
                 width: 100%;
                 max-width: 300px;
             }
-            
-            .nav-links {
-                gap: 15px;
-            }
-            
-            .nav-link {
-                font-size: 0.8rem;
+
+            .mobile-nav-link {
+                font-size: 1.25rem;
             }
         }
 
         @media (max-width: 480px) {
+            /* Navbar height adjustment for very small screens */
+            nav {
+                height: 60px;
+                padding: 10px 15px;
+            }
+
+            .roadmap-hero {
+                padding-top: 80px;
+            }
+
             .hero-title {
                 font-size: 2rem;
             }
-            
+
             .phase-card {
                 padding: 20px;
             }
-            
+
             .timeline-phase {
                 margin-left: 60px;
             }
-            
+
             .timeline-line {
                 left: 30px;
             }
-            
+
             .phase-marker {
                 left: 30px;
                 width: 30px;
                 height: 30px;
+                font-size: 1rem;
+            }
+
+            .mobile-nav-link {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .highlight-title {
+                font-size: 1.8rem;
+            }
+
+            .mobile-nav-link {
                 font-size: 1rem;
             }
         }
@@ -632,12 +746,12 @@
                 <img src="{% static 'images/crownie_logo.PNG' %}" alt="Crownie Logo" style="height: 60px; width: auto; filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.5));">
             </a>
 
+            <!-- Desktop Navigation -->
             <div class="nav-links">
                 <a href="/" class="nav-link">Home</a>
                 <a href="{% url 'quests' %}" class="nav-link">Quests</a>
                 <a href="{% url 'roadmap' %}" class="nav-link" style="color: #fbbf24; font-weight: 600;">Roadmap</a>
                 <a href="{% url 'whitepaper' %}" class="nav-link">Whitepaper</a>
-                <a href="#social" class="nav-link">Community</a>
 
                 {% if user.is_authenticated %}
                     {% if user.discord_connected %}
@@ -665,8 +779,46 @@
                 ">Sign Up</a>
                 {% endif %}
             </div>
+
+            <!-- Hamburger Menu Button (Mobile) -->
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <div class="mobile-nav-links">
+            <a href="/" class="mobile-nav-link" onclick="closeMobileMenu()">Home</a>
+            <a href="{% url 'quests' %}" class="mobile-nav-link" onclick="closeMobileMenu()">Quests</a>
+            <a href="{% url 'roadmap' %}" class="mobile-nav-link" onclick="closeMobileMenu()" style="color: #fbbf24;">Roadmap</a>
+            <a href="{% url 'whitepaper' %}" class="mobile-nav-link" onclick="closeMobileMenu()">Whitepaper</a>
+
+            {% if user.is_authenticated %}
+                {% if user.discord_connected %}
+                <a href="{% url 'dashboard' %}" class="mobile-nav-link" onclick="closeMobileMenu()" style="color: #fbbf24;">
+                    <span style="color: #00ff00; margin-right: 5px;">●</span> Dashboard
+                </a>
+                <a href="{% url 'logout' %}" class="mobile-nav-link" onclick="closeMobileMenu()">Logout</a>
+                {% else %}
+                <a href="{% url 'discord_connect' %}" class="mobile-nav-link" onclick="closeMobileMenu()" style="color: #5865F2;">Connect Discord</a>
+                <a href="{% url 'logout' %}" class="mobile-nav-link" onclick="closeMobileMenu()">Logout</a>
+                {% endif %}
+            {% else %}
+            <a href="{% url 'login' %}" class="mobile-nav-link" onclick="closeMobileMenu()">Sign In</a>
+            <a href="{% url 'signup' %}" class="mobile-nav-link" onclick="closeMobileMenu()" style="
+                background: linear-gradient(90deg, #f59e0b, #ea580c);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                margin-top: 10px;
+            ">Sign Up</a>
+            {% endif %}
+        </div>
+    </div>
 
     <!-- Roadmap Hero -->
     <section class="roadmap-hero">
@@ -676,7 +828,7 @@
                 <div class="crown-badge">DEVELOPMENT JOURNEY</div>
                 <h1 class="hero-title">CROWNIE ROADMAP</h1>
                 <p class="hero-subtitle">
-                    Follow our journey from concept to full game release. Each phase brings us closer to 
+                    Follow our journey from concept to full game release. Each phase brings us closer to
                     building the ultimate Crownieverse experience.
                 </p>
                 <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
@@ -697,7 +849,7 @@
         <div class="container">
             <h2 class="highlight-title">Phase 0: MVP / Concept</h2>
             <p class="highlight-subtitle">
-                We're laying the foundation for the Crownieverse. This phase focuses on establishing 
+                We're laying the foundation for the Crownieverse. This phase focuses on establishing
                 the core concept, storyline, and character designs that will define the entire ecosystem.
             </p>
             <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 30px;">
@@ -735,7 +887,7 @@
                         <div class="phase-status status-current">Current Phase</div>
                         <div class="phase-timeline">Ongoing</div>
                         <p class="phase-focus">
-                            Establishing the foundation of the Crownieverse with core game concepts, 
+                            Establishing the foundation of the Crownieverse with core game concepts,
                             character designs, and storyline development.
                         </p>
                         <div class="phase-features">
@@ -883,7 +1035,7 @@
         <div class="container">
             <h2 class="cta-title">Join Our Journey</h2>
             <p style="color: #cbd5e1; max-width: 600px; margin: 0 auto 30px; font-size: 1.125rem;">
-                Be part of the Crownieverse from the beginning. Follow our progress, participate in early access, 
+                Be part of the Crownieverse from the beginning. Follow our progress, participate in early access,
                 and help shape the future of blockchain gaming.
             </p>
             <div class="cta-buttons">
@@ -903,9 +1055,9 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p class="footer-copyright">© 2024 Crownie | The Gameverse Reclaimed. All rights reserved.</p>
+            <p class="footer-copyright">© 2026 Crownie | The Gameverse Reclaimed. All rights reserved.</p>
             <p class="footer-tagline">Follow our roadmap to witness the rise of the Crownieverse</p>
-            
+
             <div style="margin-top: 30px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
                 <a href="/" style="color: #fbbf24; text-decoration: none;">Home</a>
                 <a href="{% url 'quests' %}" style="color: #94a3b8; text-decoration: none;">Quests</a>
@@ -918,9 +1070,42 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // ===== MOBILE NAVIGATION =====
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            function toggleMobileMenu() {
+                hamburger.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+            }
+
+            function closeMobileMenu() {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            if (hamburger) {
+                hamburger.addEventListener('click', toggleMobileMenu);
+            }
+
+            // Close menu when clicking outside
+            mobileMenu.addEventListener('click', function(e) {
+                if (e.target === mobileMenu) {
+                    closeMobileMenu();
+                }
+            });
+
             // Smooth scroll for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
+                    // Don't prevent default for mobile menu links
+                    if (this.classList.contains('mobile-nav-link')) {
+                        closeMobileMenu();
+                        return;
+                    }
+
                     e.preventDefault();
                     const targetId = this.getAttribute('href');
                     if (targetId === '#') return;
@@ -959,7 +1144,7 @@
             function updateNavActive() {
                 const currentPath = window.location.pathname;
                 const navLinks = document.querySelectorAll('.nav-link');
-                
+
                 navLinks.forEach(link => {
                     const href = link.getAttribute('href');
                     if (href === currentPath || (href === '/roadmap/' && currentPath.includes('roadmap'))) {
@@ -974,17 +1159,17 @@
             // Add scroll effect to navbar
             let lastScrollTop = 0;
             const nav = document.querySelector('nav');
-            
+
             window.addEventListener('scroll', function() {
                 let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                
+
                 if (scrollTop > lastScrollTop && scrollTop > 100) {
                     nav.style.transform = 'translateY(-100%)';
                     nav.style.transition = 'transform 0.3s ease';
                 } else {
                     nav.style.transform = 'translateY(0)';
                 }
-                
+
                 lastScrollTop = scrollTop;
             });
 
@@ -1001,7 +1186,7 @@
             progressNumbers.forEach(number => {
                 const target = parseInt(number.textContent);
                 let current = 0;
-                
+
                 const animateProgress = () => {
                     if (current < target) {
                         current++;
@@ -1009,10 +1194,25 @@
                         setTimeout(animateProgress, 20);
                     }
                 };
-                
+
                 // Start animation after a delay
                 setTimeout(animateProgress, 500);
             });
+
+            // Adjust scroll offset for mobile
+            function updateScrollOffset() {
+                const navHeight = document.querySelector('nav').offsetHeight;
+                const style = document.createElement('style');
+                style.textContent = `
+                    html {
+                        scroll-padding-top: ${navHeight}px;
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+
+            updateScrollOffset();
+            window.addEventListener('resize', updateScrollOffset);
         });
     </script>
 </body>

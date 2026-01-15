@@ -101,8 +101,10 @@
             color: white;
             font-weight: 700;
             font-size: 1.2rem;
+            z-index: 1001;
         }
 
+        /* Desktop Navigation */
         .nav-links {
             display: flex;
             gap: 25px;
@@ -114,10 +116,88 @@
             text-decoration: none;
             font-size: 0.9rem;
             transition: color 0.3s;
+            padding: 5px 0;
         }
 
         .nav-link:hover {
             color: white;
+        }
+
+        /* Hamburger Menu for Mobile */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background: #fbbf24;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            align-items: center;
+            text-align: center;
+        }
+
+        .mobile-nav-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 600;
+            padding: 10px 0;
+            transition: color 0.3s;
+        }
+
+        .mobile-nav-link:hover {
+            color: #fbbf24;
         }
 
         /* ===== WHITEPAPER HERO ===== */
@@ -456,64 +536,98 @@
 
         /* ===== RESPONSIVE DESIGN ===== */
         @media (max-width: 768px) {
+            /* Mobile Navigation */
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            /* Hero Section */
             .hero-title {
                 font-size: 2.5rem;
             }
-            
+
             .section-title {
                 font-size: 1.75rem;
             }
-            
+
             .whitepaper-section {
                 padding: 30px;
             }
-            
+
             .section-header {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 15px;
             }
-            
+
             .feature-table {
                 display: block;
                 overflow-x: auto;
             }
-            
+
             .tokenomics-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .btn-primary,
             .btn-secondary {
                 width: 100%;
                 max-width: 300px;
             }
+
+            .mobile-nav-link {
+                font-size: 1.25rem;
+            }
         }
 
         @media (max-width: 480px) {
+            /* Navbar height adjustment for very small screens */
+            nav {
+                height: 60px;
+                padding: 10px 15px;
+            }
+
+            .whitepaper-hero {
+                padding-top: 80px;
+            }
+
             .hero-title {
                 font-size: 2rem;
             }
-            
+
             .section-title {
                 font-size: 1.5rem;
             }
-            
+
             .whitepaper-section {
                 padding: 20px;
             }
-            
-            .nav-links {
-                gap: 15px;
+
+            .mobile-nav-link {
+                font-size: 1.1rem;
             }
-            
-            .nav-link {
-                font-size: 0.8rem;
+        }
+
+        @media (max-width: 360px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .cta-title {
+                font-size: 2rem;
+            }
+
+            .mobile-nav-link {
+                font-size: 1rem;
             }
         }
 
@@ -556,12 +670,12 @@
                 <img src="{% static 'images/crownie_logo.PNG' %}" alt="Crownie Logo" style="height: 60px; width: auto; filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.5));">
             </a>
 
+            <!-- Desktop Navigation -->
             <div class="nav-links">
                 <a href="/" class="nav-link">Home</a>
                 <a href="{% url 'quests' %}" class="nav-link">Quests</a>
                 <a href="{% url 'roadmap' %}" class="nav-link">Roadmap</a>
                 <a href="{% url 'whitepaper' %}" class="nav-link" style="color: #fbbf24; font-weight: 600;">Whitepaper</a>
-                <a href="#social" class="nav-link">Community</a>
 
                 {% if user.is_authenticated %}
                     {% if user.discord_connected %}
@@ -589,8 +703,46 @@
                 ">Sign Up</a>
                 {% endif %}
             </div>
+
+            <!-- Hamburger Menu Button (Mobile) -->
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <div class="mobile-nav-links">
+            <a href="/" class="mobile-nav-link" onclick="closeMobileMenu()">Home</a>
+            <a href="{% url 'quests' %}" class="mobile-nav-link" onclick="closeMobileMenu()">Quests</a>
+            <a href="{% url 'roadmap' %}" class="mobile-nav-link" onclick="closeMobileMenu()">Roadmap</a>
+            <a href="{% url 'whitepaper' %}" class="mobile-nav-link" onclick="closeMobileMenu()" style="color: #fbbf24;">Whitepaper</a>
+
+            {% if user.is_authenticated %}
+                {% if user.discord_connected %}
+                <a href="{% url 'dashboard' %}" class="mobile-nav-link" onclick="closeMobileMenu()" style="color: #fbbf24;">
+                    <span style="color: #00ff00; margin-right: 5px;">●</span> Dashboard
+                </a>
+                <a href="{% url 'logout' %}" class="mobile-nav-link" onclick="closeMobileMenu()">Logout</a>
+                {% else %}
+                <a href="{% url 'discord_connect' %}" class="mobile-nav-link" onclick="closeMobileMenu()" style="color: #5865F2;">Connect Discord</a>
+                <a href="{% url 'logout' %}" class="mobile-nav-link" onclick="closeMobileMenu()">Logout</a>
+                {% endif %}
+            {% else %}
+            <a href="{% url 'login' %}" class="mobile-nav-link" onclick="closeMobileMenu()">Sign In</a>
+            <a href="{% url 'signup' %}" class="mobile-nav-link" onclick="closeMobileMenu()" style="
+                background: linear-gradient(90deg, #f59e0b, #ea580c);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                margin-top: 10px;
+            ">Sign Up</a>
+            {% endif %}
+        </div>
+    </div>
 
     <!-- Whitepaper Hero -->
     <section class="whitepaper-hero">
@@ -600,7 +752,7 @@
                 <div class="crown-badge">OFFICIAL DOCUMENT</div>
                 <h1 class="hero-title">CROWNIE WHITEPAPER</h1>
                 <p class="hero-subtitle">
-                    The Gameverse Reclaimed. A blockchain-powered gaming ecosystem merging play-to-earn, 
+                    The Gameverse Reclaimed. A blockchain-powered gaming ecosystem merging play-to-earn,
                     NFT ownership, and persistent gameplay in the Crownieverse.
                 </p>
                 <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
@@ -626,16 +778,16 @@
                 </div>
                 <div class="content-block">
                     <p class="content-text">
-                        Crownie is a blockchain powered gaming ecosystem that merges play to earn mechanics, 
-                        NFT ownership, and a persistent game universe, known as the Crownieverse. Unlike typical 
-                        crypto projects, Crownie is first and foremost a game, with a metaverse like structure 
+                        Crownie is a blockchain powered gaming ecosystem that merges play to earn mechanics,
+                        NFT ownership, and a persistent game universe, known as the Crownieverse. Unlike typical
+                        crypto projects, Crownie is first and foremost a game, with a metaverse like structure
                         but deeply focused on gameplay, story, and player progression.
                     </p>
                     <p class="content-text">
-                        Players take on the role of Crownie, the rightful heir whose birthright was usurped by a 
-                        treacherous uncle, struggling to reclaim his throne across multiple realms, stages, and 
-                        challenges. Every action, achievement, and in game decision is integrated into the 
-                        Crownieverse economy, allowing players to earn rewards, influence governance, and progress 
+                        Players take on the role of Crownie, the rightful heir whose birthright was usurped by a
+                        treacherous uncle, struggling to reclaim his throne across multiple realms, stages, and
+                        challenges. Every action, achievement, and in game decision is integrated into the
+                        Crownieverse economy, allowing players to earn rewards, influence governance, and progress
                         their characters and assets.
                     </p>
                 </div>
@@ -649,7 +801,7 @@
                 </div>
                 <div class="content-block">
                     <p class="content-text">
-                        Crownie aims to deliver a new class of blockchain games where storyline, strategy, 
+                        Crownie aims to deliver a new class of blockchain games where storyline, strategy,
                         and utility intersect. It solves common issues in both gaming and crypto ecosystems:
                     </p>
                     <div style="margin: 25px 0;">
@@ -667,8 +819,8 @@
                         </div>
                     </div>
                     <p class="content-text">
-                        By combining Play to Earn (P2E), Chat to Earn (C2E), Engage to Earn (E2E), NFTs, 
-                        and yield farming, Crownie provides tangible utility for both players and investors 
+                        By combining Play to Earn (P2E), Chat to Earn (C2E), Engage to Earn (E2E), NFTs,
+                        and yield farming, Crownie provides tangible utility for both players and investors
                         while preserving the integrity of the game experience.
                     </p>
                 </div>
@@ -682,7 +834,7 @@
                 </div>
                 <div class="content-block">
                     <div class="highlight-text">
-                        "In a world once ruled by a single crown... power is no longer inherited. 
+                        "In a world once ruled by a single crown... power is no longer inherited.
                         It is earned. Crownie awakens to reclaim what is rightfully his."
                     </div>
                     <div style="display: grid; gap: 20px; margin-top: 30px;">
@@ -701,14 +853,14 @@
                         <div>
                             <h3 class="content-title">Core Gameplay</h3>
                             <p class="content-text">
-                                Players conquer realms, master abilities, and unlock special items representing both 
+                                Players conquer realms, master abilities, and unlock special items representing both
                                 in-game utility and tokenized assets.
                             </p>
                         </div>
                         <div>
                             <h3 class="content-title">Progression</h3>
                             <p class="content-text">
-                                Levels, stages, and quests integrate player rewards, increasing engagement and 
+                                Levels, stages, and quests integrate player rewards, increasing engagement and
                                 economic participation.
                             </p>
                         </div>
@@ -882,7 +1034,7 @@
                             <div style="color: #cbd5e1; line-height: 1.6;">
                                 Dedicated channels for updates, events, and pre-sale/public sale news. Never miss important announcements.
                             </div>
-                            <a href="https://t.me/crownie_ann" target="_blank" style="
+                            <a href="https://t.me/crownieverse" target="_blank" style="
                                 display: inline-block;
                                 margin-top: 15px;
                                 color: #06b6d4;
@@ -907,9 +1059,9 @@
                 </div>
                 <div class="content-block">
                     <p class="content-text" style="font-size: 1.1rem; line-height: 1.8;">
-                        Crownie is more than a token or a meme project. It is a game first, community driven, 
-                        utility rich ecosystem with layered tokenomics, NFTs, and yield farming. Players are 
-                        immersed in a persistent universe where they can earn, influence, and reclaim their 
+                        Crownie is more than a token or a meme project. It is a game first, community driven,
+                        utility rich ecosystem with layered tokenomics, NFTs, and yield farming. Players are
+                        immersed in a persistent universe where they can earn, influence, and reclaim their
                         crowns literally and metaphorically.
                     </p>
                     <div class="highlight-text" style="margin-top: 30px;">
@@ -942,9 +1094,9 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p class="footer-copyright">© 2024 Crownie | The Gameverse Reclaimed. All rights reserved.</p>
+            <p class="footer-copyright">© 2026 Crownie | The Gameverse Reclaimed. All rights reserved.</p>
             <p class="footer-tagline">Built with Django | The fallen king shall rise again</p>
-            
+
             <div style="margin-top: 30px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
                 <a href="/" style="color: #fbbf24; text-decoration: none;">Home</a>
                 <a href="{% url 'quests' %}" style="color: #94a3b8; text-decoration: none;">Quests</a>
@@ -957,9 +1109,42 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // ===== MOBILE NAVIGATION =====
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            function toggleMobileMenu() {
+                hamburger.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+            }
+
+            function closeMobileMenu() {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            if (hamburger) {
+                hamburger.addEventListener('click', toggleMobileMenu);
+            }
+
+            // Close menu when clicking outside
+            mobileMenu.addEventListener('click', function(e) {
+                if (e.target === mobileMenu) {
+                    closeMobileMenu();
+                }
+            });
+
             // Smooth scroll for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
+                    // Don't prevent default for mobile menu links
+                    if (this.classList.contains('mobile-nav-link')) {
+                        closeMobileMenu();
+                        return;
+                    }
+
                     e.preventDefault();
                     const targetId = this.getAttribute('href');
                     if (targetId === '#') return;
@@ -1000,7 +1185,7 @@
                 const text = document.querySelector('body').innerText;
                 const blob = new Blob([text], { type: 'text/plain' });
                 const url = URL.createObjectURL(blob);
-                
+
                 const a = document.createElement('a');
                 a.href = url;
                 a.download = 'Crownie_Whitepaper.txt';
@@ -1008,7 +1193,7 @@
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
-                
+
                 // Show success message
                 alert('Whitepaper download started! For the full formatted version, please visit our website.');
             };
@@ -1017,7 +1202,7 @@
             function updateNavActive() {
                 const currentPath = window.location.pathname;
                 const navLinks = document.querySelectorAll('.nav-link');
-                
+
                 navLinks.forEach(link => {
                     const href = link.getAttribute('href');
                     if (href === currentPath || (href === '/whitepaper/' && currentPath.includes('whitepaper'))) {
@@ -1032,19 +1217,34 @@
             // Add scroll effect to navbar
             let lastScrollTop = 0;
             const nav = document.querySelector('nav');
-            
+
             window.addEventListener('scroll', function() {
                 let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                
+
                 if (scrollTop > lastScrollTop && scrollTop > 100) {
                     nav.style.transform = 'translateY(-100%)';
                     nav.style.transition = 'transform 0.3s ease';
                 } else {
                     nav.style.transform = 'translateY(0)';
                 }
-                
+
                 lastScrollTop = scrollTop;
             });
+
+            // Adjust scroll offset for mobile
+            function updateScrollOffset() {
+                const navHeight = document.querySelector('nav').offsetHeight;
+                const style = document.createElement('style');
+                style.textContent = `
+                    html {
+                        scroll-padding-top: ${navHeight}px;
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+
+            updateScrollOffset();
+            window.addEventListener('resize', updateScrollOffset);
         });
     </script>
 </body>

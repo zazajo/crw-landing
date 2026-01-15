@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CROWNIE | Own Meme Culture</title>
-    <meta name="description" content="CROWNIE is the Base meme economy that rewards creativity, culture, and engagement with on-chain value.">
-    <meta name="keywords" content="CROWNIE, meme economy, Base blockchain, cryptocurrency, NFT, DeFi, web3">
-    <meta name="author" content="CROWNIE Team">
+    <title>CROWNIE | The Gameverse Reclaimed</title>
+    <meta name="description" content="CROWNIE - The ultimate blockchain gaming ecosystem. Play-to-earn, NFT ownership, and persistent gameplay in the Crownieverse.">
+    <meta name="keywords" content="CROWNIE, blockchain gaming, play-to-earn, NFT, GameFi, Crownieverse, web3 games">
+    <meta name="author" content="Crownie Team">
 
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="CROWNIE | Own Meme Culture">
-    <meta property="og:description" content="CROWNIE is the Base meme economy that rewards creativity, culture, and engagement with on-chain value.">
+    <meta property="og:title" content="CROWNIE | The Gameverse Reclaimed">
+    <meta property="og:description" content="CROWNIE - The ultimate blockchain gaming ecosystem. Play-to-earn, NFT ownership, and persistent gameplay in the Crownieverse.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://crownie.com">
+    <meta property="og:url" content="https://crownieverse.xyz">
     <meta property="og:site_name" content="CROWNIE">
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CROWNIE | Own Meme Culture">
-    <meta name="twitter:description" content="CROWNIE is the Base meme economy that rewards creativity, culture, and engagement with on-chain value.">
+    <meta name="twitter:title" content="CROWNIE | The Gameverse Reclaimed">
+    <meta name="twitter:description" content="CROWNIE - The ultimate blockchain gaming ecosystem. Play-to-earn, NFT ownership, and persistent gameplay in the Crownieverse.">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,6 +39,8 @@
             --crown-gold: #FFD700;
             --crown-gold-dark: #DAA520;
             --crown-gold-light: #FFF8DC;
+            --crown-orange: #f59e0b;
+            --crown-orange-dark: #ea580c;
         }
 
         * {
@@ -77,7 +79,7 @@
             border-bottom: 1px solid rgba(168, 85, 247, 0.3);
             z-index: 1000;
             padding: 15px 20px;
-            height: 70px; /* Fixed height for nav */
+            height: 70px;
         }
 
         .nav-container {
@@ -196,29 +198,48 @@
             color: #fbbf24;
         }
 
-        /* ===== HERO SECTION ===== */
+        /* ===== FIXED HERO SECTION ===== */
         .hero-section {
             min-height: 100vh;
             display: flex;
             align-items: center;
             position: relative;
             overflow: hidden;
+            padding-top: 70px;
             background: linear-gradient(135deg,
                 rgba(10, 1, 19, 0.95) 0%,
                 rgba(42, 10, 78, 0.85) 50%,
                 rgba(10, 1, 19, 0.95) 100%);
-            padding-top: 70px; /* Match nav height */
         }
 
-        .hero-background-image {
+        /* Static background image instead of glitchy video */
+        .hero-background {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            opacity: 0.3;
+            background-image: url('{% static "images/hero_bg.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.4;
             z-index: 0;
+        }
+
+        /* Fallback if image doesn't exist */
+        .hero-background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg,
+                rgba(10, 1, 19, 0.95) 0%,
+                rgba(42, 10, 78, 0.85) 50%,
+                rgba(10, 1, 19, 0.95) 100%);
+            z-index: 1;
         }
 
         .hero-overlay {
@@ -239,8 +260,7 @@
             z-index: 2;
             text-align: center;
             width: 100%;
-            padding: 20px 20px 60px 20px; /* Reduced top padding */
-            margin-top: 0; /* Ensure no extra margin */
+            padding: 40px 20px;
         }
 
         /* Crown Badge */
@@ -261,7 +281,7 @@
         }
 
         .hero-title {
-            font-size: 4.5rem;
+            font-size: 4rem;
             font-weight: 900;
             background: linear-gradient(90deg, #fbbf24, #ea580c);
             -webkit-background-clip: text;
@@ -313,48 +333,38 @@
             box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
         }
 
-        /* ===== EARN BANNER SECTION ===== */
-        .earn-banner-section {
+        .btn-secondary {
+            background: transparent;
+            color: #fbbf24;
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.125rem;
+            border: 2px solid #f59e0b;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-height: 56px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        /* ===== GAME SHOWCASE ===== */
+        .game-showcase {
             padding: 80px 0;
-            background: linear-gradient(135deg, #1a0a2e 0%, #2a1a4e 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .earn-banner-container {
-            position: relative;
-            max-width: 1000px;
-            margin: 0 auto;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            border: 3px solid rgba(251, 191, 36, 0.3);
-        }
-
-        .earn-banner-image {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-
-        .earn-banner-container:hover .earn-banner-image {
-            transform: scale(1.02);
-        }
-
-        /* ===== GAME TEASER SECTION ===== */
-        .game-teaser-section {
-            padding: 100px 0;
-            background: rgba(0, 0, 0, 0.9);
-            position: relative;
-            overflow: hidden;
+            background: rgba(0, 0, 0, 0.95);
         }
 
         .section-title {
             font-size: 2.5rem;
             font-weight: 800;
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 20px;
             background: linear-gradient(90deg, #fbbf24, #ea580c);
             -webkit-background-clip: text;
             background-clip: text;
@@ -362,281 +372,224 @@
             text-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
         }
 
-        .game-teaser-video-container {
-            position: relative;
-            max-width: 800px;
-            margin: 40px auto 60px;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
-            border: 3px solid rgba(251, 191, 36, 0.3);
-        }
-
-        .game-teaser-video {
-            width: 100%;
-            height: auto;
-            min-height: 450px;
-            display: block;
-            border-radius: 18px;
-            background: #000;
-        }
-
-        /* Improved Video Controls */
-        .video-controls-container {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 12px 20px;
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-            opacity: 0.8;
-            transition: opacity 0.3s;
-        }
-
-        .video-controls-container:hover {
-            opacity: 1;
-        }
-
-        .video-control-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            padding: 5px;
-            border-radius: 50%;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-        }
-
-        .video-control-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.1);
-        }
-
-        .video-control-btn.mute-btn {
-            margin-left: auto;
-        }
-
-        .video-progress {
-            flex: 1;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 2px;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .video-progress-filled {
-            height: 100%;
-            background: linear-gradient(90deg, #f59e0b, #ea580c);
-            width: 0%;
-            transition: width 0.1s;
-        }
-
-        /* ===== KINGDOM OVERVIEW ===== */
-        .kingdom-overview {
-            padding: 100px 0;
-            background: linear-gradient(135deg, rgba(26, 10, 46, 0.8) 0%, rgba(42, 26, 78, 0.9) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .kingdom-image-container {
-            position: relative;
-            max-width: 900px;
-            margin: 0 auto 60px;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-            border: 3px solid rgba(168, 85, 247, 0.3);
-        }
-
-        .kingdom-image {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-
-        .kingdom-image-container:hover .kingdom-image {
-            transform: scale(1.03);
-        }
-
-        .kingdom-text {
+        .section-subtitle {
             text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto 60px;
             font-size: 1.125rem;
             line-height: 1.6;
-            color: #cbd5e1;
         }
 
-        /* ===== JOURNEY SECTION ===== */
-        .journey-section {
-            padding: 100px 0;
-            background: rgba(0, 0, 0, 0.95);
-            position: relative;
-        }
-
-        .journey-grid {
+        .game-showcase-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 40px;
             margin: 60px 0;
         }
 
-        .journey-card {
+        .game-showcase-main {
+            grid-column: 1 / -1;
             background: rgba(30, 41, 59, 0.5);
             border-radius: 20px;
             overflow: hidden;
-            border: 1px solid rgba(251, 191, 36, 0.2);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid rgba(251, 191, 36, 0.3);
             backdrop-filter: blur(10px);
         }
 
-        .journey-card:hover {
-            transform: translateY(-10px);
-            border-color: #f59e0b;
-            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.2);
-        }
-
-        .journey-image-container {
+        .game-showcase-video {
             width: 100%;
-            overflow: hidden;
-            max-height: 300px;
-        }
-
-        .journey-image {
-            width: 100%;
-            height: auto;
+            height: 400px;
+            object-fit: cover;
             display: block;
-            transition: transform 0.5s ease;
         }
 
-        .journey-card:hover .journey-image {
-            transform: scale(1.05);
+        .game-showcase-content {
+            padding: 40px;
         }
 
-        .journey-content {
-            padding: 30px;
+        .game-showcase-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 15px;
         }
 
-        .journey-title {
+        .game-showcase-desc {
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .game-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .game-feature {
+            background: rgba(251, 191, 36, 0.1);
+            color: #fbbf24;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .game-showcase-card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .game-showcase-card:hover {
+            transform: translateY(-10px);
+            border-color: #a855f7;
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.2);
+        }
+
+        .game-card-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .game-card-title {
             font-size: 1.5rem;
             font-weight: 700;
-            margin-bottom: 15px;
             color: white;
+            margin-bottom: 15px;
         }
 
-        .journey-description {
+        .game-card-desc {
             color: #94a3b8;
             line-height: 1.6;
         }
 
-        /* ===== CHARACTERS SECTION ===== */
-        .characters-section {
+        /* ===== FEATURED GAMES ===== */
+        .featured-games {
             padding: 100px 0;
-            background: linear-gradient(135deg, rgba(42, 26, 78, 0.8) 0%, rgba(26, 10, 46, 0.9) 100%);
+            background: linear-gradient(135deg, rgba(26, 10, 46, 0.9) 0%, rgba(42, 26, 78, 0.95) 100%);
         }
 
-        .characters-grid {
+        .featured-games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             margin: 60px 0;
         }
 
-        .character-card {
+        .featured-game-card {
             background: rgba(30, 41, 59, 0.5);
             border-radius: 20px;
             overflow: hidden;
-            border: 1px solid rgba(168, 85, 247, 0.2);
-            transition: all 0.3s ease;
+            border: 2px solid rgba(168, 85, 247, 0.3);
             backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .character-card:hover {
-            transform: translateY(-5px);
+        .featured-game-card:hover {
+            transform: translateY(-10px);
             border-color: #a855f7;
-            box-shadow: 0 15px 30px rgba(168, 85, 247, 0.3);
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.3);
         }
 
-        .character-image-container {
+        .featured-game-image {
             width: 100%;
-            overflow: hidden;
-            max-height: 350px;
-        }
-
-        .character-image {
-            width: 100%;
-            height: auto;
+            height: 200px;
+            object-fit: cover;
             display: block;
-            transition: transform 0.5s ease;
         }
 
-        .character-card:hover .character-image {
-            transform: scale(1.05);
+        .featured-game-content {
+            padding: 30px;
         }
 
-        .character-info {
-            padding: 25px;
-            text-align: center;
-        }
-
-        .character-name {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 10px;
+        .featured-game-title {
+            font-size: 1.5rem;
+            font-weight: 800;
             color: white;
+            margin-bottom: 10px;
         }
 
-        .character-role {
+        .featured-game-status {
             color: #fbbf24;
             font-weight: 600;
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        /* ===== CLAIM CROWN SECTION ===== */
-        .claim-crown-section {
+        .featured-game-desc {
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        /* ===== EARN SECTION ===== */
+        .earn-section {
             padding: 100px 0;
-            background: linear-gradient(135deg, rgba(26, 10, 46, 0.9) 0%, rgba(42, 26, 78, 0.95) 100%);
-            text-align: center;
+            background: rgba(0, 0, 0, 0.9);
         }
 
-        .claim-crown-container {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
+        .earn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
         }
 
-        .claim-crown-image {
-            width: 100%;
-            height: auto;
+        .earn-card {
+            background: rgba(30, 41, 59, 0.5);
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            margin-bottom: 40px;
-            border: 3px solid rgba(251, 191, 36, 0.3);
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
         }
 
-        .claim-cta {
+        .earn-card:hover {
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.2);
+        }
+
+        .earn-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .earn-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .earn-amount {
             font-size: 1.5rem;
+            font-weight: 800;
             color: #fbbf24;
-            margin-bottom: 30px;
-            font-weight: 600;
+            margin-bottom: 10px;
         }
 
-        /* ===== SOCIAL SECTION ===== */
-        .social-section {
+        .earn-desc {
+            color: #94a3b8;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* ===== COMMUNITY SECTION ===== */
+        .community-section {
             background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
             border-radius: 24px;
             padding: 80px 40px;
@@ -647,7 +600,7 @@
             overflow: hidden;
         }
 
-        .social-title {
+        .community-title {
             font-size: 3rem;
             font-weight: 800;
             margin-bottom: 20px;
@@ -657,7 +610,7 @@
             color: transparent;
         }
 
-        .social-subtitle {
+        .community-subtitle {
             color: #cbd5e1;
             max-width: 600px;
             margin: 0 auto 40px;
@@ -665,28 +618,28 @@
             line-height: 1.6;
         }
 
-        .social-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1000px;
-            margin: 0 auto;
+        .community-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
         }
 
-        .social-card {
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid #475569;
-            border-radius: 20px;
-            padding: 40px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-decoration: none;
-            color: inherit;
-            backdrop-filter: blur(10px);
+        .community-stat {
+            text-align: center;
         }
 
-        .social-card:hover {
-            border-color: currentColor;
-            transform: translateY(-5px);
+        .community-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .community-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
         }
 
         /* ===== FOOTER ===== */
@@ -730,11 +683,35 @@
             }
         }
 
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(245, 158, 11, 0.8);
+            }
+        }
+
         .fade-in {
             animation: fadeIn 1s ease-out;
         }
 
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
         /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 992px) {
+            .game-showcase-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .game-showcase-main {
+                order: -1;
+            }
+        }
+
         @media (max-width: 768px) {
             /* Mobile Navigation */
             .hamburger {
@@ -745,16 +722,7 @@
                 display: none;
             }
 
-            /* Hero Section - Mobile adjustments */
-            .hero-section {
-                padding-top: 70px; /* Match nav height */
-            }
-
-            .hero-content {
-                padding-top: 10px; /* Reduced padding on mobile */
-                padding-bottom: 40px;
-            }
-
+            /* Hero Section */
             .hero-title {
                 font-size: 3rem;
                 margin-bottom: 15px;
@@ -764,7 +732,7 @@
                 font-size: 2rem;
             }
 
-            .social-title {
+            .community-title {
                 font-size: 2.5rem;
             }
 
@@ -775,7 +743,8 @@
                 margin-bottom: 40px;
             }
 
-            .btn-primary {
+            .btn-primary,
+            .btn-secondary {
                 width: 100%;
                 max-width: 300px;
                 padding: 14px 28px;
@@ -783,61 +752,44 @@
             }
 
             /* Grid Layouts */
-            .journey-grid,
-            .characters-grid,
-            .social-cards {
+            .featured-games-grid,
+            .earn-grid {
                 grid-template-columns: 1fr;
             }
 
-            .social-section {
+            .game-showcase-video {
+                height: 300px;
+            }
+
+            .community-section {
                 padding: 40px 20px;
                 margin: 40px 0;
             }
 
-            /* Video */
-            .game-teaser-video {
-                min-height: 300px;
-            }
-
-            .video-controls-container {
-                padding: 10px 15px;
-                border-radius: 40px;
-                bottom: 15px;
-                left: 15px;
-                right: 15px;
-            }
-
-            .video-control-btn {
-                width: 35px;
-                height: 35px;
-                font-size: 18px;
-            }
-
-            /* Navigation Mobile */
+            /* Mobile Navigation */
             .mobile-nav-link {
                 font-size: 1.25rem;
             }
 
-            /* Adjust section paddings for mobile */
-            .earn-banner-section,
-            .game-teaser-section,
-            .kingdom-overview,
-            .journey-section,
-            .characters-section,
-            .claim-crown-section {
-                padding: 60px 0;
+            /* Stats */
+            .community-stats {
+                gap: 30px;
+            }
+
+            .community-number {
+                font-size: 2rem;
             }
         }
 
         @media (max-width: 480px) {
-            /* Navbar height adjustment for very small screens */
+            /* Navbar height adjustment */
             nav {
                 height: 60px;
                 padding: 10px 15px;
             }
 
             .hero-section {
-                padding-top: 60px; /* Match adjusted nav height */
+                padding-top: 60px;
             }
 
             .hero-title {
@@ -850,31 +802,19 @@
                 margin: 0 auto 30px;
             }
 
-            .social-section {
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .game-showcase-content,
+            .featured-game-content,
+            .earn-card {
+                padding: 25px 20px;
+            }
+
+            .community-section {
                 padding: 30px 20px;
                 margin: 30px 0;
-            }
-
-            .game-teaser-video {
-                min-height: 250px;
-            }
-
-            .video-controls-container {
-                padding: 8px 12px;
-                border-radius: 30px;
-                bottom: 10px;
-                left: 10px;
-                right: 10px;
-            }
-
-            .video-control-btn {
-                width: 30px;
-                height: 30px;
-                font-size: 16px;
-            }
-
-            .mobile-nav-link {
-                font-size: 1.1rem;
             }
 
             /* Crown badge adjustments */
@@ -882,6 +822,10 @@
                 font-size: 12px;
                 padding: 10px 20px;
                 margin-bottom: 20px;
+            }
+
+            .mobile-nav-link {
+                font-size: 1.1rem;
             }
         }
 
@@ -894,9 +838,17 @@
                 font-size: 1rem;
             }
 
+            .section-title {
+                font-size: 1.6rem;
+            }
+
             .crown-badge {
                 font-size: 11px;
                 padding: 8px 16px;
+            }
+
+            .mobile-nav-link {
+                font-size: 1rem;
             }
         }
     </style>
@@ -911,11 +863,10 @@
 
             <!-- Desktop Navigation -->
             <div class="nav-links">
-                <a href="/" class="nav-link">Home</a>
+                <a href="/" class="nav-link" style="color: #fbbf24; font-weight: 600;">Home</a>
                 <a href="{% url 'quests' %}" class="nav-link">Quests</a>
-                <a href="#game-teaser" class="nav-link">Roadmap</a>
+                <a href="{% url 'roadmap' %}" class="nav-link">Roadmap</a>
                 <a href="{% url 'whitepaper' %}" class="nav-link">Whitepaper</a>
-                <a href="#social" class="nav-link">Community</a>
 
                 {% if user.is_authenticated %}
                     {% if user.discord_connected %}
@@ -956,11 +907,10 @@
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobileMenu">
         <div class="mobile-nav-links">
-            <a href="/" class="mobile-nav-link" onclick="closeMobileMenu()">Home</a>
-            <a href="{% url 'quests' %}" class="nav-link" onclick="closeMobileMenu()">Quests</a>
-            <a href="#game-teaser" class="mobile-nav-link" onclick="closeMobileMenu()">Roadmap</a>
+            <a href="/" class="mobile-nav-link" onclick="closeMobileMenu()" style="color: #fbbf24;">Home</a>
+            <a href="{% url 'quests' %}" class="mobile-nav-link" onclick="closeMobileMenu()">Quests</a>
+            <a href="{% url 'roadmap' %}" class="mobile-nav-link" onclick="closeMobileMenu()">Roadmap</a>
             <a href="{% url 'whitepaper' %}" class="mobile-nav-link" onclick="closeMobileMenu()">Whitepaper</a>
-            <a href="#social" class="mobile-nav-link" onclick="closeMobileMenu()">Community</a>
 
             {% if user.is_authenticated %}
                 {% if user.discord_connected %}
@@ -987,38 +937,36 @@
 
     <!-- Hero Section -->
     <section class="hero-section">
-        {% if 'journey_begins.jpg' %}
-        <img src="{% static 'images/journey_begins.JPG' %}" alt="Crownie Journey Begins" class="hero-background-image">
-        {% endif %}
-
+        <div class="hero-background"></div>
         <div class="hero-overlay"></div>
 
         <div class="container">
-            <div class="hero-content">
+            <div class="hero-content fade-in">
                 {% if 'logo.png' %}
                 <div style="margin-bottom: 20px;">
-                    <img src="{% static 'images/logo.png' %}" alt="Crownie Logo" style="height: 70px; width: auto; filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.5));">
+                    <img src="{% static 'images/logo.png' %}" alt="Crownie Logo" style="height: 80px; width: auto; filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.5));">
                 </div>
                 {% endif %}
 
-                <div class="crown-badge">CROWNIE VERSE</div>
-                <h1 class="hero-title">THE FALLEN KING AWAITS</h1>
+                <div class="crown-badge pulse">⚔️ THE GAMEVERSE RECLAIMED</div>
+                <h1 class="hero-title">ENTER THE CROWNIEVERSE</h1>
 
                 {% if user.is_authenticated %}
                 <p class="hero-subtitle">
                     Welcome back, <span style="color: #fbbf24; font-weight: 600;">{{ user.username }}</span>!
                     Your reputation: <span style="color: #fbbf24; font-weight: 600;">{{ user.reputation_score|floatformat:1 }}</span>
-                    <br>Continue your quest to reclaim the crown!
+                    <br>Continue your quest in the ultimate blockchain gaming ecosystem!
                 </p>
                 {% else %}
                 <p class="hero-subtitle">
-                    Dethroned. Disgraced. Determined. <span style="color: #fbbf24; font-weight: 600;">Crownie</span> fights through endless challenges to reclaim the crown in a never-ending battle for royalty.
+                    Dethroned. Disgraced. Determined. <span style="color: #fbbf24; font-weight: 600;">Crownie</span> fights through endless challenges 
+                    in a persistent blockchain universe where every battle earns rewards and every victory brings you closer to the crown.
                 </p>
                 {% endif %}
 
                 <div class="cta-buttons">
-                    <a href="#game-teaser" class="btn-primary">
-                        <span>⚔️</span> Begin Your Quest
+                    <a href="#game-showcase" class="btn-primary">
+                        <span>🎮</span> Play Now
                     </a>
 
                     {% if user.is_authenticated %}
@@ -1033,230 +981,234 @@
                         {% endif %}
                     {% else %}
                     <a href="{% url 'signup' %}" class="btn-primary">
-                        <span>👑</span> Join the Kingdom
+                        <span>⚔️</span> Start Playing
                     </a>
                     {% endif %}
+                    <a href="#earn" class="btn-secondary">
+                        <span>💰</span> Earn Rewards
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Earn Banner Section -->
-    <section class="earn-banner-section fade-in">
+    <!-- Game Showcase -->
+    <section id="game-showcase" class="game-showcase fade-in">
         <div class="container">
-            <h2 class="section-title">Earn Your Royalty</h2>
-            {% if 'earn_banner.JPG' %}
-            <div class="earn-banner-container">
-                <img src="{% static 'images/earn_banner.JPG' %}" alt="Chat to Earn, Engage to Earn, Play to Earn" class="earn-banner-image">
-            </div>
-            {% endif %}
-        </div>
-    </section>
-
-   <!-- Game Teaser Section -->
-<section id="game-teaser" class="game-teaser-section fade-in">
-    <div class="container">
-        <h2 class="section-title">Witness the Battle</h2>
-
-        <div class="game-teaser-video-container">
-            {% if 'videos/teaser.MP4' %}
-            <video class="game-teaser-video"
-                   id="crownieVideo"
-                   poster="{% static 'images/video-thumbnail.png' %}"
-                   loop
-                   playsinline
-                   preload="auto">
-                <source src="{% static 'videos/teaser.MP4' %}" type="video/mp4">
-                <source src="{% static 'videos/teaser.webm' %}" type="video/webm">
-                Your browser does not support the video tag.
-            </video>
-
-            <!-- Video Controls -->
-            <div class="video-controls-container" style="opacity: 0;">
-                <button class="video-control-btn play-pause-btn" id="playPauseBtn"
-                        title="Play/Pause (Space or K)" style="background: rgba(245, 158, 11, 0.9);">
-                    ▶
-                </button>
-                <div class="video-progress" id="videoProgress" title="Click to seek">
-                    <div class="video-progress-filled" id="videoProgressFilled"></div>
-                </div>
-                <button class="video-control-btn mute-btn" id="muteBtn"
-                        title="Mute/Unmute (M)" style="background: rgba(255, 255, 255, 0.2);">
-                    🔇
-                </button>
-                <button class="video-control-btn fullscreen-btn" id="fullscreenBtn"
-                        title="Fullscreen (F)" style="background: rgba(255, 255, 255, 0.2);">
-                    ⛶
-                </button>
-            </div>
-            {% else %}
-            <div style="background: linear-gradient(135deg, #1a0a2e, #2a1a4e); min-height: 450px; border-radius: 18px; display: flex; align-items: center; justify-content: center;">
-                <div style="text-align: center;">
-                    <div style="font-size: 60px; margin-bottom: 20px;">🎮</div>
-                    <h3 style="color: white; margin-bottom: 10px;">Game Teaser Coming Soon</h3>
-                    <p style="color: #94a3b8;">Epic battles await in the Crownie kingdom</p>
-                    <!-- Add a static image fallback -->
-                    {% if 'video_placeholder.jpg' %}
-                    <img src="{% static 'images/video_placeholder.jpg' %}" alt="Game Teaser" style="width: 100%; max-width: 600px; border-radius: 10px; margin-top: 20px;">
-                    {% endif %}
-                </div>
-            </div>
-            {% endif %}
-        </div>
-    </div>
-</section>
-
-    <!-- Kingdom Overview -->
-    <section class="kingdom-overview fade-in">
-        <div class="container">
-            <h2 class="section-title">Observe the Kingdom</h2>
-            {% if 'Observing_kingdom.JPG' %}
-            <div class="kingdom-image-container">
-                <img src="{% static 'images/Observing_kingdom.JPG' %}" alt="The King Observing His Kingdom" class="kingdom-image">
-            </div>
-            {% endif %}
-            <p class="kingdom-text">
-                From the highest peak, the fallen king surveys the vast kingdom he once ruled.
-                Every mountain, every valley, every fortress holds memories of glory and betrayal.
-                The path to reclaiming the crown begins with understanding the land and its people.
+            <h2 class="section-title">Experience the Crownieverse</h2>
+            <p class="section-subtitle">
+                A persistent blockchain universe where your actions have real value. 
+                Battle, earn, and conquer in the ultimate gaming ecosystem.
             </p>
-        </div>
-    </section>
 
-    <!-- Journey Section -->
-    <section class="journey-section fade-in">
-        <div class="container">
-            <h2 class="section-title">The Journey of Royalty</h2>
-            <div class="journey-grid">
-                <div class="journey-card">
-                    <div class="journey-image-container">
-                        {% if 'journey_begins.JPG' %}
-                        <img src="{% static 'images/journey_begins.JPG' %}" alt="The Journey Begins" class="journey-image">
-                        {% endif %}
+            <div class="game-showcase-grid">
+                <div class="game-showcase-main">
+                    {% if 'videos/teaser.MP4' %}
+                    <video class="game-showcase-video" controls poster="{% static 'images/video-thumbnail.png' %}">
+                        <source src="{% static 'videos/teaser.MP4' %}" type="video/mp4">
+                        <source src="{% static 'videos/teaser.webm' %}" type="video/webm">
+                        Your browser does not support the video tag.
+                    </video>
+                    {% else %}
+                    <div style="height: 400px; background: linear-gradient(135deg, #1a0a2e, #2a1a4e); display: flex; align-items: center; justify-content: center;">
+                        <div style="text-align: center; padding: 40px;">
+                            <div style="font-size: 60px; margin-bottom: 20px;">🎮</div>
+                            <h3 style="color: white; margin-bottom: 10px; font-size: 1.8rem;">Game Teaser</h3>
+                            <p style="color: #94a3b8;">Epic battles await in the Crownieverse</p>
+                        </div>
                     </div>
-                    <div class="journey-content">
-                        <h3 class="journey-title">The Journey Begins</h3>
-                        <p class="journey-description">Every king starts as a warrior. Your path to royalty begins with courage and determination.</p>
+                    {% endif %}
+                    <div class="game-showcase-content">
+                        <h3 class="game-showcase-title">Crownie's Revenge</h3>
+                        <p class="game-showcase-desc">
+                            Lead Crownie on an epic journey to reclaim his stolen throne. Battle through treacherous realms, 
+                            defeat powerful enemies, and earn valuable rewards in this play-to-earn action RPG.
+                        </p>
+                        <div class="game-features">
+                            <span class="game-feature">Play-to-Earn</span>
+                            <span class="game-feature">NFT Collectibles</span>
+                            <span class="game-feature">PvP Arena</span>
+                            <span class="game-feature">Daily Quests</span>
+                            <span class="game-feature">Guild System</span>
+                        </div>
+                        <a href="{% url 'signup' %}" class="btn-primary" style="width: 100%;">
+                            <span>⚔️</span> Start Your Journey
+                        </a>
                     </div>
                 </div>
 
-                <div class="journey-card">
-                    <div class="journey-image-container">
-                        {% if 'heir_rise.JPG' %}
-                        <img src="{% static 'images/heir_rise.JPG' %}" alt="Rise of the Heir" class="journey-image">
-                        {% endif %}
+                <div class="game-showcase-card">
+                    <span class="game-card-icon">🏰</span>
+                    <h3 class="game-card-title">Persistent Universe</h3>
+                    <p class="game-card-desc">
+                        Your progress is saved forever on the blockchain. Build your legacy in a living world 
+                        that evolves with community decisions and player actions.
+                    </p>
+                </div>
+
+                <div class="game-showcase-card">
+                    <span class="game-card-icon">👑</span>
+                    <h3 class="game-card-title">True Ownership</h3>
+                    <p class="game-card-desc">
+                        Own your in-game assets as NFTs. Trade, sell, or upgrade your weapons, armor, 
+                        and characters in our marketplace.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Games -->
+    <section class="featured-games fade-in">
+        <div class="container">
+            <h2 class="section-title">Featured Games</h2>
+            <p class="section-subtitle">
+                Explore diverse gaming experiences within the Crownieverse ecosystem.
+            </p>
+
+            <div class="featured-games-grid">
+                <!-- Kingdom Strategy -->
+                <div class="featured-game-card">
+                    {% if 'Observing_kingdom.JPG' %}
+                    <img src="{% static 'images/Observing_kingdom.JPG' %}" alt="Kingdom Strategy" class="featured-game-image">
+                    {% endif %}
+                    <div class="featured-game-content">
+                        <h3 class="featured-game-title">Kingdom Strategy</h3>
+                        <div class="featured-game-status">
+                            <span>🏰</span> Strategy • Coming Soon
+                        </div>
+                        <p class="featured-game-desc">
+                            Build and defend your blockchain kingdom. Manage resources, form alliances, 
+                            and conquer territories in this strategic web3 game.
+                        </p>
+                        <button class="btn-secondary" style="width: 100%; cursor: not-allowed; opacity: 0.7;">
+                            <span>⏳</span> Coming Soon
+                        </button>
                     </div>
-                    <div class="journey-content">
-                        <h3 class="journey-title">Rise of the Heir</h3>
-                        <p class="journey-description">Prove your worth, gain allies, and rise through the ranks to claim your birthright.</p>
+                </div>
+
+                <!-- Crown's Quest -->
+                <div class="featured-game-card">
+                    {% if 'claim_crown.JPG' %}
+                    <img src="{% static 'images/claim_crown.JPG' %}" alt="Crown's Quest" class="featured-game-image">
+                    {% endif %}
+                    <div class="featured-game-content">
+                        <h3 class="featured-game-title">Crown's Quest</h3>
+                        <div class="featured-game-status">
+                            <span>🔍</span> Adventure • Beta Access
+                        </div>
+                        <p class="featured-game-desc">
+                            Solve ancient puzzles and uncover hidden treasures in this narrative-driven 
+                            adventure. Each discovery reveals more of Crownie's mysterious past.
+                        </p>
+                        <a href="{% url 'signup' %}" class="btn-primary" style="width: 100%; background: linear-gradient(90deg, #8b5cf6, #7c3aed);">
+                            <span>🎭</span> Join Beta
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Battle Arena -->
+                <div class="featured-game-card">
+                    {% if 'journey_begins.JPG' %}
+                    <img src="{% static 'images/journey_begins.JPG' %}" alt="Battle Arena" class="featured-game-image">
+                    {% endif %}
+                    <div class="featured-game-content">
+                        <h3 class="featured-game-title">Battle Arena</h3>
+                        <div class="featured-game-status">
+                            <span>⚔️</span> PvP • Live Now
+                        </div>
+                        <p class="featured-game-desc">
+                            Test your skills in fast-paced PvP battles. Compete in tournaments, 
+                            climb the leaderboards, and earn exclusive rewards.
+                        </p>
+                        <a href="{% url 'signup' %}" class="btn-primary" style="width: 100%;">
+                            <span>🏆</span> Enter Arena
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Characters Section -->
-    <section id="characters" class="characters-section fade-in">
+    <!-- Earn Section -->
+    <section id="earn" class="earn-section fade-in">
         <div class="container">
-            <h2 class="section-title">The Royal Kingdom</h2>
-            <div class="characters-grid">
-                <div class="character-card">
-                    <div class="character-image-container">
-                        {% if 'character1.JPG' %}
-                        <img src="{% static 'images/character1.JPG' %}" alt="The Fallen King" class="character-image">
-                        {% endif %}
-                    </div>
-                    <div class="character-info">
-                        <h3 class="character-name">Crownie the Fallen</h3>
-                        <div class="character-role">The Dethroned King</div>
-                        <p style="color: #94a3b8; font-size: 0.9rem;">Once ruler of all he surveyed, now fighting to reclaim his kingdom and honor.</p>
-                    </div>
+            <h2 class="section-title">Earn While You Play</h2>
+            <p class="section-subtitle">
+                Multiple ways to earn real rewards in the Crownieverse ecosystem.
+            </p>
+
+            <div class="earn-grid">
+                <div class="earn-card">
+                    <span class="earn-icon">🎮</span>
+                    <h3 class="earn-title">Play-to-Earn</h3>
+                    <div class="earn-amount">$10-50/hr</div>
+                    <p class="earn-desc">
+                        Complete quests, win battles, and achieve milestones to earn $CROWNIE tokens.
+                    </p>
                 </div>
 
-                <div class="character-card">
-                    <div class="character-image-container">
-                        {% if 'character2.JPG' %}
-                        <img src="{% static 'images/character2.JPG' %}" alt="The Crown's Spirit" class="character-image">
-                        {% endif %}
-                    </div>
-                    <div class="character-info">
-                        <h3 class="character-name">The Crown's Spirit</h3>
-                        <div class="character-role">The Dethroned King</div>
-                        <p style="color: #94a3b8; font-size: 0.9rem;">The very essence of royalty, manifesting as Crownie in his quest for redemption.</p>
-                    </div>
+                <div class="earn-card">
+                    <span class="earn-icon">💬</span>
+                    <h3 class="earn-title">Chat-to-Earn</h3>
+                    <div class="earn-amount">$5-20/hr</div>
+                    <p class="earn-desc">
+                        Engage with the community, share strategies, and participate in discussions.
+                    </p>
                 </div>
 
-                <div class="character-card">
-                    <div class="character-image-container">
-                        {% if 'character3.JPG' %}
-                        <img src="{% static 'images/character3.JPG' %}" alt="The Fallen Monarch" class="character-image">
-                        {% endif %}
-                    </div>
-                    <div class="character-info">
-                        <h3 class="character-name">The Fallen Monarch</h3>
-                        <div class="character-role">The Dethroned King</div>
-                        <p style="color: #94a3b8; font-size: 0.9rem;">A king without a throne, but with undying determination to reclaim what was lost.</p>
-                    </div>
+                <div class="earn-card">
+                    <span class="earn-icon">🌟</span>
+                    <h3 class="earn-title">Engage-to-Earn</h3>
+                    <div class="earn-amount">$3-15/hr</div>
+                    <p class="earn-desc">
+                        Complete social challenges, participate in events, and contribute to governance.
+                    </p>
+                </div>
+
+                <div class="earn-card">
+                    <span class="earn-icon">🏦</span>
+                    <h3 class="earn-title">Yield Farming</h3>
+                    <div class="earn-amount">15-30% APY</div>
+                    <p class="earn-desc">
+                        Stake your $CROWNIE tokens to earn passive rewards from the ecosystem.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Claim Crown Section -->
-    <section class="claim-crown-section fade-in">
+    <!-- Community Section -->
+    <section class="community-section fade-in">
         <div class="container">
-            <h2 class="section-title">Claim Your Destiny</h2>
-            <div class="claim-crown-container">
-                {% if 'claim_crown.JPG' %}
-                <img src="{% static 'images/claim_crown.JPG' %}" alt="Claim the Crown" class="claim-crown-image">
-                {% endif %}
-                <div class="claim-cta">The Crown Awaits Its Rightful Heir</div>
-                <a href="{% url 'signup' %}" class="btn-primary" style="font-size: 1.25rem; padding: 18px 40px;">
-                    <span>👑</span> Begin Your Claim
+            <h2 class="community-title">Join Our Gaming Community</h2>
+            <p class="community-subtitle">
+                Connect with thousands of gamers, strategists, and blockchain enthusiasts 
+                in the fastest-growing gaming ecosystem.
+            </p>
+
+            <div class="community-stats">
+                <div class="community-stat">
+                    <div class="community-number">25K+</div>
+                    <div class="community-label">Discord Members</div>
+                </div>
+                <div class="community-stat">
+                    <div class="community-number">50K+</div>
+                    <div class="community-label">Twitter Followers</div>
+                </div>
+                <div class="community-stat">
+                    <div class="community-number">100+</div>
+                    <div class="community-label">Daily Tournaments</div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <a href="https://discord.gg/kNyKUAw6" target="_blank" class="btn-primary" style="background: linear-gradient(90deg, #5865F2, #7289DA);">
+                    <span>💬</span> Join Discord
                 </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Social Section -->
-    <section id="social" class="social-section fade-in">
-        <div class="container">
-            <div class="social-content">
-                <h2 class="social-title">Join the Royal Community</h2>
-                <p class="social-subtitle">
-                    The Crownie kingdom thrives on community. Join Discord for chat-to-earn sessions,
-                    follow our journey on X, and connect with fellow knights.
-                </p>
-
-                <div class="social-cards">
-                    <a href="https://discord.gg/kNyKUAw6" target="_blank" class="social-card" style="border-color: #8b5cf6;">
-                        <div style="font-size: 40px; margin-bottom: 20px;">💬</div>
-                        <h3 style="color: white; margin-bottom: 15px; font-size: 1.5rem;">Discord</h3>
-                        <p style="color: #94a3b8; line-height: 1.6; margin-bottom: 20px;">
-                            Chat-to-Earn sessions, community events, and real-time updates with fellow knights.
-                        </p>
-                        <div style="color: #8b5cf6; font-weight: 600; display: flex; align-items: center; gap: 8px;">
-                            <span>Join Now</span>
-                            <span>→</span>
-                        </div>
-                    </a>
-
-                    <a href="https://x.com/crownie" target="_blank" class="social-card" style="border-color: #3b82f6;">
-                        <div style="font-size: 40px; margin-bottom: 20px;">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="#3b82f6">
-                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                            </svg>
-                        </div>
-                        <h3 style="color: white; margin-bottom: 15px; font-size: 1.5rem;">X (Twitter)</h3>
-                        <p style="color: #94a3b8; line-height: 1.6; margin-bottom: 20px;">
-                            Follow for announcements, memes, kingdom updates, and exclusive content.
-                        </p>
-                        <div style="color: #3b82f6; font-weight: 600; display: flex; align-items: center; gap: 8px;">
-                            <span>Follow Us</span>
-                            <span>→</span>
-                        </div>
-                    </a>
-                </div>
+                <a href="https://x.com/CrownieVerse" target="_blank" class="btn-secondary" style="border-color: #1DA1F2; color: #1DA1F2;">
+                    <span>🐦</span> Follow on X
+                </a>
             </div>
         </div>
     </section>
@@ -1264,8 +1216,16 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p class="footer-copyright">© 2026 Crownie | Own Meme Culture. All rights reserved.</p>
+            <p class="footer-copyright">© 2026 Crownie | The Gameverse Reclaimed. All rights reserved.</p>
             <p class="footer-tagline">Built with Django | The fallen king shall rise again</p>
+
+            <div style="margin-top: 30px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <a href="/" style="color: #fbbf24; text-decoration: none;">Home</a>
+                <a href="{% url 'quests' %}" style="color: #94a3b8; text-decoration: none;">Quests</a>
+                <a href="{% url 'roadmap' %}" style="color: #94a3b8; text-decoration: none;">Roadmap</a>
+                <a href="{% url 'whitepaper' %}" style="color: #94a3b8; text-decoration: none;">Whitepaper</a>
+                <a href="#game-showcase" style="color: #94a3b8; text-decoration: none;">Games</a>
+            </div>
 
             {% if user.is_authenticated %}
             <div style="margin-top: 20px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
@@ -1309,296 +1269,6 @@
                 closeMobileMenu();
             }
         });
-
-        // ===== VIDEO CONTROLS WITH SOUND FIX =====
-        const video = document.getElementById('crownieVideo');
-        const playPauseBtn = document.getElementById('playPauseBtn');
-        const muteBtn = document.getElementById('muteBtn');
-        const fullscreenBtn = document.getElementById('fullscreenBtn');
-        const videoProgress = document.getElementById('videoProgress');
-        const videoProgressFilled = document.getElementById('videoProgressFilled');
-
-        // Track if user has interacted with page
-        let userInteracted = false;
-        let videoStarted = false;
-
-        if (video) {
-            // Different approach for PC vs Mobile
-            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-            if (isMobile) {
-                // Mobile: Use original approach (muted autoplay)
-                video.muted = true;
-                video.volume = 0; // Start at 0 volume
-
-                const playPromise = video.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        console.log('Mobile: Video autoplay started (muted)');
-                        videoStarted = true;
-                        updatePlayPauseButton();
-                        updateMuteButton();
-                    }).catch(error => {
-                        console.log('Mobile autoplay prevented:', error);
-                    });
-                }
-            } else {
-                // PC: Don't autoplay, wait for user interaction
-                video.muted = false;
-                video.volume = 1.0; // Set to max volume
-                video.pause(); // Don't autoplay on PC
-
-                // Show play button more prominently
-                if (playPauseBtn) {
-                    playPauseBtn.style.opacity = '1';
-                    playPauseBtn.style.background = 'rgba(245, 158, 11, 0.9)';
-                }
-
-                console.log('PC: Waiting for user interaction before playing');
-            }
-
-            // Update play/pause button
-            function updatePlayPauseButton() {
-                if (playPauseBtn) {
-                    playPauseBtn.textContent = video.paused ? '▶' : '⏸';
-                    playPauseBtn.title = video.paused ? 'Play (Space)' : 'Pause (Space)';
-                }
-            }
-
-            // Update mute button
-            function updateMuteButton() {
-                if (muteBtn) {
-                    muteBtn.textContent = video.muted ? '🔇' : '🔊';
-                    muteBtn.title = video.muted ? 'Unmute (M)' : 'Mute (M)';
-
-                    // Highlight mute button if video is muted
-                    if (video.muted) {
-                        muteBtn.style.background = 'rgba(239, 68, 68, 0.8)';
-                        muteBtn.style.color = 'white';
-                    } else {
-                        muteBtn.style.background = 'rgba(255, 255, 255, 0.2)';
-                        muteBtn.style.color = 'white';
-                    }
-                }
-            }
-
-            // Update progress bar
-            function updateProgressBar() {
-                if (videoProgressFilled && video.duration && !isNaN(video.duration)) {
-                    const percent = (video.currentTime / video.duration) * 100;
-                    videoProgressFilled.style.width = `${percent}%`;
-                }
-            }
-
-            // Play/Pause toggle
-            if (playPauseBtn) {
-                playPauseBtn.addEventListener('click', () => {
-                    userInteracted = true;
-
-                    if (video.paused) {
-                        // First play on PC - ensure sound is enabled
-                        if (!videoStarted) {
-                            video.muted = false;
-                            video.volume = 1.0;
-                            videoStarted = true;
-                            console.log('PC: First play with sound enabled');
-                        }
-
-                        video.play().then(() => {
-                            console.log('Video playing with sound');
-                        }).catch(error => {
-                            console.log('Play failed:', error);
-                            // If play fails, try with muted
-                            video.muted = true;
-                            video.play();
-                        });
-                    } else {
-                        video.pause();
-                    }
-                    updatePlayPauseButton();
-                    updateMuteButton();
-                });
-            }
-
-            // Mute toggle
-            if (muteBtn) {
-                muteBtn.addEventListener('click', () => {
-                    userInteracted = true;
-                    video.muted = !video.muted;
-
-                    // If unmuting, set volume to max
-                    if (!video.muted) {
-                        video.volume = 1.0;
-                    }
-
-                    updateMuteButton();
-                    console.log('Mute toggled:', video.muted ? 'Muted' : 'Unmuted');
-                });
-            }
-
-            // Fullscreen toggle
-            if (fullscreenBtn) {
-                fullscreenBtn.addEventListener('click', () => {
-                    userInteracted = true;
-                    if (!document.fullscreenElement) {
-                        video.parentElement.requestFullscreen().catch(err => {
-                            console.log(`Fullscreen error: ${err.message}`);
-                        });
-                    } else {
-                        document.exitFullscreen();
-                    }
-                });
-            }
-
-            // Progress bar click
-            if (videoProgress) {
-                videoProgress.addEventListener('click', (e) => {
-                    userInteracted = true;
-                    const rect = videoProgress.getBoundingClientRect();
-                    const pos = (e.clientX - rect.left) / rect.width;
-                    video.currentTime = pos * video.duration;
-                    updateProgressBar();
-                });
-            }
-
-            // Video event listeners
-            video.addEventListener('play', updatePlayPauseButton);
-            video.addEventListener('pause', updatePlayPauseButton);
-            video.addEventListener('timeupdate', updateProgressBar);
-            video.addEventListener('volumechange', updateMuteButton);
-            video.addEventListener('loadedmetadata', updateProgressBar);
-
-            video.addEventListener('loadeddata', () => {
-                console.log('Video loaded, duration:', video.duration);
-                updateProgressBar();
-            });
-
-            video.addEventListener('error', (e) => {
-                console.error('Video error:', video.error);
-                showVideoError();
-            });
-
-            // Loop video when it ends
-            video.addEventListener('ended', () => {
-                video.currentTime = 0;
-                video.play();
-            });
-
-            // Initialize controls
-            updatePlayPauseButton();
-            updateMuteButton();
-        }
-
-        // ===== FORCE SOUND ON USER INTERACTION (PC FIX) =====
-        function enableVideoSound() {
-            if (video && !userInteracted) {
-                userInteracted = true;
-                console.log('User interacted with page');
-
-                // Try to play video with sound
-                if (video.paused) {
-                    video.muted = false;
-                    video.volume = 1.0;
-
-                    // Small delay to ensure interaction is registered
-                    setTimeout(() => {
-                        video.play().then(() => {
-                            console.log('Video started with sound after user interaction');
-                            videoStarted = true;
-                            updatePlayPauseButton();
-                            updateMuteButton();
-                        }).catch(error => {
-                            console.log('Play after interaction failed:', error);
-                        });
-                    }, 100);
-                }
-            }
-        }
-
-        // Multiple interaction listeners for PC
-        const interactionEvents = ['click', 'touchstart', 'keydown', 'scroll', 'mousemove'];
-        interactionEvents.forEach(eventType => {
-            document.addEventListener(eventType, enableVideoSound, { once: true });
-        });
-
-        // Also listen for specific play button interaction
-        if (playPauseBtn) {
-            playPauseBtn.addEventListener('click', enableVideoSound);
-        }
-
-        // ===== VIDEO ERROR HANDLING =====
-        function showVideoError() {
-            const videoContainer = document.querySelector('.game-teaser-video-container');
-            if (!videoContainer) return;
-
-            // Create or show error message
-            let errorDiv = document.getElementById('videoError');
-            if (!errorDiv) {
-                errorDiv = document.createElement('div');
-                errorDiv.id = 'videoError';
-                errorDiv.style.cssText = `
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: rgba(0,0,0,0.9);
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    color: white;
-                    text-align: center;
-                    padding: 20px;
-                    border-radius: 18px;
-                    z-index: 10;
-                `;
-
-                errorDiv.innerHTML = `
-                    <div style="font-size: 48px; margin-bottom: 20px;">🔇</div>
-                    <h3 style="color: #fbbf24; margin-bottom: 10px;">Audio Issue Detected</h3>
-                    <p style="color: #94a3b8; margin-bottom: 15px; max-width: 400px;">
-                        Some browsers restrict audio autoplay. Please:
-                    </p>
-                    <ol style="text-align: left; color: #cbd5e1; margin-bottom: 20px; max-width: 400px;">
-                        <li>Click the play button below</li>
-                        <li>Then click the 🔊 icon to unmute</li>
-                        <li>Or try clicking anywhere on the page first</li>
-                    </ol>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
-                        <button onclick="document.getElementById('playPauseBtn')?.click()" style="
-                            background: linear-gradient(90deg, #f59e0b, #ea580c);
-                            color: white;
-                            border: none;
-                            padding: 12px 24px;
-                            border-radius: 8px;
-                            cursor: pointer;
-                            font-weight: bold;
-                        ">
-                            ▶ Play Video
-                        </button>
-                        <button onclick="document.getElementById('muteBtn')?.click()" style="
-                            background: #3b82f6;
-                            color: white;
-                            border: none;
-                            padding: 12px 24px;
-                            border-radius: 8px;
-                            cursor: pointer;
-                            font-weight: bold;
-                        ">
-                            🔊 Toggle Mute
-                        </button>
-                    </div>
-                    <p style="color: #64748b; margin-top: 20px; font-size: 12px;">
-                        Still having issues? Try <a href="https://youtu.be/5OylbAODfFw" target="_blank" style="color: #fbbf24;">watching on YouTube</a>
-                    </p>
-                `;
-
-                videoContainer.appendChild(errorDiv);
-            }
-
-            errorDiv.style.display = 'flex';
-        }
 
         // ===== SMOOTH SCROLL =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1679,201 +1349,98 @@
         }
 
         // ===== ENHANCED CTA BUTTON ANIMATIONS =====
-        const ctaButtons = document.querySelectorAll('.btn-primary');
+        const ctaButtons = document.querySelectorAll('.btn-primary, .btn-secondary');
 
         ctaButtons.forEach(button => {
-            button.style.animation = 'float 3s ease-in-out infinite';
-
             button.addEventListener('mouseenter', function() {
-                this.style.boxShadow = '0 15px 35px rgba(245, 158, 11, 0.4)';
+                this.style.transform = 'translateY(-3px)';
+                if (this.classList.contains('btn-primary')) {
+                    this.style.boxShadow = '0 15px 35px rgba(245, 158, 11, 0.4)';
+                }
             });
 
             button.addEventListener('mouseleave', function() {
-                this.style.boxShadow = '0 10px 25px rgba(245, 158, 11, 0.3)';
-            });
-
-            button.addEventListener('click', function(e) {
-                createRippleEffect(this, e);
+                this.style.transform = 'translateY(0)';
+                if (this.classList.contains('btn-primary')) {
+                    this.style.boxShadow = '0 10px 25px rgba(245, 158, 11, 0.3)';
+                }
             });
         });
 
-        // ===== RIPPLE EFFECT FUNCTION =====
-        function createRippleEffect(button, e) {
-            const ripple = document.createElement('span');
-            const rect = button.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            const x = e.clientX - rect.left - size / 2;
-            const y = e.clientY - rect.top - size / 2;
+        // ===== GAME CARD INTERACTIONS =====
+        const gameCards = document.querySelectorAll('.featured-game-card, .game-showcase-card');
 
-            ripple.style.cssText = `
-                position: absolute;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.7);
-                transform: scale(0);
-                animation: ripple 0.6s linear;
-                width: ${size}px;
-                height: ${size}px;
-                top: ${y}px;
-                left: ${x}px;
-                pointer-events: none;
-            `;
-
-            button.appendChild(ripple);
-
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
-        }
-
-        // Add CSS styles
-        const styles = document.createElement('style');
-        styles.textContent = `
-            @keyframes ripple {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
-                }
-            }
-
-            .btn-primary {
-                position: relative;
-                overflow: hidden;
-            }
-
-            .video-control-btn {
-                transition: all 0.2s ease;
-            }
-
-            .video-control-btn:hover {
-                transform: scale(1.1);
-                background: rgba(255, 255, 255, 0.3) !important;
-            }
-
-            #videoError {
-                animation: fadeIn 0.5s ease;
-            }
-
-            @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-
-            /* Sound warning for PC users */
-            .sound-warning {
-                position: absolute;
-                top: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: rgba(245, 158, 11, 0.9);
-                color: white;
-                padding: 8px 16px;
-                border-radius: 20px;
-                font-size: 12px;
-                font-weight: bold;
-                z-index: 5;
-                display: none;
-                animation: pulse 2s infinite;
-            }
-
-            @keyframes pulse {
-                0%, 100% { opacity: 0.8; }
-                50% { opacity: 1; }
-            }
-        `;
-        document.head.appendChild(styles);
-
-        // ===== ADD SOUND WARNING FOR PC USERS =====
-        if (!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-            const videoContainer = document.querySelector('.game-teaser-video-container');
-            if (videoContainer) {
-                const warning = document.createElement('div');
-                warning.className = 'sound-warning';
-                warning.textContent = 'Click play, then unmute for sound 🔊';
-                warning.style.display = 'block';
-                videoContainer.appendChild(warning);
-
-                // Hide warning after 10 seconds or when video plays
-                setTimeout(() => {
-                    warning.style.display = 'none';
-                }, 10000);
-
-                if (video) {
-                    video.addEventListener('play', () => {
-                        warning.style.display = 'none';
-                    });
-                }
-            }
-        }
-
-        // ===== VIDEO CONTROLS VISIBILITY =====
-        const videoContainer = document.querySelector('.game-teaser-video-container');
-        if (videoContainer) {
-            let controlsTimeout;
-
-            videoContainer.addEventListener('mouseenter', function() {
-                const controls = this.querySelector('.video-controls-container');
-                if (controls) {
-                    controls.style.opacity = '1';
-                    clearTimeout(controlsTimeout);
-                }
+        gameCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
             });
 
-            videoContainer.addEventListener('mouseleave', function() {
-                const controls = this.querySelector('.video-controls-container');
-                if (controls && !video.paused) {
-                    controlsTimeout = setTimeout(() => {
-                        controls.style.opacity = '0.5';
-                    }, 2000);
-                }
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
             });
-        }
-
-        // ===== CHECK FOR AUDIO ISSUES =====
-        setTimeout(() => {
-            if (video && videoStarted && video.muted) {
-                // Video is playing but muted - show help
-                console.log('Video is muted, showing help');
-                showVideoError();
-            }
-        }, 3000);
-
-        // ===== KEYBOARD SHORTCUTS =====
-        document.addEventListener('keydown', function(e) {
-            if (!video) return;
-
-            switch(e.key.toLowerCase()) {
-                case ' ':
-                case 'k':
-                    e.preventDefault();
-                    if (video.paused) {
-                        video.play();
-                    } else {
-                        video.pause();
-                    }
-                    updatePlayPauseButton();
-                    break;
-
-                case 'm':
-                    e.preventDefault();
-                    video.muted = !video.muted;
-                    updateMuteButton();
-                    break;
-
-                case 'f':
-                    e.preventDefault();
-                    if (!document.fullscreenElement) {
-                        video.parentElement.requestFullscreen();
-                    } else {
-                        document.exitFullscreen();
-                    }
-                    break;
-            }
         });
 
-        // ===== LOG VIDEO STATE FOR DEBUGGING =====
-        console.log('Video initialized - Platform:', navigator.userAgent);
-        console.log('Video element:', video);
+        // ===== VIDEO AUTOPLAY FIX =====
+        const gameVideo = document.querySelector('.game-showcase-video');
+        if (gameVideo) {
+            // Don't autoplay, let user control the video
+            gameVideo.removeAttribute('autoplay');
+            gameVideo.controls = true;
+        }
+
+        // ===== PULSE ANIMATION FOR BADGE =====
+        const crownBadge = document.querySelector('.crown-badge');
+        if (crownBadge) {
+            setInterval(() => {
+                crownBadge.classList.toggle('pulse');
+            }, 4000);
+        }
+
+        // ===== STATS COUNTER ANIMATION =====
+        function animateStats() {
+            const stats = document.querySelectorAll('.community-number');
+            stats.forEach(stat => {
+                const target = parseInt(stat.textContent.replace(/\D/g, ''));
+                let current = 0;
+                const increment = target / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    stat.textContent = Math.floor(current).toLocaleString() + '+';
+                }, 20);
+            });
+        }
+
+        // Trigger stats animation when in view
+        const communitySection = document.querySelector('.community-section');
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateStats();
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        if (communitySection) {
+            statsObserver.observe(communitySection);
+        }
+
+        // ===== ENHANCE GAMING EXPERIENCE =====
+        console.log('🎮 Crownieverse - The Gameverse Reclaimed 🎮');
+        console.log('Welcome to the ultimate blockchain gaming experience!');
+        
+        // Add loading animation for better UX
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '1';
+            document.body.style.transition = 'opacity 0.5s ease';
+        });
+        
+        document.body.style.opacity = '0';
     });
-</script>
+    </script>
 </body>
 </html>
