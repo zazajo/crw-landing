@@ -1,5 +1,5 @@
 """
-Django settings for crwn project - Production Configuration
+Django settings for crwn project - Railway Production Configuration
 """
 
 import os
@@ -13,10 +13,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security settings
 SECRET_KEY = os.getenv('SECRET_KEY', os.urandom(50).hex())
-DEBUG = False
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 # Site configuration
-SITE_URL = 'https://www.crownieverse.xyz'
+SITE_URL = os.getenv('SITE_URL', 'https://www.crownieverse.xyz')
 SITE_NAME = 'CrownieVerse'
 
 # Application definition
@@ -34,6 +34,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # For serving static files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -65,12 +66,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'crwn.wsgi.application'
 
-# Database
+# Database - Use PostgreSQL on Railway, SQLite as fallback
+import dj_database_url
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 }
 
 # Password validation
@@ -98,10 +101,11 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files
 MEDIA_URL = '/media/'
@@ -113,39 +117,54 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
 
-# Security headers
-ALLOWED_HOSTS = [
-    'www.crownieverse.xyz',
-    'crownieverse.xyz',
-    'crownie.pythonanywhere.com',
-]
+# Security headers - Production only
+if not DEBUG:
+    # Hosts allowed
+    ALLOWED_HOSTS = [
+        'www.crownieverse.xyz',
+        'crownieverse.xyz',
+        '.railway.app',  # Allows all Railway subdomains
+        'localhost',
+        '127.0.0.1',
+    ]
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://www.crownieverse.xyz',
-    'https://crownieverse.xyz',
-    'https://crownie.pythonanywhere.com',
-]
+    CSRF_TRUSTED_ORIGINS = [
+        'https://www.crownieverse.xyz',
+        'https://crownieverse.xyz',
+        'https://*.railway.app',
+    ]
 
-# SSL/HTTPS
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SAMESITE = 'Lax'
-CSRF_COOKIE_SAMESITE = 'Lax'
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-X_FRAME_OPTIONS = 'DENY'
-SECURE_HSTS_SECONDS = 31536000
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
+    # SSL/HTTPS
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SAMESITE = 'Lax'
+    CSRF_COOKIE_SAMESITE = 'Lax'
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+else:
+    # Development settings
+    ALLOWED_HOSTS = ['*']
+    CSRF_TRUSTED_ORIGINS = [
+        'http://localhost:8000',
+        'http://127.0.0.1:8000',
+        'https://*.railway.app',
+    ]
+    SECURE_SSL_REDIRECT = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
 
 # Discord OAuth
 DISCORD_CLIENT_ID = os.getenv('DISCORD_CLIENT_ID')
 DISCORD_CLIENT_SECRET = os.getenv('DISCORD_CLIENT_SECRET')
 DISCORD_BOT_TOKEN = os.getenv('DISCORD_BOT_TOKEN')
 DISCORD_GUILD_ID = os.getenv('DISCORD_GUILD_ID')
-DISCORD_REDIRECT_URI = 'https://www.crownieverse.xyz/discord/callback/'
+DISCORD_REDIRECT_URI = os.getenv('DISCORD_REDIRECT_URI', 'https://www.crownieverse.xyz/discord/callback/')
 DISCORD_OAUTH_SCOPES = 'identify guilds.join'
 
 # Django Sites Framework
@@ -168,10 +187,14 @@ REST_FRAMEWORK = {
 }
 
 # CORS
-CORS_ALLOWED_ORIGINS = [
-    'https://www.crownieverse.xyz',
-    'https://crownieverse.xyz',
-]
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
+else:
+    CORS_ALLOWED_ORIGINS = [
+        'https://www.crownieverse.xyz',
+        'https://crownieverse.xyz',
+        'https://*.railway.app',
+    ]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = [
     'GET',
@@ -193,8 +216,17 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
 ]
 
-# Email (using console for now, add SMTP later if needed)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Email (configure for production if needed)
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
+    EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
+    EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True') == 'True'
+    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+    DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'CrownieVerse <noreply@crownieverse.xyz>')
 
 # Cache
 CACHES = {
@@ -223,18 +255,18 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'filename': BASE_DIR / 'production.log',
             'formatter': 'verbose',
-            'level': 'ERROR',
+            'level': 'ERROR' if not DEBUG else 'DEBUG',
         },
     },
     'loggers': {
         'django': {
             'handlers': ['console'],
-            'level': 'INFO',
+            'level': 'INFO' if not DEBUG else 'DEBUG',
             'propagate': True,
         },
         'django.request': {
-            'handlers': ['file'],
-            'level': 'ERROR',
+            'handlers': ['file', 'console'],
+            'level': 'ERROR' if not DEBUG else 'DEBUG',
             'propagate': False,
         },
         'django.security': {
@@ -244,7 +276,7 @@ LOGGING = {
         },
         'crownie': {
             'handlers': ['console', 'file'],
-            'level': 'INFO',
+            'level': 'INFO' if not DEBUG else 'DEBUG',
             'propagate': False,
         },
     },
@@ -260,3 +292,6 @@ SESSION_CACHE_ALIAS = 'default'
 # File upload limits
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
+
+# Railway specific
+PORT = int(os.getenv('PORT', 8000))
