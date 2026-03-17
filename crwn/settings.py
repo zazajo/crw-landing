@@ -35,7 +35,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # For serving static files
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -66,8 +66,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'crwn.wsgi.application'
-
-# Database - Use PostgreSQL on Railway, SQLite as fallback
 
 if dj_database_url:
     DATABASES = {
@@ -132,7 +130,7 @@ if not DEBUG:
     ALLOWED_HOSTS = [
         'www.crownieverse.xyz',
         'crownieverse.xyz',
-        '.railway.app',  # Allows all Railway subdomains
+        '.railway.app',
         'localhost',
         '127.0.0.1',
     ]
@@ -225,18 +223,6 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
 ]
 
-# Email (configure for production if needed)
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-else:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
-    EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
-    EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True') == 'True'
-    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-    DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'CrownieVerse <noreply@crownieverse.xyz>')
-
 # Cache
 CACHES = {
     'default': {
@@ -302,5 +288,6 @@ SESSION_CACHE_ALIAS = 'default'
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
 
-# Railway specific
-PORT = int(os.getenv('PORT', 8000))
+import os
+PORT = os.getenv('PORT', '8000')
+print(f"⚡ Server will attempt to bind to port: {PORT}")
