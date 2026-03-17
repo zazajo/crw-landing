@@ -13,6 +13,9 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from dotenv import load_dotenv
+from django.http import HttpResponse
+
+
 
 from .forms import CustomUserCreationForm, LoginForm, QuestForm
 from .models import (
@@ -32,6 +35,12 @@ User = get_user_model()
 def is_staff_or_superuser(user):
     """Check if user is staff or superuser"""
     return user.is_staff or user.is_superuser
+
+def home(request):
+    return HttpResponse("CrownieVerse is running!")
+
+def healthcheck(request):
+    return HttpResponse("OK")
 
 # ==================== SIMPLE AUTHENTICATION VIEWS ====================
 
