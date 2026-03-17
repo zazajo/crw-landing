@@ -1,1 +1,1 @@
-worker: python crownie/discord_bot.py
+worker: python manage.py runserver

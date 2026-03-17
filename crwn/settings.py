@@ -1,5 +1,5 @@
 """
-Django settings for crwn project - Development Configuration
+Django settings for crwn project - Production Configuration
 """
 
 import os
@@ -12,11 +12,11 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security settings
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-dev-key-change-this-in-production')
-DEBUG = True  # Changed to True for development
+SECRET_KEY = os.getenv('SECRET_KEY', os.urandom(50).hex())
+DEBUG = False
 
 # Site configuration
-SITE_URL = 'http://localhost:8000'  # Changed to HTTP for development
+SITE_URL = 'https://www.crownieverse.xyz'
 SITE_NAME = 'CrownieVerse'
 
 # Application definition
@@ -113,38 +113,39 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
 
-# ===== DEVELOPMENT SETTINGS =====
-# Allow all hosts for local development
-ALLOWED_HOSTS = ['*']
+# Security headers
+ALLOWED_HOSTS = [
+    'www.crownieverse.xyz',
+    'crownieverse.xyz',
+    'crownie.pythonanywhere.com',
+]
 
-# Disable SSL for development
-SECURE_SSL_REDIRECT = False
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
-SECURE_PROXY_SSL_HEADER = None  # Disable for development
-
-# CSRF settings for development
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:8000',
-    'http://127.0.0.1:8000',
-    'http://0.0.0.0:8000',
+    'https://www.crownieverse.xyz',
+    'https://crownieverse.xyz',
+    'https://crownie.pythonanywhere.com',
 ]
 
-# CORS for development
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8000',
-    'http://127.0.0.1:8000',
-    'http://0.0.0.0:8000',
-]
-CORS_ALLOW_ALL_ORIGINS = True  # Enable for development
-CORS_ALLOW_CREDENTIALS = True
+# SSL/HTTPS
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SAMESITE = 'Lax'
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
 
-# Discord OAuth for development
-DISCORD_REDIRECT_URI = 'http://localhost:8000/discord/callback/'  # HTTP for dev
+# Discord OAuth
 DISCORD_CLIENT_ID = os.getenv('DISCORD_CLIENT_ID')
 DISCORD_CLIENT_SECRET = os.getenv('DISCORD_CLIENT_SECRET')
 DISCORD_BOT_TOKEN = os.getenv('DISCORD_BOT_TOKEN')
 DISCORD_GUILD_ID = os.getenv('DISCORD_GUILD_ID')
+DISCORD_REDIRECT_URI = 'https://www.crownieverse.xyz/discord/callback/'
 DISCORD_OAUTH_SCOPES = 'identify guilds.join'
 
 # Django Sites Framework
@@ -160,26 +161,50 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',  # Enable browsable API for dev
     ],
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.JSONParser',
-        'rest_framework.parsers.FormParser',
-        'rest_framework.parsers.MultiPartParser',
     ],
 }
 
-# Email (using console for development)
+# CORS
+CORS_ALLOWED_ORIGINS = [
+    'https://www.crownieverse.xyz',
+    'https://crownieverse.xyz',
+]
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS'
+]
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+# Email (using console for now, add SMTP later if needed)
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# Cache for development
+# Cache
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',  # Simple cache for dev
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'crownie-production',
     }
 }
 
-# Logging for development
+# Logging
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -188,20 +213,17 @@ LOGGING = {
             'format': '{levelname} {asctime} {module} {message}',
             'style': '{',
         },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
     },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
-            'formatter': 'simple',
+            'formatter': 'verbose',
         },
         'file': {
             'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'debug.log',
+            'filename': BASE_DIR / 'production.log',
             'formatter': 'verbose',
+            'level': 'ERROR',
         },
     },
     'loggers': {
@@ -211,17 +233,18 @@ LOGGING = {
             'propagate': True,
         },
         'django.request': {
-            'handlers': ['console', 'file'],
-            'level': 'DEBUG',
+            'handlers': ['file'],
+            'level': 'ERROR',
             'propagate': False,
         },
-        'django.db.backends': {
-            'handlers': ['console'],
-            'level': 'WARNING',
+        'django.security': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': False,
         },
         'crownie': {
             'handlers': ['console', 'file'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': False,
         },
     },
@@ -230,122 +253,10 @@ LOGGING = {
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Session settings for development
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-SESSION_COOKIE_AGE = 1209600  # 2 weeks in seconds
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+# Performance optimizations
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+SESSION_CACHE_ALIAS = 'default'
 
 # File upload limits
-DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10MB
-FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10MB
-
-# ===== UTILITY FUNCTION =====
-def is_development():
-    """Check if we're in development mode."""
-    return DEBUG is True
-
-def is_production():
-    """Check if we're in production mode."""
-    return DEBUG is False and 'crownieverse.xyz' in SITE_URL
-
-# ===== DEVELOPMENT-SPECIFIC SETTINGS =====
-if is_development():
-    print("🔧 Running in DEVELOPMENT mode")
-    
-    # Additional development apps
-    INSTALLED_APPS += [
-        'django_extensions',  # Useful for development
-    ]
-    
-    # Development middleware
-    MIDDLEWARE += [
-        
-    ]
-    
-    # Debug toolbar
-    INSTALLED_APPS += []
-    INTERNAL_IPS = [
-        '127.0.0.1',
-        'localhost',
-    ]
-    
-    # Django Extensions
-    SHELL_PLUS = "ipython"
-    
-    # Disable HTTPS requirements completely
-    SECURE_HSTS_SECONDS = 0
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = False
-    SECURE_HSTS_PRELOAD = False
-    
-    # Allow iframes in development
-    X_FRAME_OPTIONS = 'SAMEORIGIN'
-    
-    # Disable security headers for easier development
-    SECURE_BROWSER_XSS_FILTER = False
-    SECURE_CONTENT_TYPE_NOSNIFF = False
-
-# ===== PRODUCTION SETTINGS (commented out for now) =====
-# Uncomment these when deploying to production:
-"""
-if is_production():
-    print("🚀 Running in PRODUCTION mode")
-    
-    # Production security settings
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    
-    # HSTS
-    SECURE_HSTS_SECONDS = 31536000  # 1 year
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
-    
-    # Security headers
-    SECURE_BROWSER_XSS_FILTER = True
-    SECURE_CONTENT_TYPE_NOSNIFF = True
-    X_FRAME_OPTIONS = 'DENY'
-    
-    # Production hosts
-    ALLOWED_HOSTS = [
-        'www.crownieverse.xyz',
-        'crownieverse.xyz',
-        'crownie.pythonanywhere.com',
-    ]
-    
-    CSRF_TRUSTED_ORIGINS = [
-        'https://www.crownieverse.xyz',
-        'https://crownieverse.xyz',
-        'https://crownie.pythonanywhere.com',
-    ]
-    
-    # Production CORS
-    CORS_ALLOWED_ORIGINS = [
-        'https://www.crownieverse.xyz',
-        'https://crownieverse.xyz',
-    ]
-    CORS_ALLOW_ALL_ORIGINS = False
-    
-    # Production Discord OAuth
-    DISCORD_REDIRECT_URI = 'https://www.crownieverse.xyz/discord/callback/'
-    
-    # Production cache
-    CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'crownie-production',
-        }
-    }
-    
-    # Production logging
-    LOGGING['handlers']['file']['level'] = 'ERROR'
-    LOGGING['loggers']['django.request']['level'] = 'ERROR'
-    LOGGING['loggers']['crownie']['level'] = 'INFO'
-    
-    # Production email (configure your SMTP settings)
-    # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    # EMAIL_HOST = 'smtp.gmail.com'
-    # EMAIL_PORT = 587
-    # EMAIL_USE_TLS = True
-    # EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-    # EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-"""
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
