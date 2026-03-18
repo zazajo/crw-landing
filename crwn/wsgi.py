@@ -1,14 +1,10 @@
 """
 WSGI config for crwn project.
-
-It exposes the WSGI callable as a module-level variable named ``application``.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/4.2/howto/deployment/wsgi/
 """
 
 import os
 import sys
+import time
 import traceback
 
 print("=" * 60)
@@ -21,23 +17,41 @@ for key in ['DJANGO_SETTINGS_MODULE', 'PORT', 'SECRET_KEY', 'DATABASE_URL']:
 print("=" * 60)
 
 try:
-    print("STEP 2: Importing Django...")
-    from django.core.wsgi import get_wsgi_application
-    print("✓ Django imported successfully")
-    
-    print("STEP 3: Setting settings module...")
+    print("STEP 2: Setting Django settings module...")
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'crwn.settings')
-    print(f"✓ Settings module set to: {os.environ['DJANGO_SETTINGS_MODULE']}")
     
-    print("STEP 4: Creating WSGI application...")
+    print("STEP 3: Importing Django...")
+    import django
+    print(f"Django version: {django.get_version()}")
+    
+    print("STEP 4: Setting up Django...")
+    django.setup()
+    print("✓ Django setup complete")
+    
+    print("STEP 5: Importing get_wsgi_application...")
+    from django.core.wsgi import get_wsgi_application
+    
+    print("STEP 6: Creating WSGI application...")
     application = get_wsgi_application()
     print("✓ WSGI application created successfully!")
     
-    print("STEP 5: Checking if application is callable...")
-    if callable(application):
-        print("✓ Application is callable")
-    else:
-        print("✗ Application is NOT callable")
+    print("STEP 7: Testing database connection...")
+    from django.db import connections
+    from django.db.utils import OperationalError
+    
+    db_conn = connections['default']
+    try:
+        c = db_conn.cursor()
+        c.execute("SELECT 1")
+        c.fetchone()
+        print("✓ Database connection successful")
+    except OperationalError as e:
+        print(f"⚠️ Database connection failed: {e}")
+        print("This might be normal if migrations haven't run yet")
+    
+    print("=" * 60)
+    print("WSGI.PY COMPLETED SUCCESSFULLY")
+    print("=" * 60)
     
 except Exception as e:
     print("=" * 60)
@@ -48,19 +62,3 @@ except Exception as e:
     traceback.print_exc(file=sys.stdout)
     print("=" * 60)
     raise
-
-import socket
-
-# after creating application
-try:
-    hostname = socket.gethostname()
-    local_ip = socket.gethostbyname(hostname)
-    print(f"🌐 Server hostname: {hostname}")
-    print(f"🌐 Server IP: {local_ip}")
-    print(f"🌐 Server should be listening on 0.0.0.0:{os.environ.get('PORT', '8080')}")
-except Exception as e:
-    print(f"Could not get network info: {e}")
-
-print("=" * 60)
-print("WSGI.PY COMPLETED SUCCESSFULLY")
-print("=" * 60)

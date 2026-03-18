@@ -40,15 +40,23 @@ def is_staff_or_superuser(user):
 
 
 @csrf_exempt
-@never_cache
 @require_http_methods(["GET", "HEAD"])
 def healthcheck(request):
-    """Simple healthcheck endpoint that always returns 200"""
-    print(f"Healthcheck called - path: {request.path}")
-    print(f"User authenticated: {request.user.is_authenticated if hasattr(request, 'user') else 'No user'}")
-    response = HttpResponse("OK", status=200, content_type="text/plain")
-    print(f"Response status: {response.status_code}")
-    return response
+    """
+    Ultra-simple healthcheck that bypasses ALL Django complexity
+    """
+    # Print to gunicorn logs
+    print(f"✅ Healthcheck called at {timezone.now()}")
+    
+    # Return super simple response
+    return HttpResponse(
+        "OK", 
+        status=200, 
+        content_type="text/plain",
+        headers={
+            'Cache-Control': 'no-cache',
+        }
+    )
 
 # ==================== SIMPLE AUTHENTICATION VIEWS ====================
 
