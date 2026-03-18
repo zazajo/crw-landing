@@ -6,6 +6,7 @@
   "deploy": {
     "startCommand": "python railway_app.py",
     "healthcheckPath": "/health",
+    "healthcheckPort": 8081,
     "healthcheckTimeout": 30,
     "restartPolicyType": "ON_FAILURE"
   }
