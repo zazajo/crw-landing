@@ -14,6 +14,8 @@ from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from dotenv import load_dotenv
 from django.http import HttpResponse
+from django.views.decorators.cache import never_cache
+from django.views.decorators.http import require_http_methods
 
 
 
@@ -37,18 +39,13 @@ def is_staff_or_superuser(user):
     return user.is_staff or user.is_superuser
 
 
-from django.views.decorators.cache import never_cache
-from django.views.decorators.http import require_http_methods
-
 @csrf_exempt
 @never_cache
 @require_http_methods(["GET", "HEAD"])
 def healthcheck(request):
+    """Simple healthcheck endpoint that always returns 200"""
     print(f"Healthcheck called - path: {request.path}")
     print(f"User authenticated: {request.user.is_authenticated if hasattr(request, 'user') else 'No user'}")
-    print(f"Session: {request.session.keys() if hasattr(request, 'session') else 'No session'}")
-    
-    # Check if any middleware is interfering
     response = HttpResponse("OK", status=200, content_type="text/plain")
     print(f"Response status: {response.status_code}")
     return response
