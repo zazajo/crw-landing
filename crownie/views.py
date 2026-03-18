@@ -44,21 +44,14 @@ from django.views.decorators.http import require_http_methods
 @never_cache
 @require_http_methods(["GET", "HEAD"])
 def healthcheck(request):
-    """
-    Healthcheck endpoint that always returns 200 OK
-    This bypasses all Django middleware that might cause redirects
-    """
-    # Return a simple plain text response with no HTML
-    return HttpResponse(
-        "OK", 
-        status=200, 
-        content_type="text/plain",
-        headers={
-            'Cache-Control': 'no-cache, no-store, must-revalidate',
-            'Pragma': 'no-cache',
-            'Expires': '0',
-        }
-    )
+    print(f"Healthcheck called - path: {request.path}")
+    print(f"User authenticated: {request.user.is_authenticated if hasattr(request, 'user') else 'No user'}")
+    print(f"Session: {request.session.keys() if hasattr(request, 'session') else 'No session'}")
+    
+    # Check if any middleware is interfering
+    response = HttpResponse("OK", status=200, content_type="text/plain")
+    print(f"Response status: {response.status_code}")
+    return response
 
 # ==================== SIMPLE AUTHENTICATION VIEWS ====================
 

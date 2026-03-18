@@ -307,6 +307,8 @@ SESSION_CACHE_ALIAS = 'default'
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
 
+APPEND_SLASH = True
+
 import os
 PORT = os.getenv('PORT', '8000')
 print(f"⚡ Server will attempt to bind to port: {PORT}")
