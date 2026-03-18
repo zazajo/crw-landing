@@ -1,1 +1,1 @@
-web: bash -c "python healthcheck_server.py & sleep 3 && python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn crwn.wsgi:application --bind 0.0.0.0:$PORT --workers 1 --threads 1 --timeout 120 --log-level debug --access-logfile - --error-logfile -"
+web: python railway_app.py
