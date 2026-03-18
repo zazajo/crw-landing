@@ -49,6 +49,18 @@ except Exception as e:
     print("=" * 60)
     raise
 
+import socket
+
+# after creating application
+try:
+    hostname = socket.gethostname()
+    local_ip = socket.gethostbyname(hostname)
+    print(f"🌐 Server hostname: {hostname}")
+    print(f"🌐 Server IP: {local_ip}")
+    print(f"🌐 Server should be listening on 0.0.0.0:{os.environ.get('PORT', '8080')}")
+except Exception as e:
+    print(f"Could not get network info: {e}")
+
 print("=" * 60)
 print("WSGI.PY COMPLETED SUCCESSFULLY")
 print("=" * 60)

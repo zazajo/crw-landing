@@ -12,6 +12,7 @@ from . import views
 urlpatterns = [
     path('', home_view, name='home'),
     path('health/', views.healthcheck, name='healthcheck'),
+    path('healthcheck/', views.healthcheck, name='healthcheck_alt'),
     path('signup/', signup_view, name='signup'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),

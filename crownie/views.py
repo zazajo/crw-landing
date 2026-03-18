@@ -36,11 +36,24 @@ def is_staff_or_superuser(user):
     """Check if user is staff or superuser"""
     return user.is_staff or user.is_superuser
 
-def home(request):
-    return HttpResponse("CrownieVerse is running!")
 
+from django.views.decorators.http import require_GET
+
+@csrf_exempt
+@require_GET
 def healthcheck(request):
-    return HttpResponse("OK")
+    """Simple healthcheck endpoint"""
+    print("=" * 50)
+    print("HEALTHCHECK CALLED!")
+    print(f"Request path: {request.path}")
+    print(f"Request method: {request.method}")
+    print("=" * 50)
+    
+    return HttpResponse("OK", status=200, content_type="text/plain")
+
+def home(request):
+    print(f"Home view called - path: {request.path}")
+    return HttpResponse("CrownieVerse is running!")
 
 # ==================== SIMPLE AUTHENTICATION VIEWS ====================
 
