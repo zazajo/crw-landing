@@ -7,11 +7,8 @@ from .views import (
     quests_view, start_quest, claim_quest_reward, daily_login_reward,
     manage_quests, create_quest, edit_quest, delete_quest, whitepaper_view, roadmap_view
 )
-from . import views
 
 urlpatterns = [
-    path('health/', views.healthcheck, name='healthcheck'),
-    path('healthcheck/', views.healthcheck, name='healthcheck_alt'),
     path('', home_view, name='home'),
     path('signup/', signup_view, name='signup'),
     path('login/', login_view, name='login'),

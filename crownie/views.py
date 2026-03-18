@@ -38,26 +38,6 @@ def is_staff_or_superuser(user):
     """Check if user is staff or superuser"""
     return user.is_staff or user.is_superuser
 
-
-@csrf_exempt
-@require_http_methods(["GET", "HEAD"])
-def healthcheck(request):
-    """
-    Ultra-simple healthcheck that bypasses ALL Django complexity
-    """
-    # Print to gunicorn logs
-    print(f"✅ Healthcheck called at {timezone.now()}")
-    
-    # Return super simple response
-    return HttpResponse(
-        "OK", 
-        status=200, 
-        content_type="text/plain",
-        headers={
-            'Cache-Control': 'no-cache',
-        }
-    )
-
 # ==================== SIMPLE AUTHENTICATION VIEWS ====================
 
 def signup_view(request):

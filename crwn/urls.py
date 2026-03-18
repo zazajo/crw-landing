@@ -19,10 +19,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from crownie.views import healthcheck
 
 urlpatterns = [
-    path('health/', healthcheck, name='healthcheck'),
     path('admin/', admin.site.urls),
     path('', include('crownie.urls')),
 ]
