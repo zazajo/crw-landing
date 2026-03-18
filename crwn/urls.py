@@ -24,7 +24,7 @@ from crownie import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('crownie.urls')),
-    path('health/', views.healthcheck, name='healthcheck'),
+    path('health/', include('crownie.healthcheck_urls')),
 ]
 
 if settings.DEBUG:

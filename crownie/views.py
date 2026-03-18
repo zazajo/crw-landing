@@ -37,23 +37,28 @@ def is_staff_or_superuser(user):
     return user.is_staff or user.is_superuser
 
 
-from django.views.decorators.http import require_GET
+from django.views.decorators.cache import never_cache
+from django.views.decorators.http import require_http_methods
 
 @csrf_exempt
-@require_GET
+@never_cache
+@require_http_methods(["GET", "HEAD"])
 def healthcheck(request):
-    """Simple healthcheck endpoint"""
-    print("=" * 50)
-    print("HEALTHCHECK CALLED!")
-    print(f"Request path: {request.path}")
-    print(f"Request method: {request.method}")
-    print("=" * 50)
-    
-    return HttpResponse("OK", status=200, content_type="text/plain")
-
-def home(request):
-    print(f"Home view called - path: {request.path}")
-    return HttpResponse("CrownieVerse is running!")
+    """
+    Healthcheck endpoint that always returns 200 OK
+    This bypasses all Django middleware that might cause redirects
+    """
+    # Return a simple plain text response with no HTML
+    return HttpResponse(
+        "OK", 
+        status=200, 
+        content_type="text/plain",
+        headers={
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0',
+        }
+    )
 
 # ==================== SIMPLE AUTHENTICATION VIEWS ====================
 
