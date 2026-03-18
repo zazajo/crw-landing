@@ -4,10 +4,27 @@ Django settings for crwn project - Railway Production Configuration
 
 import os
 from pathlib import Path
+import sys
+
+print("=" * 60)
+print("SETTINGS.PY LOADING - PHASE 1")
+print(f"Settings file: {__file__}")
+print(f"Current directory: {os.getcwd()}")
+print(f"Python executable: {sys.executable}")
+print("=" * 60)
+
 from dotenv import load_dotenv
 import dj_database_url
 
 load_dotenv()
+
+print("=" * 60)
+print("SETTINGS.PY LOADING - PHASE 2")
+print(f"BASE_DIR: {Path(__file__).resolve().parent.parent}")
+print(f"SECRET_KEY exists: {'Yes' if os.getenv('SECRET_KEY') else 'No'}")
+print(f"DEBUG mode: {os.getenv('DEBUG', 'False')}")
+print(f"DATABASE_URL exists: {'Yes' if os.getenv('DATABASE_URL') else 'No'}")
+print("=" * 60)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -291,3 +308,12 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
 import os
 PORT = os.getenv('PORT', '8000')
 print(f"⚡ Server will attempt to bind to port: {PORT}")
+
+
+print("=" * 60)
+print("SETTINGS.PY LOADING - PHASE 2")
+print(f"BASE_DIR: {Path(__file__).resolve().parent.parent}")
+print(f"SECRET_KEY exists: {'Yes' if os.getenv('SECRET_KEY') else 'No'}")
+print(f"DEBUG mode: {os.getenv('DEBUG', 'False')}")
+print(f"DATABASE_URL exists: {'Yes' if os.getenv('DATABASE_URL') else 'No'}")
+print("=" * 60)
