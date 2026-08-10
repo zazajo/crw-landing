@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import secrets
 from datetime import datetime, timedelta
 
 import requests
@@ -11,7 +12,6 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
-from django.views.decorators.csrf import csrf_exempt
 from dotenv import load_dotenv
 from django.http import HttpResponse
 from django.views.decorators.cache import never_cache
@@ -248,12 +248,22 @@ def discord_connect(request):
     # Discord OAuth2 URL
     client_id = os.getenv('DISCORD_CLIENT_ID')
     redirect_uri = os.getenv('DISCORD_REDIRECT_URI', 'https://www.crownieverse.xyz/discord/callback/')
-    
+
     # Scopes needed: identify + guilds.join (to add to server)
     scopes = ['identify', 'guilds.join']
-    
-    auth_url = f"https://discord.com/api/oauth2/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code&scope={'%20'.join(scopes)}"
-    
+
+    # CSRF-protect the OAuth flow: bind this session to the callback via a
+    # random state token, so an attacker can't trick a victim into linking
+    # the attacker's Discord account by replaying a captured callback URL.
+    state = secrets.token_urlsafe(32)
+    request.session['discord_oauth_state'] = state
+
+    auth_url = (
+        f"https://discord.com/api/oauth2/authorize?client_id={client_id}"
+        f"&redirect_uri={redirect_uri}&response_type=code"
+        f"&scope={'%20'.join(scopes)}&state={state}"
+    )
+
     return redirect(auth_url)
 
 @login_required
@@ -276,7 +286,14 @@ def discord_callback(request):
         messages.error(request, "No authorization code received from Discord")
         logger.error("No authorization code in callback")
         return redirect('home')
-    
+
+    expected_state = request.session.pop('discord_oauth_state', None)
+    received_state = request.GET.get('state')
+    if not expected_state or received_state != expected_state:
+        messages.error(request, "Discord authorization failed a security check. Please try connecting again.")
+        logger.error("Discord OAuth state mismatch (possible CSRF attempt)")
+        return redirect('home')
+
     try:
         # IMPORTANT: Use the exact same redirect URI as in Discord portal
         redirect_uri = settings.DISCORD_REDIRECT_URI
@@ -427,69 +444,6 @@ def discord_disconnect(request):
     
     messages.success(request, 'Discord account disconnected')
     return redirect('dashboard')
-
-@csrf_exempt
-def discord_activity_webhook(request):
-    """Receive Discord activity updates"""
-    if request.method != 'POST':
-        return JsonResponse({'error': 'Method not allowed'}, status=405)
-    
-    try:
-        data = json.loads(request.body)
-        discord_id = data.get('discord_id')
-        message_count = data.get('message_count', 0)
-        voice_minutes = data.get('voice_minutes', 0)
-        
-        if not discord_id:
-            return JsonResponse({'error': 'Missing discord_id'}, status=400)
-        
-        user = User.objects.filter(discord_id=discord_id).first()
-        if not user:
-            return JsonResponse({'error': 'User not found'}, status=404)
-        
-        # Update last activity
-        user.discord_last_activity = timezone.now()
-        
-        # Update Discord stats
-        user.discord_total_messages += message_count
-        user.discord_chat_points += message_count * 0.5  # 0.5 points per message
-        
-        # Update quest progress
-        quests_progress = UserQuestProgress.objects.filter(
-            user=user,
-            quest__is_active=True,
-            status__in=['in_progress', 'completed']
-        ).select_related('quest')
-        
-        for progress in quests_progress:
-            updated = False
-            
-            # Update Discord message count
-            if progress.quest.required_discord_messages > 0:
-                progress.discord_messages_count += message_count
-                updated = True
-            
-            # Update voice minutes
-            if progress.quest.required_discord_voice_minutes > 0:
-                progress.discord_voice_minutes += voice_minutes
-                updated = True
-            
-            if updated:
-                # Check if quest is now complete
-                if progress.check_completion():
-                    progress.status = 'completed'
-                    progress.completed_at = timezone.now()
-                
-                progress.save()
-        
-        user.save()
-        
-        return JsonResponse({'status': 'success', 'user': user.username})
-    
-    except json.JSONDecodeError:
-        return JsonResponse({'error': 'Invalid JSON'}, status=400)
-    except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)
 
 @login_required
 def get_user_chat_stats(request):

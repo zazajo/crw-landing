@@ -18,7 +18,7 @@ class User(AbstractUser):
     discord_connected_at = models.DateTimeField(blank=True, null=True)
     
     # Discord chat tracking fields
-    discord_chat_points = models.IntegerField(default=0)
+    discord_chat_points = models.FloatField(default=0)
     discord_total_messages = models.IntegerField(default=0)
     discord_last_activity = models.DateTimeField(blank=True, null=True)
     

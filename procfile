@@ -1,1 +1,2 @@
 web: python railway_app.py
+worker: python manage.py run_chat_bot

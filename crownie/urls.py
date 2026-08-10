@@ -2,8 +2,8 @@
 from django.urls import path
 from .views import (
     home_view, signup_view, login_view, logout_view, dashboard_view,
-    discord_connect, discord_callback, discord_disconnect, 
-    discord_activity_webhook, get_user_chat_stats,
+    discord_connect, discord_callback, discord_disconnect,
+    get_user_chat_stats,
     quests_view, start_quest, claim_quest_reward, daily_login_reward,
     manage_quests, create_quest, edit_quest, delete_quest, whitepaper_view, roadmap_view
 )
@@ -23,7 +23,6 @@ urlpatterns = [
     path('discord/connect/', discord_connect, name='discord_connect'),
     path('discord/callback/', discord_callback, name='discord_callback'),
     path('discord/disconnect/', discord_disconnect, name='discord_disconnect'),
-    path('api/discord/activity/', discord_activity_webhook, name='discord_activity'),
     path('api/chat/stats/', get_user_chat_stats, name='chat_stats'),
     
     # Quest URLs

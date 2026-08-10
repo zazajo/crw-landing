@@ -1,7 +1,6 @@
 # crownie/middleware.py
 from django.shortcuts import redirect
 from django.urls import reverse
-import re
 
 class DiscordConnectionRequiredMiddleware:
     """Middleware to ensure users have connected Discord"""
@@ -45,32 +44,14 @@ logger = logging.getLogger(__name__)
 class RequestLoggingMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
-        print("✅ RequestLoggingMiddleware initialized")
-    
+
     def __call__(self, request):
-        # Log before request
-        print(f"📥 Incoming request: {request.method} {request.path}")
         logger.info(f"Request: {request.method} {request.path}")
-        
-        # Process request
+
         start_time = time.time()
         response = self.get_response(request)
         duration = time.time() - start_time
-        
-        # Log after request
-        print(f"📤 Response: {response.status_code} for {request.path} (took {duration:.2f}s)")
-        logger.info(f"Response: {response.status_code} for {request.path}")
-        
-        return response
-    
-import re
 
-class HealthcheckBypassMiddleware:
-    def __init__(self, get_response):
-        self.get_response = get_response
-    
-    def __call__(self, request):
-        if request.path == '/health/' or request.path == '/health':
-            # Bypass any authentication for healthcheck
-            return self.get_response(request)
-        return self.get_response(request)
+        logger.info(f"Response: {response.status_code} for {request.path} (took {duration:.2f}s)")
+
+        return response

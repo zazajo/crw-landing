@@ -11,8 +11,11 @@ db.sqlite3
 # Ignore virtual environments
 venv/
 
-# Ignore static files collected by collectstatic
-static/
+# Ignore static files collected by collectstatic (source assets in static/ are tracked)
+staticfiles/
+
+# Ignore log files
+*.log
 
 # Ignore IDE-specific files
 .vscode/
