@@ -73,7 +73,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='quest',
             name='quest_type',
-            field=models.CharField(choices=[('social', 'Social Engagement'), ('discord', 'Discord Activity'), ('content', 'Content Creation'), ('referral', 'Referral'), ('daily', 'Daily Challenge'), ('special', 'Special Event')], default=django.utils.timezone.now, max_length=20),
+            field=models.CharField(choices=[('social', 'Social Engagement'), ('discord', 'Discord Activity'), ('content', 'Content Creation'), ('referral', 'Referral'), ('daily', 'Daily Challenge'), ('special', 'Special Event')], default='daily', max_length=20),
             preserve_default=False,
         ),
         migrations.AddField(
