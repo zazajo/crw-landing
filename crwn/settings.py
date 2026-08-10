@@ -146,6 +146,10 @@ if not DEBUG:
     # SSL/HTTPS
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_SSL_REDIRECT = True
+    # Railway's internal healthcheck prober hits the container directly
+    # (no X-Forwarded-Proto), so the SSL redirect would 301 it and fail
+    # the deploy healthcheck. Exempt just that path.
+    SECURE_REDIRECT_EXEMPT = [r'^health/$']
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SAMESITE = 'Lax'
