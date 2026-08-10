@@ -16,11 +16,18 @@ Including another URLconf
 """
 
 from django.contrib import admin
+from django.http import HttpResponse
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+
+def health_view(request):
+    return HttpResponse('OK')
+
+
 urlpatterns = [
+    path('health/', health_view, name='health'),
     path('admin/', admin.site.urls),
     path('', include('crownie.urls')),
 ]
