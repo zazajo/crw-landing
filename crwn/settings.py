@@ -114,7 +114,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Templates reference a few static assets that were never actually added
+# (images/hero_bg.jpg, images/logo.png, videos/teaser.webm). Manifest
+# storage hard-crashes page rendering on any single missing file; plain
+# compressed storage just 404s that one asset instead.
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Media files
 MEDIA_URL = '/media/'
